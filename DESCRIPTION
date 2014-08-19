@@ -1,0 +1,18 @@
+Package: RGENERATEPREC
+Maintainer: Emanuele Cordano <emanuele.cordano@gmail.com>
+License: GPL (>= 2)
+Title: RGENERATE : generation method for daily precipitation
+Type: Package
+Author: Emanuele Cordano
+Description: This package contains functions and S3 methods for spatial
+    multi-site stochastic generation of daily precipitation. It generates
+    precipitation occurrence in several sites using Wilks' Approach (1998).
+    Bugs/comments/questions/collaboration of any kind are warmly welcomed.
+Version: 1.0
+Repository: CRAN
+Date: 2014-07-22
+Depends:
+    R (>= 3.0),
+    copula,
+    RGENERATE,RMAWGEN,blockmatrix,Matrix
+URL: https://github.com/ecor/RGENERATEPREC
