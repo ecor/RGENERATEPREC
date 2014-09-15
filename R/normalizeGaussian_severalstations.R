@@ -60,48 +60,22 @@ NULL
 #' 
 #'valmin <- 0.5
 #'prec_mes_gaussWilks <- WilksGaussianization(x=prec_mes, data=prec_mes,valmin=valmin,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,force.precipitation.value="both") 
-#' prec_mes_gauss <- normalizeGaussian_severalstations(x=prec_mes, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin)  
-#### prec_mes_gauss_nullstep <- normalizeGaussian_severalstations(x=prec_mes, data=prec_mes,step=NULL,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin)  
-# CCGamma <- CCGamma(data=prec_mes, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
-#' prec_mes_ginv <- list()
-#' prec_mes_ginv$unforced <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks$unforced, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
-#' prec_mes_ginv$forced <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks$forced, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
 #' 
-#' str(prec_mes_ginv)
-#' 
-#'  plot(prec_mes[,1],prec_mes_ginv$unforced[,1])
-#'  plot(prec_mes[,19],prec_mes_ginv$unforced[,19])
-#' 
-#' CCGamma <- CCGamma(data=prec_mes, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
+#' ##prec_mes_ginv <- list()
+#' prec_mes_ginv  <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
+#' ccgamma <- CCGamma(data=prec_mes, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
+#' ccgamma_wilks <- cor(prec_mes_gaussWilks,use="pairwise.complete.obs")
 #' 
 #' 
-# plot(prec_mes[,5],prec_mes_ginv[,5])
-
+#' plot(prec_mes[,2],prec_mes_ginv[,2])
+#' 
+#' plot(ccgamma,ccgamma_wilks)
+#' abline(0,1)
 # plot(prec_mes_gaussWilks[,1],prec_mes_gauss[,1])
 # plot(prec_mes_gaussWilks[,2],prec_mes_gauss[,2])
 # plot(prec_mes_gaussWilks[,19],prec_mes_gauss[,19])
 # plot(prec_mes_gaussWilks[,10],prec_mes_gauss[,10])
-#'  plot(cor(prec_mes_gaussWilks$unforced),cor(prec_mes_gaussWilks$forced))
-#' abline(0,1)
-#' 
-#' 
-#' VARselect(prec_mes_gaussWilks$forced)
-#'
-#' 
-#' # u <- apply(prec_mes_ginv$forced,2,rank)/(nrow(prec_mes_ginv$forced)+1)
-#' #copula <- normalCopula(dim=ncol(u), disp = "un",param=P2p(CCGamma))
-#' #out <- fitCopula(copula, data=u, method = "ml" )
-#'      #     start = NULL, lower = NULL, upper = NULL,
-#'      #     optim.method = "BFGS", optim.control = list(maxit=1000),
-#'      #     estimate.variance = TRUE, hideWarnings = TRUE)
-# #### c("mpl", "ml", "itau", "irho"),
-#
-#' 
-# ### ,step = valmin, prec = 10^-4, type = 3,
-#		extremes = TRUE, sample = "monthly", origin_x = origin, origin_data = origin)
-#
-#
-#
+
 #' 
 #
 #
@@ -182,16 +156,18 @@ WilksGaussianization <- function (x,data=x,gauss=NULL,valmin=0.5,tolerance=0.001
 	for (iter in 1:iterations) {
 		
 		
+		outgf <- gapFilling(x=out,objectForGeneration=A,max.filling=nrow(out),names=names(out),cov=Sigma_u_m)
 		
-		out <- modifyCovariance(out,covchol=chol_ccg,use="pairwise.complete.obs")
+		outcorcov <- modifyCovariance(outgf,covchol=chol_ccg,use="pairwise.complete.obs")
 		#####str(out)
-		out <- gapFilling(x=out,objectForGeneration=A,max.filling=nrow(A),names=names(out),cov=Sigma_u_m)
+		
 		
 		
 		#######str(out)
 		
 		message <- sprintf("Iteration: %d on %d",iter,iterations)
-	    x_rec <- normalizeGaussian_severalstations(x=out, data=data,step=0,inverse=TRUE,...)
+	    
+		x_rec <- normalizeGaussian_severalstations(x=outcorcov, data=data,step=0,inverse=TRUE,...)
 		if (length(prec_tolerance)==1) prec_tolerance[2] <- 50*prec_tolerance[2]
 		cond <- abs(x-x_rec)<prec_tolerance[1]
 		condhigh <- abs(x-x_rec)<prec_tolerance[2]
@@ -202,7 +178,11 @@ WilksGaussianization <- function (x,data=x,gauss=NULL,valmin=0.5,tolerance=0.001
 			
 		print(message)  
 		print(message2)
-		out[!cond] <- NA
+		#str(out)
+		#str(outgf)
+		##str(adjusted)
+		
+		out[cond] <- outcorcov[cond]
 ##		gauss[cond] <- out[cond]
 			
 
