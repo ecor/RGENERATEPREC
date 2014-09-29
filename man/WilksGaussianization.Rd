@@ -65,33 +65,17 @@ prec_mes <- prec_mes[,1:5]
 
 valmin <- 0.5
 prec_mes_gaussWilks <- WilksGaussianization(x=prec_mes, data=prec_mes,valmin=valmin,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,force.precipitation.value="both")
-##prec_mes_gauss <- normalizeGaussian_severalstations(x=prec_mes, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin)
+
 ##prec_mes_ginv <- list()
 prec_mes_ginv  <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
 ccgamma <- CCGamma(data=prec_mes, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
-##prec_mes_ginv$forced <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks$forced, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
-
-##str(prec_mes_ginv)
-
- ##plot(prec_mes[,1],prec_mes_ginv$unforced[,1])
- ##plot(prec_mes[,19],prec_mes_ginv$unforced[,19])
-
-CCGamma <- CCGamma(data=prec_mes, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
+ccgamma_wilks <- cor(prec_mes_gaussWilks,use="pairwise.complete.obs")
 
 
- ##plot(cor(prec_mes_gaussWilks$unforced),cor(prec_mes_gaussWilks$forced))
-##abline(0,1)
+plot(prec_mes[,2],prec_mes_ginv[,2])
 
-
-##VARselect(prec_mes_gaussWilks$forced)
-
-
-# u <- apply(prec_mes_ginv$forced,2,rank)/(nrow(prec_mes_ginv$forced)+1)
-#copula <- normalCopula(dim=ncol(u), disp = "un",param=P2p(CCGamma))
-#out <- fitCopula(copula, data=u, method = "ml" )
-     #     start = NULL, lower = NULL, upper = NULL,
-     #     optim.method = "BFGS", optim.control = list(maxit=1000),
-     #     estimate.variance = TRUE, hideWarnings = TRUE)
+plot(ccgamma,ccgamma_wilks)
+abline(0,1)
 }
 \seealso{
 \code{\link{normalizeGaussian_severalstations}},\code{\link{CCGamma}}

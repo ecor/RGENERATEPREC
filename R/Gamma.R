@@ -150,12 +150,27 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 				}
 				if (length(lag)==1) {
 					out <- continuity_ratio(data,lag=lag,valmin=valmin)
-					
-				
+					### NOOCCURENCE_CORRELATION 
 					out$lag <- lag
 					out$p0_v1 <- p0_v1
 					print("lag")
 					print(lag)
+					out$nooccurence_correlation <- out[[text]]
+					
+					for (r in 1:nrow(out$nooccurence_correlation)) {
+						for (c in 1:ncol(out$nooccurence_correlation)) {
+							
+							p0v <- diag(out[[text]])
+							out$nooccurence_correlation[r,c] <- (out[[text]][r,c]-p0_v1[r]*p0_v1[c])/(p0_v1[r]*p0_v1[c]*(1-p0_v1[r])*(1-p0_v1[c]))^0.5
+							
+						}
+						
+					}
+					
+					
+					### NOOCCURENCE_CORRELATION
+				    
+					
 					out$nooccurence_gcorrelation <- omega_inv(p0=out[[text]],p0_v1=p0_v1,correlation=NA,only.value=TRUE,interval=interval,tolerance=tolerance,nearPD=nearPD,...)
 					out$nooccurence_gcorrelation[abs(out$nooccurence_gcorrelation)<null.gcorrelation] <- 0 ## added on 2014 03 18
 			

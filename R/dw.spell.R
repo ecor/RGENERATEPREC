@@ -52,12 +52,14 @@ NULL
 #' 
 
 
-dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12) {
+dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE) {
 	
 	
 	out <- list()
 	
 	data <- adddate(data,origin=origin)
+	nrdata <- nrow(data)
+	
 	ignore.date <- !(names(data) %in% c("year","month","day"))
 	###data <- data[,!(names(data) %in% c("year","month","day"))]
 	
@@ -116,6 +118,38 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12) 
 		out <- lapply(X=out,FUN=function(x,month) {x[which(x$month %in% month),]},month=month)
 	}
 	
+	## FARE UN OPZIONE PER IL MELTING ..... 
+	
+	if (melting.df==TRUE) {
+		
+		warning("Melting into a df: this option require that extract argument be 'wet' or 'dry' !!")
+		
+		out_df <- as.data.frame(array(NA,c(nrdata,length(out))))
+		names(out_df) <- names(out)
+		out_df <- adddate(out_df,origin=origin)
+		index <- sprintf("%04d-%02d-%02d",out_df$year,out_df$month,out_df$day)
+		out_df$Date <- as.Date(index)
+		
+		for (i in names(out)) {
+			
+			name <- i
+			
+			index_out <- sprintf("%04d-%02d-%02d",out[[i]]$year,out[[i]]$month,out[[i]]$day)
+			index_out <- as.Date(index_out)
+			out_df[,i] <- 0*NA
+			str(index_out)
+			print(length(which(out_df$Date %in% index_out)))
+			str(out[[i]])
+			out_df[out_df$Date %in% index_out,i] <- out[[i]]$spell_length
+			
+		
+		}
+		
+		
+		out <- out_df
+		
+		
+	}
 	
 	
 	return(out)

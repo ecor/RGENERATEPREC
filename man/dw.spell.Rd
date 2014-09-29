@@ -3,7 +3,7 @@
 \title{It calculates dry/wet spell duration.}
 \usage{
 dw.spell(data, valmin = 0.5, origin = "1961-1-1", extract = NULL,
-  month = 1:12)
+  month = 1:12, melting.df = FALSE)
 }
 \arguments{
   \item{data}{data frame R object containing daily
