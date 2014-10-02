@@ -203,7 +203,7 @@ if (plotccgamma) for (it in titles) {
 	}
 }
 
-## Dry Spell 
+## Dry and wet Spell 
 
 spell=TRUE
 if (spell) for (it in station) {
@@ -249,6 +249,8 @@ dw.spell.qqplot=TRUE
 if (dw.spell.qqplot) {
 	for (it in station) { 
 		
+		### dry 
+		
 		png <- paste(wpath,'RMAWGENplotAlpha_plot/qqplot_dw_spell_dry_prec_RMAWGEN_XXX.png',sep='/')  
 		title <- "Quantile-Quantile dry spell length [days] at XXX"		
 		
@@ -272,6 +274,31 @@ if (dw.spell.qqplot) {
 		print(qqplot_prec_unseas)
 		dev.off()	
 		
+		
+		### WET 
+		
+		png <- paste(wpath,'RMAWGENplotAlpha_plot/qqplot_dw_spell_wet_prec_RMAWGEN_XXX.png',sep='/')  
+		title <- "Quantile-Quantile wet spell length [days] at XXX"		
+		
+		png <- str_replace(png,"XXX",it)
+		title <- str_replace(title,"XXX",it)
+		qqplot_prec <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=TRUE,origin=origin,station=it)
+		
+		png(png,width=width,height=height)
+		print(qqplot_prec)
+		dev.off()	
+		
+		
+		png <- paste(wpath,'RMAWGENplotAlpha_plot/qqplot_dw_spell_wet_prec__RMAWGEN_XXX_unseas.png',sep='/')  
+		title <- "Quantile-Quantile wet spell length [days] at XXX"		
+		
+		png <- str_replace(png,"XXX",it)
+		title <- str_replace(title,"XXX",it)
+		qqplot_prec_unseas <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=FALSE,origin=origin,station=it)
+		
+		png(png,width=width,height=height_unseas)
+		print(qqplot_prec_unseas)
+		dev.off()	
 		
 		
 		
