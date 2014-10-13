@@ -47,18 +47,35 @@ NULL
 #' abline(0,1)
 #' 
 
-rearrange.precipitation.generation <- function(gen,obs,qfun=NULL,valmin=0.5,sample=NULL,origin_obs=origin,origin_gen=origin,origin="1961-01-01",random.generation=TRUE,extremes=TRUE,...) {
+rearrange.precipitation.generation <- function(gen,obs=NULL,qfun=NULL,valmin=0.5,sample=NULL,origin_obs=origin,origin_gen=origin,origin="1961-01-01",random.generation=TRUE,extremes=TRUE,...) {
 	
-	if (is.null(sample)=="all")
+	if (is.null(sample)) sample="all"
 	
+	
+
 	if (sample=="monthly") {
-			return(NULL)
+			##str(gen)
+			
 			months <- 1:12
-			out <- as.data.frame(gen)
+			gen <- as.data.frame(gen)
+			obs <- as.data.frame(obs)
+			out <- gen
+			names(out) <- names(gen)
+			
 			obs <- adddate(as.data.frame(obs),origin=origin_obs)
 			gen <- adddate(as.data.frame(gen),origin=origin_gen)
-			
-			nes <-am
+			names <- names(out)[names(out) %in% names(obs)]
+			for (m in months){
+			#	str(out)
+			#	str(gen)
+			#	print(m)str(gen$month==m)
+				out[gen$month==m,names] <- rearrange.precipitation.generation(gen=gen[gen$month==m,names],obs=obs[obs$month==m,names],valmin=valmin,random.generation=random.generation,extremes=extremes,sample="all",...)
+			#	str(out)
+			#	str(gen)
+				
+			}
+				
+				
 		##	for ()
 			
 			
@@ -66,6 +83,31 @@ rearrange.precipitation.generation <- function(gen,obs,qfun=NULL,valmin=0.5,samp
 		
 	}
 	
+	if (is.data.frame(gen)) {
+		if (ncol(gen)>1) {
+			
+			out <- gen 
+			
+			
+			names <- names(out)[names(out) %in% names(obs)]
+			
+			for (it in names) {
+				
+				out[,it] <- rearrange.precipitation.generation(gen=gen[,it],obs=obs[,it],valmin=valmin,random.generation=random.generation,extremes=extremes,sample="all",...)
+				
+			}
+		
+			
+			return(out)
+			
+		} else {
+			
+			gen <- as.vector(gen)
+		}	
+		
+		
+		
+	}
 	
 	out <- gen 
 	
@@ -75,16 +117,17 @@ rearrange.precipitation.generation <- function(gen,obs,qfun=NULL,valmin=0.5,samp
 	
 	n <- length(genv)
 	
-	if (random.generation==TRUE) {
+	if (random.generation==FALSE) {
 		
 		qgenv <- ecdf(genv)(genv)
+		
 		
 	} else {
 		
 		qgenv <- runif(n)
 	}
-	if (extremes==TRUE) qgenv <- qgenv*(n/(n+1))
 	
+	if (extremes==TRUE) qgenv <- qgenv*(n/(n+1))
 	
 	if (is.null(qfun)) {
 		
@@ -97,7 +140,7 @@ rearrange.precipitation.generation <- function(gen,obs,qfun=NULL,valmin=0.5,samp
 		outv <- qfun(qgenv,...)
 	}
 	
-	out[gen>valmin] <- outv
+	out[out>valmin] <- outv
 	return(out)
 }
 

@@ -82,6 +82,7 @@ year_min <- 1961
 year_max <- 1990
 origin <- paste(year_min,1,1,sep="-")
 origin_sim <- paste(year_min_sim,1,1,sep="-")
+valmin <- 1.0
 
 period <- PRECIPITATION$year>=year_min & PRECIPITATION$year<=year_max
 station <- names(PRECIPITATION)[!(names(PRECIPITATION) %in% c("day","month","year"))]
@@ -111,6 +112,7 @@ Tn_gen <- Tx_gen[,station_temp]
 
 
 ## TO DO 
+
 
 
 
@@ -193,7 +195,7 @@ if (plotccgamma) for (it in titles) {
 		
 		title <- str_replace(title,"Y",lag)
 		
-		ccgammaplot_out <- ccgammaplot(x=prec_mes,y=prec_gen,corx=NULL,xlab="observed",ylab="generated",title=title,season=FALSE,origin=origin,lag=lag,return.value=return.values[it])
+		ccgammaplot_out <- ccgammaplot(x=prec_mes,y=prec_gen,corx=NULL,xlab="observed",ylab="generated",title=title,season=FALSE,origin=origin,lag=lag,return.value=return.values[it],valmin=valmin)
 		
 		png(png,width=width,height=height)
 		print(ccgammaplot_out)
@@ -219,8 +221,8 @@ if (spell) for (it in station) {
 	
 
 	
-	dry <- spellBoxPlot(x=prec_mes,y=(prec_gen),use.dw.spell=TRUE,station=it,origin=origin,title="Dry Spell Duration",extract="dry",observationIndex="observed",xlab="type",ylab="dry spell [day]",season=TRUE)
-	wet <- spellBoxPlot(x=prec_mes,y=(prec_gen),use.dw.spell=TRUE,station=it,origin=origin,title="Wet Spell Duration",extract="wet",observationIndex="observed",xlab="type",ylab="wet spell [day]",season=TRUE)
+	dry <- spellBoxPlot(x=prec_mes,y=(prec_gen),use.dw.spell=TRUE,station=it,origin=origin,title="Dry Spell Duration",extract="dry",observationIndex="observed",xlab="type",ylab="dry spell [day]",season=TRUE,valmin=valmin)
+	wet <- spellBoxPlot(x=prec_mes,y=(prec_gen),use.dw.spell=TRUE,station=it,origin=origin,title="Wet Spell Duration",extract="wet",observationIndex="observed",xlab="type",ylab="wet spell [day]",season=TRUE,valmin=valmin)
 	
 	
 	png(png_dry,width=width,height=height)
@@ -233,11 +235,14 @@ if (spell) for (it in station) {
 	
 }	
 	## QQPLOT 
-dw.spell.df.dry.mes <- dw.spell(prec_mes,origin=origin,melting.df=TRUE,extract="dry")
-dw.spell.df.dry.gen <- dw.spell(prec_gen,origin=origin,melting.df=TRUE,extract="dry")
 
-dw.spell.df.wet.mes <- dw.spell(prec_mes,origin=origin,melting.df=TRUE,extract="wet")
-dw.spell.df.wet.gen <- dw.spell(prec_gen,origin=origin,melting.df=TRUE,extract="wet")
+valmin_spell <- valmin
+
+dw.spell.df.dry.mes <- dw.spell(prec_mes,origin=origin,melting.df=TRUE,extract="dry",valmin=valmin_spell)
+dw.spell.df.dry.gen <- dw.spell(prec_gen,origin=origin,melting.df=TRUE,extract="dry",valmin=valmin_spell)
+
+dw.spell.df.wet.mes <- dw.spell(prec_mes,origin=origin,melting.df=TRUE,extract="wet",valmin=valmin_spell)
+dw.spell.df.wet.gen <- dw.spell(prec_gen,origin=origin,melting.df=TRUE,extract="wet",valmin=valmin_spell)
 	
 	
 
@@ -282,7 +287,7 @@ if (dw.spell.qqplot) {
 		
 		png <- str_replace(png,"XXX",it)
 		title <- str_replace(title,"XXX",it)
-		qqplot_prec <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=TRUE,origin=origin,station=it)
+		qqplot_prec <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=TRUE,origin=origin,station=it,va)
 		
 		png(png,width=width,height=height)
 		print(qqplot_prec)

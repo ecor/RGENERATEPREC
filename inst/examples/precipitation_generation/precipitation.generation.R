@@ -129,16 +129,16 @@ names(Tn_spline) <- paste("Tn",names(Tn_spline),sep="_")
 names(Tm_spline) <- paste("Tm",names(Tm_spline),sep="_")
 
 
-exogen_var <- cbind(Tm_mes-Tm_spline) ##,Tx_mes-Tn_mes) ###  cbind(Tx_mes,Tn_mes)-cbind(Tx_spline,Tn_spline)
-exogen_var_sim <- cbind(Tm_gen-Tm_spline) ##,Tx_gen-Tn_gen) ##cbind(Tx_gen,Tn_gen)-cbind(Tx_spline,Tn_spline)
+exogen_var <- NULL ###cbind(Tm_mes-Tm_spline) ###,Tx_mes-Tn_mes) ###  cbind(Tx_mes,Tn_mes)-cbind(Tx_spline,Tn_spline)
+exogen_var_sim <- NULL ###cbind(Tm_gen-Tm_spline),Tx_gen-Tn_gen) ##cbind(Tx_gen,Tn_gen)-cbind(Tx_spline,Tn_spline)
 
-exogen  <- normalizeGaussian_severalstations(x=exogen_var, data=exogen_var,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin)
-exogen_sim  <- normalizeGaussian_severalstations(x=exogen_var_sim, data=exogen_var,sample="monthly",extremes=TRUE,origin_x = origin_sim, origin_data = origin_sim)
+exogen  <- NULL #normalizeGaussian_severalstations(x=exogen_var, data=exogen_var,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin)
+exogen_sim  <- NULL #normalizeGaussian_severalstations(x=exogen_var_sim, data=exogen_var,sample="monthly",extremes=TRUE,origin_x = origin_sim, origin_data = origin_sim)
 
 
 ## END SET TEMPERATURE STATION
 
-valmin <- 0.5
+valmin <- 1.0
 prec_mes_gaussWilks <- WilksGaussianization(x=prec_mes, data=prec_mes,valmin=valmin,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,force.precipitation.value="both")
 
 prec_mes_ginv  <- normalizeGaussian_severalstations(x=prec_mes_gaussWilks, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin, origin_data = origin,inverse=TRUE)
@@ -160,11 +160,14 @@ gauss_prec_gpcavar <- getVARmodel(data=prec_mes_gaussWilks,suffix=NULL,p=1,n_GPC
 ## Precipitation Stochastic Generation
 
 prec_gen_gaussWilks <- generate(x=gauss_prec_gpcavar,exogen=exogen_sim,n=nrow(prec_mes_gaussWilks),names=names(prec_mes_gaussWilks))
-prec_gen  <- normalizeGaussian_severalstations(x=prec_gen_gaussWilks, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin_sim, origin_data = origin_sim,inverse=TRUE)
+prec_gen0  <- normalizeGaussian_severalstations(x=prec_gen_gaussWilks, data=prec_mes,step=0,sample="monthly",extremes=TRUE,origin_x = origin_sim, origin_data = origin,inverse=TRUE)
+prec_gen <- prec_gen0
+
+###prec_gen <- rearrange.precipitation.generation(gen=prec_gen0,obs=prec_mes,valmin=0.5,sample="monthly",origin_gen=origin_sim,origin_obs=origin)
 ccgamma_wilks <- CCGamma(data=prec_gen, lag = 0,valmin=valmin,only.matrix=TRUE,tolerance=0.001)
 
 
 plot(ccgamma,ccgamma_wilks)
 abline(0,1)
 
-save(prec_mes_gaussWilks,prec_gen_gaussWilks,prec_gen,gauss_prec_var,origin_sim,file=prec_file)
+save(prec_mes_gaussWilks,prec_gen_gaussWilks,prec_mes,prec_gen,prec_gen0,gauss_prec_var,origin_sim,origin,file=prec_file)
