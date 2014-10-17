@@ -27,7 +27,7 @@ NULL
 #' 
 #' @examples
 #' 
-#' library(RMRAINGEN)
+#' library(RGENERATEPREC)
 #' 
 #' 
 #' data(trentino)

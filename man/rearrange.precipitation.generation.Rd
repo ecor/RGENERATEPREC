@@ -4,7 +4,8 @@
 \usage{
 rearrange.precipitation.generation(gen, obs = NULL, qfun = NULL,
   valmin = 0.5, sample = NULL, origin_obs = origin, origin_gen = origin,
-  origin = "1961-01-01", random.generation = TRUE, extremes = TRUE, ...)
+  origin = "1961-01-01", random.generation = TRUE, extremes = TRUE,
+  quantile.from.obs = FALSE, ...)
 }
 \arguments{
   \item{gen}{generated sample}

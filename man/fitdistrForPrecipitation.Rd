@@ -48,7 +48,7 @@ This function is taken by the previous package
 \code{RMAWGEN}.
 }
 \examples{
-library(RMRAINGEN)
+library(RGENERATEPREC)
 
 
 data(trentino)

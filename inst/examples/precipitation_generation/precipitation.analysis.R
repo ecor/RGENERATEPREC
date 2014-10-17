@@ -287,7 +287,7 @@ if (dw.spell.qqplot) {
 		
 		png <- str_replace(png,"XXX",it)
 		title <- str_replace(title,"XXX",it)
-		qqplot_prec <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=TRUE,origin=origin,station=it,va)
+		qqplot_prec <- QuantileQuantilePlot(x=dw.spell.df.wet.mes,y=dw.spell.df.wet.gen,xlab="observed",ylab="generated",title=title,season=TRUE,origin=origin,station=it)
 		
 		png(png,width=width,height=height)
 		print(qqplot_prec)
