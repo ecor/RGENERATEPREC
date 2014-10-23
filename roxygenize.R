@@ -20,7 +20,7 @@
 ###############################################################################
 library(roxygen2)
 
-path <- "/Users/ecor/R-packages"
+path <- "/Users/ecor/Dropbox/R-packages"
 pkg_name <- "RGENERATEPREC"
 pkg_dir <- paste(path,pkg_name,sep="/")
 
