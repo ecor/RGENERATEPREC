@@ -36,7 +36,7 @@ NULL
 #' 
 #' \code{nooccurence_gcorrelation} corresponding gaussian correlation for no precipitation occurence obtained by applying \code{\link{omega_inv}} to \code{nooccurence},
 #' 
-#' \code{TransintionMatrixMCFirstOrder} List of transition matrices (with condinitioned probability values) of the first-order Markov Chain.  See \code{\link{TransitionMatrixMCFirstOrder}}.
+# ##### \code{TransintionMatrixMCFirstOrder} List of transition matrices (with condinitioned probability values) of the first-order Markov Chain.  See \code{\link{TransitionMatrixMCFirstOrder}}.
 #' 
 #' If the argument \code{only.matrix} is \code{TRUE}, only \code{nooccurence_gcorrelation} is returned as a matrix. 
 #' In case the argument \code{lag} is a vector wirh length more than one, the function returns a list of the above-cited return object for each value of the vector \code{lag}.
@@ -50,7 +50,7 @@ NULL
 #' @seealso \code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
 #' @import RMAWGEN
 #' @examples 
-#' library(RMAWGEN2)
+#' 
 #' data(trentino)
 #' 
 #' year_min <- 1961

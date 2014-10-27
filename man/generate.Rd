@@ -2,9 +2,8 @@
 \alias{generate}
 \alias{generate.CCGammaObjectListPerEachMonth}
 \alias{generate.PrecipitationOccurenceModel}
-\alias{generate.PrecipitationOccurenceModelx}
 \alias{generate.PrecipitationOccurenceMultiSiteModel}
-\title{generate method}
+\title{Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object}
 \usage{
 \method{generate}{PrecipitationOccurenceModel}(x, newdata = NULL,
   previous = NULL, n = 30, random = runif(n, min = 0, max = 1),
@@ -13,17 +12,33 @@
 \method{generate}{CCGammaObjectListPerEachMonth}(x, ...)
 
 \method{generate}{PrecipitationOccurenceMultiSiteModel}(x, exogen, n = 10,
-  origin = "1961-1-1", end = "1990-1-1", previous = NULL, months = NULL,
-  ...)
+  origin = "1961-1-1", end = "1990-1-1", previous = NULL,
+  monthly.factor = NULL, ...)
 }
 \arguments{
   \item{x}{model returned by
-  \code{\link{PrecipitationOccurenceModel}}}
+  \code{\link{PrecipitationOccurenceModel}} or
+  \code{\link{PrecipitationOccurenceMultiSiteModel}}}
 
-  \item{newdata}{predictor or exogenous variables}
+  \item{newdata}{predictor or exogenous variables. See
+  \code{\link{predict.PrecipitationOccurenceModel}}}
 
-  \item{type}{see \code{\link{predict.glm}}. DEfault is
-  \code{"response"}}
+  \item{exogen}{predictor or exogenous variables}
+
+  \item{monthly.factor}{vector of factors indicating the
+  month of the days}
+
+  \item{random}{vector of random or calculated numbers
+  ranging between 0 and 1}
+
+  \item{origin,end}{character strings (yyyy-dd-mm)
+  indicating the start and/or end date of the daily weather
+  generation.}
+
+  \item{n}{number of generations. See
+  \code{\link{generate}}. Here it is ignored and the number
+  of generations is given by \code{origin},\code{end} or
+  \code{monthly.factor}.}
 
   \item{previous}{logical vector containing previously
   occurred states}
@@ -31,7 +46,7 @@
   \item{...}{further arguments}
 }
 \description{
-generate method
+It is an implentation \code{\link{generate}} method
 }
 \examples{
 library(RGENERATEPREC)
@@ -94,6 +109,6 @@ obs_multisite <- prec_mes[,station]>=valmin
 gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
 }
 \seealso{
-\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+\code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}
 }
 

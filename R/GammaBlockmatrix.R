@@ -18,7 +18,7 @@ NULL
 # @rdaname CCGamma
 #' @seealso  \code{\link{CCGamma}},\code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
 #' @examples 
-#' library(RMAWGEN2)
+#' 
 #' data(trentino)
 #' 
 #' year_min <- 1961

@@ -1,6 +1,6 @@
 \name{PrecipitationOccurenceModel}
 \alias{PrecipitationOccurenceModel}
-\title{PrecipitationOccurenceModel}
+\title{Precipitation Occurence Model}
 \usage{
 PrecipitationOccurenceModel(x, exogen = NULL, p = 1,
   monthly.factor = NULL, valmin = 0.5, ...)
@@ -9,12 +9,38 @@ PrecipitationOccurenceModel(x, exogen = NULL, p = 1,
   \item{x}{variable for calibration, e.g. daily
   precipitaton}
 
-  \item{exogen}{...}
+  \item{p}{auto-regression order}
 
-  \item{....}{further arguments}
+  \item{exogen}{exogenous predictors}
+
+  \item{monthly.factor}{vector of factors indicating the
+  month of membership of the day}
+
+  \item{valmin}{minimum admitted value for daily
+  precipitation amount}
+
+  \item{...}{further arguments}
+}
+\value{
+The function returns a
+\code{PrecipitationOccurenceModel-class} S3 object
+containing the following elements:
+
+\code{predictor} data frame containg the endogenous and
+exogenous predictors of the logistic regression model;
+
+\code{glm} the genaralized liner model using for the
+logistic regression;
+
+\code{p} auto-regression order
+
+\code{valmin} minimum admitted value for daily
+precipitation amount
 }
 \description{
-description for PrecipitationOccurenceModel
+This functions creates a stochastic Occurence Model for the
+variable \code{x} (\code{PrecipitationOccurenceModel} S3
+object) through a calibration from observed data.
 }
 \examples{
 library(RGENERATEPREC)
@@ -61,9 +87,12 @@ probs <- predict(model$glm,type="response")
 
 
 
-plot(months[,-1],probs)
+plot(months[-1],probs)
 
 newdata <- model$predictor[2000:2007,]
 probs0 <- predict(model,newdata=newdata)
+}
+\seealso{
+\code{\link{glm}}
 }
 

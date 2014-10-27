@@ -1,8 +1,7 @@
 \name{predict.PrecipitationOccurenceModel}
-\alias{generate.PrecipitationOccurenceModelx}
 \alias{predict}
 \alias{predict.PrecipitationOccurenceModel}
-\title{predict method}
+\title{Prediction of a  \code{PrecipitationOccurenceModel} model object}
 \usage{
 \method{predict}{PrecipitationOccurenceModel}(object, newdata = NULL,
   type = "response", previous = NULL, ...)
@@ -22,7 +21,9 @@
   \item{...}{further arguments}
 }
 \description{
-predict method
+It is wrapper implementaion of \code{\link{predict.glm}}
+method for the a \code{PrecipitationOccurenceModel} model
+object S3 class.
 }
 \examples{
 library(RGENERATEPREC)
@@ -77,5 +78,7 @@ probs[row_test]==probs2
 }
 \seealso{
 \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+
+\code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
 }
 

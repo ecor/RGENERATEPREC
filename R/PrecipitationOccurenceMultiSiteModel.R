@@ -1,17 +1,33 @@
 
 #
 NULL
-#' PrecipitationOccurenceMultiSiteModel
+#' Precipitation Occurence Multi-Site Model
 #' 
-#' PrecipitationOccurenceMultiSiteModel Description
+#' This functions creates a stochastic Occurence Multi-Site Model for the variable  \code{x} (\code{PrecipitationOccurenceMultiSiteModel} S3 object) through a calibration from observed data.     
 #' 
-## @param x 
-## @param 
+#' @param x data frame (each column is a site) of variable utilized for the auto-regression of its occurence, e.g. daily precipitaton 
+#' @param exogen exogenous predictors
+#' @param station character string vectors containing the codes of the station used for model calibration
+#' @param valmin minimum admitted value for daily precipitation amount 
+#' @param multisite_type string indicating the utilized approach for spatial multi-site dependence description. Default is \code{wilks}.
+#' @param tolerance_wilks see \code{tolerance} used by \code{\link{omega_inv}} through \code{\link{CCGamma}}
+#' @param origin character string (yyyy-dd-mm) indicating the date of the first row of \code{"x"}.
+#' @param ... further arguments
 #' 
 #' 
+#' @return The function returns a \code{PrecipitationOccurenceModel-class} S3 object containing the following elements:
+#' 
+#' ... \code{\link{PrecipitationOccurenceModel}} S3 class objects for each analyzed site. The name is the site (or station) code
+#' 
+#' \code{ccgama} \code{CCGammaObjectListPerEachMonth} object, i.e. matices of Gaussian Inter-Site  Correlation returned by \code{\link{CCGamma}};
+#' 
+#' \code{type} Tstring indicating the utilized approach for spatial multi-site dependence description, only \code{"wilks"} type is implemented;
+#' 
+#' \code{station} character string vectors containing the codes of the station used in \code{PrecipitationMultiSiteOccurenceModel}.
 #' 
 #'  @export
 #' 
+#' @seealso \code{\link{PrecipitationOccurenceModel}},\code{\link{CCGamma}} 
 #' 
 #' @examples
 #' 
@@ -109,7 +125,7 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 		out$ccgamma <- CCGamma(x,lag=0,tolerance=tolerance_wilks,sample="monthly",only.matrix=TRUE,origin=origin)
 		
 		names(out$ccgamma) <- sprintf("month%02d",1:length(out$ccgamma))
-	} else if (type=="logit"){
+	} else if (multisite_type=="logit"){
 		
 		
 		

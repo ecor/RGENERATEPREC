@@ -26,7 +26,6 @@ This a wrapper for \code{\link{CCGamma}} with the option
 transformed into a \code{\link{blockmatrix}} object.
 }
 \examples{
-library(RMAWGEN2)
 data(trentino)
 
 year_min <- 1961

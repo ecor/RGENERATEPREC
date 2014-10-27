@@ -1,8 +1,9 @@
 
 NULL
 
-#' predict method 
+#' Prediction of a  \code{PrecipitationOccurenceModel} model object
 #' 
+#' It is wrapper implementaion of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
 #' 
 #' @param object model returned by \code{\link{PrecipitationOccurenceModel}}
 #' @param newdata predictor or exogenous variables
@@ -14,8 +15,11 @@ NULL
 #' @export 
 #' @method predict PrecipitationOccurenceModel
 #' @S3method predict PrecipitationOccurenceModel
-#' @aliases predict generate.PrecipitationOccurenceModelx 
+#' @aliases predict predict.PrecipitationOccurenceModel 
 ##### @importFrom predict stats
+#' 
+#' 
+#' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
 #' 
 #' @examples
 #' 

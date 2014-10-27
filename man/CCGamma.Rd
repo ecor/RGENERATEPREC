@@ -86,11 +86,6 @@ to the diagonal of \code{nooccurence} matrix (see argument
 correlation for no precipitation occurence obtained by
 applying \code{\link{omega_inv}} to \code{nooccurence},
 
-\code{TransintionMatrixMCFirstOrder} List of transition
-matrices (with condinitioned probability values) of the
-first-order Markov Chain.  See
-\code{\link{TransitionMatrixMCFirstOrder}}.
-
 If the argument \code{only.matrix} is \code{TRUE}, only
 \code{nooccurence_gcorrelation} is returned as a matrix. In
 case the argument \code{lag} is a vector wirh length more
@@ -112,7 +107,6 @@ for Yule-Walker Equations. In case \code{lag} is a vactor,
 See the R code for major details
 }
 \examples{
-library(RMAWGEN2)
 data(trentino)
 
 year_min <- 1961

@@ -3,16 +3,29 @@
 # Author: ecor
 ###############################################################################
 NULL
-#' PrecipitationOccurenceModel
+#' Precipitation Occurence Model
 #' 
-#' description for PrecipitationOccurenceModel
+#' This functions creates a stochastic Occurence Model for the variable  \code{x} (\code{PrecipitationOccurenceModel} S3 object) through a calibration from observed data.     
 #' 
 #' @param x variable for calibration, e.g. daily precipitaton 
-#' @param exogen ...
+#' @param p auto-regression order 
+#' @param exogen exogenous predictors
+#' @param monthly.factor vector of factors indicating the month of membership of the day
+#' @param valmin minimum admitted value for daily precipitation amount 
+#' @param ... further arguments
 #' 
 #' 
-#' @param  .... further arguments
+#' @return The function returns a \code{PrecipitationOccurenceModel-class} S3 object containing the following elements:
 #' 
+#' \code{predictor} data frame containg the endogenous and exogenous predictors of the logistic regression model;
+#' 
+#' \code{glm} the genaralized liner model using for the logistic regression;
+#' 
+#' \code{p} auto-regression order 
+#' 
+#' \code{valmin} minimum admitted value for daily precipitation amount 
+#' 
+#' @seealso \code{\link{glm}}
 #' @export 
 #' @examples 
 #' 
@@ -58,13 +71,13 @@ NULL
 
 #' model <- PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months)
 #' 
-#' probs <- predict(model$glm,type="response")
+#'probs <- predict(model$glm,type="response")
 #' 
 #' 
 #' 
 #' 
 #' 
-#' plot(months[,-1],probs)
+#' plot(months[-1],probs)
 #' 
 #' newdata <- model$predictor[2000:2007,]
 #' probs0 <- predict(model,newdata=newdata)

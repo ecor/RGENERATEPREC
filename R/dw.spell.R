@@ -14,13 +14,14 @@ NULL
 #' @param origin character string \code{"yyyy-mm-dd"} indicated the date of the first row of \code{"data"}. 
 #' @param extract string charecter referred to the state to be extracted, eg. \code{"dry"} or \code{"wet"}
 #' @param month integer vectors containing the considered months. Default is \code{1:12} (all the year). 
+#' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Dafault is \code{FALSE}.
+#' 
 #' @export
 #'
 #' 
 #' @return Function returns a list of data frames containing the spell length expressed in days
 #' 
 #' @examples  
-#' library(RMRAINGEN)
 #' 
 #' 
 #' data(trentino)

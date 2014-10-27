@@ -21,6 +21,10 @@ dw.spell(data, valmin = 0.5, origin = "1961-1-1", extract = NULL,
 
   \item{month}{integer vectors containing the considered
   months. Default is \code{1:12} (all the year).}
+
+  \item{melting.df}{logical value. If it \code{TRUE} the
+  output is melted into a data frame. Dafault is
+  \code{FALSE}.}
 }
 \value{
 Function returns a list of data frames containing the spell
@@ -30,9 +34,6 @@ length expressed in days
 It calculates dry/wet spell duration.
 }
 \examples{
-library(RMRAINGEN)
-
-
 data(trentino)
 
 year_min <- 1961

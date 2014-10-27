@@ -1,23 +1,28 @@
 
 NULL 
 
-#' generate method 
+#' Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object
 #' 
+#' It is an implentation \code{\link{generate}} method 
 #' 
-#' @param x model returned by \code{\link{PrecipitationOccurenceModel}}
-#' @param newdata predictor or exogenous variables
-#' @param type see \code{\link{predict.glm}}. DEfault is \code{"response"}
+#' @param x model returned by \code{\link{PrecipitationOccurenceModel}} or \code{\link{PrecipitationOccurenceMultiSiteModel}}
+#' @param newdata predictor or exogenous variables. See \code{\link{predict.PrecipitationOccurenceModel}}
+#' @param exogen  predictor or exogenous variables
+#' @param monthly.factor vector of factors indicating the month of the days
+#' @param random vector of random or calculated numbers ranging between 0 and 1 
+#' @param origin,end  character strings (yyyy-dd-mm) indicating the start and/or end date of the daily weather generation.
+#' @param n number of generations. See \code{\link{generate}}. Here it is ignored and the number of generations is given by \code{origin},\code{end} or \code{monthly.factor}.
 #' @param previous logical vector containing previously occurred states
 #' @param ... further arguments 
 #' 
-#' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+#' @seealso \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}
 #' @export 
 #' @method generate PrecipitationOccurenceModel
 #' @S3method generate PrecipitationOccurenceModel
-#' @aliases generate generate.PrecipitationOccurenceModelx 
+#' @aliases generate generate.PrecipitationOccurenceModel 
 #' @rdname generate
 #' 
-##### @importFrom predict stats
+#' @importFrom RGENERATE generate 
 #'
 #' 
 #' @examples
@@ -169,11 +174,11 @@ NULL
 #' @rdname generate
 #' 
 
-generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="1961-1-1",end="1990-1-1",previous=NULL,months=NULL,...) {
+generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="1961-1-1",end="1990-1-1",previous=NULL,monthly.factor=NULL,...) {
 	
 	
 	out <- NULL 
-	if (is.null(months)) {
+	if (is.null(monthly.factor)) {
 		
 		dates <- as.Date(origin):as.Date(end)
 		months <- adddate(as.data.frame(dates),origin=origin)$month
@@ -182,7 +187,7 @@ generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="
 		
 		
 	} else {
-		
+		months <- monthly.factor
 		n <- length(months)
 	}
 	if (x$type=="wilks") {

@@ -1,13 +1,62 @@
 \name{PrecipitationOccurenceMultiSiteModel}
 \alias{PrecipitationOccurenceMultiSiteModel}
-\title{PrecipitationOccurenceMultiSiteModel}
+\title{Precipitation Occurence Multi-Site Model}
 \usage{
 PrecipitationOccurenceMultiSiteModel(x, exogen = NULL, station = names(x),
   origin = origin, valmin = 0.5, multisite_type = "wilks",
   tolerance_wilks = 0.001, ...)
 }
+\arguments{
+  \item{x}{data frame (each column is a site) of variable
+  utilized for the auto-regression of its occurence, e.g.
+  daily precipitaton}
+
+  \item{exogen}{exogenous predictors}
+
+  \item{station}{character string vectors containing the
+  codes of the station used for model calibration}
+
+  \item{valmin}{minimum admitted value for daily
+  precipitation amount}
+
+  \item{multisite_type}{string indicating the utilized
+  approach for spatial multi-site dependence description.
+  Default is \code{wilks}.}
+
+  \item{tolerance_wilks}{see \code{tolerance} used by
+  \code{\link{omega_inv}} through \code{\link{CCGamma}}}
+
+  \item{origin}{character string (yyyy-dd-mm) indicating
+  the date of the first row of \code{"x"}.}
+
+  \item{...}{further arguments}
+}
+\value{
+The function returns a
+\code{PrecipitationOccurenceModel-class} S3 object
+containing the following elements:
+
+... \code{\link{PrecipitationOccurenceModel}} S3 class
+objects for each analyzed site. The name is the site (or
+station) code
+
+\code{ccgama} \code{CCGammaObjectListPerEachMonth} object,
+i.e. matices of Gaussian Inter-Site Correlation returned by
+\code{\link{CCGamma}};
+
+\code{type} Tstring indicating the utilized approach for
+spatial multi-site dependence description, only
+\code{"wilks"} type is implemented;
+
+\code{station} character string vectors containing the
+codes of the station used in
+\code{PrecipitationMultiSiteOccurenceModel}.
+}
 \description{
-PrecipitationOccurenceMultiSiteModel Description
+This functions creates a stochastic Occurence Multi-Site
+Model for the variable \code{x}
+(\code{PrecipitationOccurenceMultiSiteModel} S3 object)
+through a calibration from observed data.
 }
 \examples{
 library(RGENERATEPREC)
@@ -48,5 +97,8 @@ station <- station[1:4]
 exogen <- Tx_mes-Tn_mes
 months <- factor(prec_mes$month)
 model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin)
+}
+\seealso{
+\code{\link{PrecipitationOccurenceModel}},\code{\link{CCGamma}}
 }
 
