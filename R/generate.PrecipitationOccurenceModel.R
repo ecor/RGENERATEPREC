@@ -128,7 +128,7 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 	for (i in 1:n) {
 		
 		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...)
-		out[i] <- prob>=random[i]
+		out[i] <- random[i]>=prob
 		previous  <- c(out[i],previous[-p])
 		
 	}

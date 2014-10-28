@@ -7,10 +7,10 @@ NULL
 #' 
 #' This functions creates a stochastic Occurence Model for the variable  \code{x} (\code{PrecipitationOccurenceModel} S3 object) through a calibration from observed data.     
 #' 
-#' @param x variable for calibration, e.g. daily precipitaton 
+#' @param x variable utilized for the auto-regression of its occurence, e.g. daily precipitaton 
 #' @param p auto-regression order 
 #' @param exogen exogenous predictors
-#' @param monthly.factor vector of factors indicating the month of membership of the day
+#' @param monthly.factor vector of factors indicating the month of the days
 #' @param valmin minimum admitted value for daily precipitation amount 
 #' @param ... further arguments
 #' 

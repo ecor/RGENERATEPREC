@@ -6,15 +6,15 @@ PrecipitationOccurenceModel(x, exogen = NULL, p = 1,
   monthly.factor = NULL, valmin = 0.5, ...)
 }
 \arguments{
-  \item{x}{variable for calibration, e.g. daily
-  precipitaton}
+  \item{x}{variable utilized for the auto-regression of its
+  occurence, e.g. daily precipitaton}
 
   \item{p}{auto-regression order}
 
   \item{exogen}{exogenous predictors}
 
   \item{monthly.factor}{vector of factors indicating the
-  month of membership of the day}
+  month of the days}
 
   \item{valmin}{minimum admitted value for daily
   precipitation amount}
