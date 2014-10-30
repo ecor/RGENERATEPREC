@@ -97,9 +97,11 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	
 	if (is.null(exogen)) {
 		
-		df <- as.data.frame(array(NA,length(variable)))
-		
+		df <- as.data.frame(array(variable,length(variable)))
+		names(df) <- "variable"
 		nrows <- nrow(df)
+		
+		
 	##	out$exogen <- exogen
 		
 	} else  { 
@@ -118,9 +120,12 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	
 	
 	if (!is.null(monthly.factor)) df$month <- factor(monthly.factor)
+	
 	### lag analysis 
 	out <- list()
+	
 	out$predictor <- df
+	
 	if (p>0) {
 		ndf <- nrow(df)
 		rows <- ((p+1):ndf)
@@ -139,6 +144,7 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	}
 	
 	###
+	df <- data.frame(df)
 	
 	out$glm <- glm(df,family="binomial")
 	
@@ -146,8 +152,10 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	
 	out$valmin <- valmin
 ##	 if (!is.null(monthly.factor)) out$month <- factor(monthly.factor)
-	out$predictor <- out$predictor[,-1]
-	 
+	names_predictor <- names(out$predictor)
+	out$predictor <- as.data.frame(out$predictor[,-1])
+	names(out$predictor) <- names_predictor[-1]
+	
 	class(out) <- "PrecipitationOccurenceModel"
 	return(out)
 	

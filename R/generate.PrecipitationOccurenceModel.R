@@ -96,15 +96,19 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 	
 	p <- x$p
 	
-	
+	if (p<1) previous <- NULL
 	
 	if (!is.null(exogen)) newdata <- as.data.frame(exogen)
 	
-	if (is.null(newdata)) {
+	if (is.null(newdata) & is.null(monthly.factor)) {
 		
 		newdata <- x$predictor
 		
+	} else if (is.null(newdata)) {
+		
+		newdata <- as.data.frame(array(NA,c(length(monthly.factor),0)))
 	}
+	
 	
 	if (!is.null(monthly.factor)) newdata$month <- factor(monthly.factor)
 	
@@ -115,7 +119,10 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 		n <- nrow(newdata)
 		
 	}
-	newdata <- newdata[1:n,]
+	
+	names_n <- names(newdata)
+	newdata <- as.data.frame(newdata[1:n,])
+	names(newdata) <- names_n
 	
 	if (is.null(previous)) {
 		
@@ -125,8 +132,18 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 	
 	
 	out <- array(NA,n)
+	
+	
 	for (i in 1:n) {
 		
+	#	if (is.data.frame(newdata)) {
+			
+		##	newdata_loc <- newdata[i,]
+			
+#		} else {
+			
+#			newdata_loc <- newdata[i]
+#		}
 		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...)
 		out[i] <- random[i]>=prob
 		previous  <- c(out[i],previous[-p])

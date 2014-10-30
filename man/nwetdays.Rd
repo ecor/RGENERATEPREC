@@ -1,0 +1,54 @@
+\name{nwetdays}
+\alias{nwetdays}
+\title{It calculates th number of wet days for each month and each year}
+\usage{
+nwetdays(data, valmin = 0.5, origin = "1961-1-1", station = names(data))
+}
+\arguments{
+  \item{data}{data frame R object containing daily
+  precipitation time series for several gauges (one gauge
+  time series per column).}
+
+  \item{valmin}{threshold precipitation value [mm] for
+  wet/dry day indicator.}
+
+  \item{origin}{character string \code{"yyyy-mm-dd"}
+  indicated the date of the first row of \code{"data"}.}
+
+  \item{station}{character string indicating the stations.
+  Default is \code{names(data)}}
+}
+\value{
+Function returns a list of data frames containing the spell
+length expressed in days
+}
+\description{
+It calculates th number of wet days for each month and each
+year
+}
+\examples{
+data(trentino)
+
+year_min <- 1961
+year_max <- 1990
+
+period <- PRECIPITATION$year>=year_min & PRECIPITATION$year<=year_max
+station <- names(PRECIPITATION)[!(names(PRECIPITATION) \%in\% c("day","month","year"))]
+prec_mes <- PRECIPITATION[period,station]
+
+## removing nonworking stations (e.g. time series with NA)
+accepted <- array(TRUE,length(names(prec_mes)))
+names(accepted) <- names(prec_mes)
+for (it in names(prec_mes)) {
+		 accepted[it]  <- (length(which(!is.na(prec_mes[,it])))==length(prec_mes[,it]))
+}
+
+prec_mes <- prec_mes[,accepted]
+## the dateset is reduced!!!
+prec_mes <- prec_mes[,1:3]
+
+origin <- paste(year_min,1,1,sep="-")
+
+nwetdays <- nwetdays(prec_mes,origin)
+}
+

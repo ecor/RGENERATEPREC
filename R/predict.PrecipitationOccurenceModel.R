@@ -84,6 +84,8 @@ NULL
 
 predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="response",previous=NULL,...) {
 	
+	if (object$p<1) previous <- NULL
+	
 	
 	if (!is.null(previous)) {
 		
@@ -93,7 +95,7 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 		
 		if(is.null(newdata)) newdata <- object$predictor
 		
-		
+		newdata <- as.data.frame(newdata)
 		for (l in 1:object$p) {
 			
 			label <- sprintf("x_l%02d",l)
@@ -103,10 +105,18 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 			
 		}
 		
+		labels <- sprintf("x_l%02d",1:object$p)
+		
+		names(newdata)[!(names(newdata) %in% labels)] <- names(object$predictor)[!(names(object$predictor) %in% labels)]
 		
 		
+	} else {
 		
+		if(is.null(newdata)) newdata <- object$predictor
 		
+		newdata <- as.data.frame(newdata)
+		
+		names(newdata) <- names(object$predictor)
 		
 	}
 	
