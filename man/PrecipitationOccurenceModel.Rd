@@ -3,7 +3,7 @@
 \title{Precipitation Occurence Model}
 \usage{
 PrecipitationOccurenceModel(x, exogen = NULL, p = 1,
-  monthly.factor = NULL, valmin = 0.5, ...)
+  monthly.factor = NULL, valmin = 0.5, id.name = NULL, ...)
 }
 \arguments{
   \item{x}{variable utilized for the auto-regression of its

@@ -99,14 +99,22 @@ gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
 
 
 station <- station[1:4]
-exogen <- Tx_mes-Tn_mes
+exogen <- Tx_mes[,station]-Tn_mes[,station]
+
 months <- factor(prec_mes$month)
 
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin)
+model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin,multisite_type="wilks")
+
+
+## LOGIT-type Model
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+
 
 obs_multisite <- prec_mes[,station]>=valmin
 
 gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
+
+gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
 }
 \seealso{
 \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}

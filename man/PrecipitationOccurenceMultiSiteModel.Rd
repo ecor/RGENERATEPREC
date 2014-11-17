@@ -4,7 +4,7 @@
 \usage{
 PrecipitationOccurenceMultiSiteModel(x, exogen = NULL, station = names(x),
   origin = origin, valmin = 0.5, multisite_type = "wilks",
-  tolerance_wilks = 0.001, ...)
+  tolerance_wilks = 0.001, p = 2, ...)
 }
 \arguments{
   \item{x}{data frame (each column is a site) of variable
@@ -96,7 +96,11 @@ station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
 station <- station[1:4]
 exogen <- Tx_mes-Tn_mes
 months <- factor(prec_mes$month)
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin)
+model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
+###
+
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+###
 }
 \seealso{
 \code{\link{PrecipitationOccurenceModel}},\code{\link{CCGamma}}

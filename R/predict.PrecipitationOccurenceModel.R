@@ -16,6 +16,8 @@ NULL
 #' @method predict PrecipitationOccurenceModel
 #' @S3method predict PrecipitationOccurenceModel
 #' @aliases predict predict.PrecipitationOccurenceModel 
+#' 
+#' @rdname predict
 ##### @importFrom predict stats
 #' 
 #' 
@@ -55,6 +57,9 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
+#' origin <- origin(year_min,1,1,sep="-")
+#' 
+#' 
 #' prec_occurence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
@@ -80,9 +85,32 @@ NULL
 #' 
 #' 
 #' 
+#' Tx_mes <- Tx_mes[,accepted]
+#' Tn_mes <- Tn_mes[,accepted]
+#' prec_occurence_mes <- prec_mes>=valmin
+#' 
+#' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
+#' 
+#' station <- station[1:4] ## reduced the dataset!!! 
+#' Tx_mes <- Tx_mes[,station]
+#' Tn_mes <- Tn_mes[,station]
+#' 
+#' prec_mes <- prec_mes[,station]
+#' exogen <- Tx_mes-Tn_mes
+#' months <- factor(prec_mes$month)
+#' 
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks",origin=origin)
+#' ### 
+#' 
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",origin=origin)
+#' ### 
+#' 
+#' probs_multimodel  <- predict(model_multisite_logit)
+#' 
+#' 
 
 
-predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="response",previous=NULL,...) {
+predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="response",previous=NULL,endogenous=NULL,...) {
 	
 	if (object$p<1) previous <- NULL
 	
@@ -96,19 +124,38 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 		if(is.null(newdata)) newdata <- object$predictor
 		
 		newdata <- as.data.frame(newdata)
-		for (l in 1:object$p) {
+		
+		if (is.null(endogenous)) {
+			for (l in 1:object$p) {
 			
 			label <- sprintf("x_l%02d",l)
 			
 			newdata[,label] <- previous[l]
 			
+			}
+		
 			
-		}
 		
-		labels <- sprintf("x_l%02d",1:object$p)
+			labels <- sprintf("x_l%02d",1:object$p)
 		
-		names(newdata)[!(names(newdata) %in% labels)] <- names(object$predictor)[!(names(object$predictor) %in% labels)]
-		
+			names(newdata)[!(names(newdata) %in% labels)] <- names(object$predictor)[!(names(object$predictor) %in% labels)]
+		} else { 
+			labels <- NULL
+			for (l in 1:object$p) {
+				
+				######rows_l <- ((l+1):ndf)
+				
+				label <- sprintf("_endog_l%02d",l)
+				names_label <- paste(endogenous,label,sep="")
+				newdata[,names_label] <- previous[,l]
+				labels <- c(labels,names_label)
+			}	
+		###	print(labels)
+		###	str(newdata)
+		###	print("predictor:")
+		###	str(object$predictor)
+			names(newdata)[!(names(newdata) %in% labels)] <- names(object$predictor)[!(names(object$predictor) %in% labels)]
+		}	
 		
 	} else {
 		
@@ -119,6 +166,10 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 		names(newdata) <- names(object$predictor)
 		
 	}
+	
+	
+	newdata <- newdata[,names(newdata) %in% names(object$predictor)]
+#####	newdata <- newdata[,names(object$predictor)]
 	
 	out <- NULL
 	out <- predict(object$glm,newdata=newdata,type=type,...)
@@ -131,5 +182,40 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 }
 
 
+NULL
 
-
+#'
+#' 
+#' 
+#' @export 
+#' @method predict PrecipitationOccurenceMultiSiteModel
+#' @S3method predict PrecipitationOccurenceMultiSiteModel
+#' @aliases predict predict.PrecipitationOccurenceMultiSiteModel
+#' @rdname predict
+#'
+predict.PrecipitationOccurenceMultiSiteModel <- function(object,exogen=NULL,...) {
+	   	
+	out <- NULL
+	if (object$type=="wilks") {
+		endogenous <- NULL
+	} else if (object$type=="logit") {
+	
+	 	endogenous <- object$station
+	
+	}
+	
+	out <- lapply(X=object[object$station],FUN=predict,endogenous=endogenous,...)
+	names(out) <- object$station
+	
+	out <- as.data.frame(do.call(cbind,out))
+	
+	names(out) <- object$station
+	
+	
+	return(out)
+	
+	
+	
+	
+	
+}

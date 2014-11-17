@@ -72,13 +72,16 @@ NULL
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin)
-#'
-PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),origin=origin,valmin=0.5,multisite_type="wilks",tolerance_wilks=0.001,...) {
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
+#' ### 
+#' 
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+#' ### 
+PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),origin=origin,valmin=0.5,multisite_type="wilks",tolerance_wilks=0.001,p=2,...) {
 	
 	x <- adddate(x,origin=origin)
 	monthly.factor <- factor(x$month)
-	
+	station <- station
 	station <- station[!(station %in% c("day","month","year"))]
 	
 	x <- x[,station]
@@ -86,7 +89,7 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 	if (multisite_type=="wilks") {
 		
 	
-		if (is.null(exogen)) {
+		if (is.null(exogen) | (length(exogen)==0)) {
 			
 			exogen <- lapply(X=station,FUN=function(x){ NULL })
 			names(exogen) <- station
@@ -101,14 +104,19 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 			
 			if (is.data.frame(exogen)) {
 				
-				exogen_loc <- exogen[,it]
+				cols <- str_detect(names(exogen),it)
+				exogen_loc <- exogen[,cols]
 				
-			} else {
+				
+			} else if (is.list(exogen)) {
 				
 				exogen_loc <- exogen[[it]]
+			} else {
+				
+				exogen_loc <- exogen
 			}
 			
-			out[[it]] <- PrecipitationOccurenceModel(x=x[,it],exogen=exogen_loc,monthly.factor=monthly.factor,valmin=valmin,...)
+			out[[it]] <- PrecipitationOccurenceModel(x=x[,it],exogen=exogen_loc,monthly.factor=monthly.factor,valmin=valmin,p=p,id.name=it,...)
 			
 		}
 		
@@ -122,24 +130,85 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 #		
 #
 		
-		out$ccgamma <- CCGamma(x,lag=0,tolerance=tolerance_wilks,sample="monthly",only.matrix=TRUE,origin=origin)
+		out$ccgamma <- CCGamma(x,lag=0,tolerance=tolerance_wilks,sample="monthly",only.matrix=TRUE,origin=origin,valmin=valmin)
 		
 		names(out$ccgamma) <- sprintf("month%02d",1:length(out$ccgamma))
 	} else if (multisite_type=="logit"){
 		
+		if (is.null(valmin)) valmin <- NA
+		if (!is.na(valmin))  { 
+			variable <- x>=valmin
+			x <- as.data.frame(variable)
+		}
+		
+		if (!is.null(exogen)) { as.data.frame(array(0*NA,c(nrow(x),0))) }
+		if (!is.data.frame(exogen)) {
+			
+			stop("Option: multisty_type == logit, exogen must be a data frame or NULL!!!")
+		} else if (nrow(x)!=nrow(exogen)) {
+			
+			stop("Option: multisty_type == logit, exogen and x must be have the same numbers of rows!!!")
+			
+		}
+		
+		df <- exogen 
+	###	str(x)
+	###	str(df)
+	###	str(p)
+		### TO GO ON MONDAY ......
+		if (p>0) {
+			ndf <- nrow(df)
+			rows <- ((p+1):ndf)
+		###	df <- df[rows,]
+		##   print(station)
+			for (l in 1:p) {
+				rows_l <- ((l+1):ndf)
+				
+				label <- sprintf("_endog_l%02d",l)
+				names_label <- paste(station,label,sep="")
+			###	print(names_label)
+				df[,names_label]  <- NA
+				df[rows_l,names_label] <- x[rows_l-l,station]
+	
+	
+	
+	#######			out$predictor[,label] <- c(array(NA,p),variable[rows-l])
+				
+				
+			}
+		}
+		
+		
+		out <- list()
+		for (it in station) { 
+			
+			out[[it]] <- PrecipitationOccurenceModel(x=x[,it],exogen=df,monthly.factor=monthly.factor,valmin=valmin,p=0,...)
+			out[[it]]$p <- p
+		}
+		
+		#str(out)
+		#stop()
+		
+#		} if (is.null(exogen) {
+#			
+#		} else if (!)
+#		
+#		out
 		
 		
 		
 		
-		out <- NULL
 		
+	} else {
 		
-		
+		out <- list()
 	}
 	
+	
+	out$K <- ncol(x)
 	out$type <- multisite_type
 	out$station <- station 
-	
+	out$p <- p 
 	class(out) <- "PrecipitationOccurenceMultiSiteModel"
 	return(out)
 	

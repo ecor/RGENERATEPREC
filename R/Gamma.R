@@ -150,6 +150,8 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 				}
 				if (length(lag)==1) {
 					out <- continuity_ratio(data,lag=lag,valmin=valmin)
+					
+	
 					### NOOCCURENCE_CORRELATION 
 					out$lag <- lag
 					out$p0_v1 <- p0_v1
@@ -157,6 +159,11 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 					print(lag)
 					out$nooccurence_correlation <- out[[text]]
 					
+					#### CORRECTION HERE FOR p0v
+					
+					
+					
+					#####
 					for (r in 1:nrow(out$nooccurence_correlation)) {
 						for (c in 1:ncol(out$nooccurence_correlation)) {
 							

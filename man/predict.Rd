@@ -1,10 +1,14 @@
 \name{predict.PrecipitationOccurenceModel}
 \alias{predict}
 \alias{predict.PrecipitationOccurenceModel}
+\alias{predict.PrecipitationOccurenceMultiSiteModel}
 \title{Prediction of a  \code{PrecipitationOccurenceModel} model object}
 \usage{
 \method{predict}{PrecipitationOccurenceModel}(object, newdata = NULL,
-  type = "response", previous = NULL, ...)
+  type = "response", previous = NULL, endogenous = NULL, ...)
+
+\method{predict}{PrecipitationOccurenceMultiSiteModel}(object, exogen = NULL,
+  ...)
 }
 \arguments{
   \item{object}{model returned by
@@ -56,6 +60,9 @@ prec_mes <- prec_mes[,accepted]
 
 Tx_mes <- Tx_mes[,accepted]
 Tn_mes <- Tn_mes[,accepted]
+origin <- origin(year_min,1,1,sep="-")
+
+
 prec_occurence_mes <- prec_mes>=valmin
 
 station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
@@ -75,6 +82,31 @@ probs2 <- predict(model,newdata=newdata)
 
 probs[row_test]==probs2
 ###
+
+
+
+
+Tx_mes <- Tx_mes[,accepted]
+Tn_mes <- Tn_mes[,accepted]
+prec_occurence_mes <- prec_mes>=valmin
+
+station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
+
+station <- station[1:4] ## reduced the dataset!!!
+Tx_mes <- Tx_mes[,station]
+Tn_mes <- Tn_mes[,station]
+
+prec_mes <- prec_mes[,station]
+exogen <- Tx_mes-Tn_mes
+months <- factor(prec_mes$month)
+
+model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks",origin=origin)
+###
+
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",origin=origin)
+###
+
+probs_multimodel  <- predict(model_multisite_logit)
 }
 \seealso{
 \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}

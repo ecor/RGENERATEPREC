@@ -80,16 +80,22 @@ NULL
 #' 
 #' 
 #' station <- station[1:4]
-#' exogen <- Tx_mes-Tn_mes
+#' exogen <- Tx_mes[,station]-Tn_mes[,station]
+#' 
 #' months <- factor(prec_mes$month)
 #' 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin)
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin,multisite_type="wilks")
 #'
+#' 
+#' ## LOGIT-type Model 
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+#' 
+#' 
 #' obs_multisite <- prec_mes[,station]>=valmin
 #' 
 #' gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
 #' 
-#' 
+#' gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
 
 
 generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
@@ -144,11 +150,22 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 			
 #			newdata_loc <- newdata[i]
 #		}
-		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...)
+		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",enndogenous=endogenous,...)
 		out[i] <- random[i]>=prob
+		
+#		if (!is.null(endogenous)) {
 		previous  <- c(out[i],previous[-p])
 		
+#		} else {
+		
+#			previous[-1,] <- previous[-p,]
+#			previous[1,] <- out
+#			
+#			
+#		}	
 	}
+		
+	
 	
 	return(out)
 } 
@@ -218,58 +235,142 @@ generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="
 			
 			gen_wilks[,c] <- pnorm(gen_wilks[,c])
 			
+		} 
+		
+		
+		
+		
+	 
+
+	
+		if (is.null(exogen)) {
+			
+			exogen <- lapply(X=x$station,FUN=function(x){ NULL })
+			names(exogen) <- x$station
+			
+			
+		}
+		
+		if (is.null(previous)) {
+			
+			previous <- lapply(X=x$station,FUN=function(x){ NULL })
+			names(previous) <- x$station
+			
+		}
+		out <- as.data.frame(array(NA,dim(gen_wilks)))
+		names(out) <- names(gen_wilks)
+		
+		for (it in x$station) {
+			
+#			if (is.data.frame(exogen)) {
+#				
+#				exogen_loc <- exogen[,it]
+#				
+#			} else {
+#				
+#				exogen_loc <- exogen[[it]]
+#			}
+			
+			if (is.data.frame(exogen)) {
+				
+				cols <- str_detect(names(exogen),it)
+				exogen_loc <- exogen[,cols]
+				
+				
+			} else if (is.list(exogen)) {
+				
+				exogen_loc <- exogen[[it]]
+			} else {
+				
+				exogen_loc <- exogen
+			}
+			
+			if (is.data.frame(previous)) {
+				
+				previous_loc <- previous[,it]
+				
+			} else {
+				
+				previous_loc <- previous[[it]]
+			}
+			
+			### 
+			###function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
+			message(paste("Processing",it))
+			out[,it] <- generate(x[[it]],previous=previous_loc,exogen=exogen_loc,monthly.factor=factor(months),random=gen_wilks[,it],n=n)
+		
+			 
+			
+			###
+		} 
+		
+		
+		
+		
+		
+	}	else if (x$type=="logit") {
+	
+		if (is.null(exogen)) { 
+		
+			exogen <- as.data.frame(array(NA,c(n,0)))
+			
+		}	
+		
+		if (is.null(previous)) {
+			
+			
+				
+				previous <- as.data.frame(array(rnorm(x$p*x$K)>=0,c(x$p,x$K)))
+				names(previous) <- x$station
+				
+				
+			
+		}	else {
+			
+			
+			previous <- previous[,station]
+		}
+	
+		out <- as.data.frame(array(NA,c(n,length(x$station))))
+		names(out) <- x$station
+		
+##		str(exogen)
+		percs <- seq(from=0,to=100,by=5)
+		npercs <- trunc(percs/100*n)
+		
+		
+		
+	##	str(exogen)
+	##	str(previous)
+		for (ncnt in 1:n) {
+			
+			if (ncnt %in% npercs) {
+				
+				valprec <- percs[npercs==ncnt]
+				message <- paste(sprintf("Processing: %0.2f",valprec),"%",sep="")
+				message(message)
+				
+			}
+
+		    out[ncnt,] <- unlist(lapply(X=x[station],FUN=generate,previous=previous,endogenous=x$station,exogen=exogen[ncnt,],monthly.factor=factor(months)[ncnt],n=1,...))
+
+			previous[-1,] <- previous[-x$p,]
+			previous[1,] <- out[ncnt,]
+			
 		}
 		
 		
 		
 		
-	}
-	
-	if (is.null(exogen)) {
+####		out[,it] <- generate(x[[it]],previous=previous_loc,exogen=exogen,monthly.factor=factor(months),random=gen_wilks[,it],n=n)
 		
-		exogen <- lapply(X=x$station,FUN=function(x){ NULL })
-		names(exogen) <- x$station
+		
 		
 		
 	}
+	###		out <- NULL 
 	
-	if (is.null(previous)) {
-		
-		previous <- lapply(X=x$station,FUN=function(x){ NULL })
-		names(exogen) <- x$station
-		
-	}
-	out <- as.data.frame(array(NA,dim(gen_wilks)))
-	names(out) <- names(gen_wilks)
-	
-	for (it in x$station) {
-		
-		if (is.data.frame(exogen)) {
-			
-			exogen_loc <- exogen[,it]
-			
-		} else {
-			
-			exogen_loc <- exogen[[it]]
-		}
-		if (is.data.frame(previous)) {
-			
-			previous_loc <- previous[,it]
-			
-		} else {
-			
-			previous_loc <- previous[[it]]
-		}
-		
-		### 
-		###function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
-		message(paste("Processing",it))
-		out[,it] <- generate(x[[it]],previous=previous_loc,exogen=exogen_loc,monthly.factor=factor(months),random=gen_wilks[,it],n=n)
-	
-		 
-		
-		###
-	}
+	## TO DO 
 	
 	
 	## TO GO ON ....

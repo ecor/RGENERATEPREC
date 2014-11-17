@@ -87,7 +87,7 @@ NULL
 
 ###
 
-PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,valmin=0.5,...) {
+PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,valmin=0.5,id.name=NULL,...) {
 	
 	if (is.null(valmin)) valmin <- NA
 	if (!is.na(valmin)) variable <- x>=valmin
@@ -95,7 +95,7 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	
 	out <- list()
 	
-	if (is.null(exogen)) {
+	if (is.null(exogen) | (length(exogen)==0)) {
 		
 		df <- as.data.frame(array(variable,length(variable)))
 		names(df) <- "variable"
@@ -155,6 +155,14 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 	names_predictor <- names(out$predictor)
 	out$predictor <- as.data.frame(out$predictor[,-1])
 	names(out$predictor) <- names_predictor[-1]
+	if (!is.null(id.name)) {
+		
+		out$id.name <-  id.name
+		
+	} else {
+		
+		out$id.name <-  NA
+	}
 	
 	class(out) <- "PrecipitationOccurenceModel"
 	return(out)
