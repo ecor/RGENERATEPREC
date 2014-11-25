@@ -12,6 +12,7 @@ NULL
 #' @param exogen exogenous predictors
 #' @param monthly.factor vector of factors indicating the month of the days
 #' @param valmin minimum admitted value for daily precipitation amount 
+#' @param id.name identification name of the station
 #' @param ... further arguments
 #' 
 #' 

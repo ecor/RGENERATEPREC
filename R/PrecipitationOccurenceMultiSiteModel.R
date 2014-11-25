@@ -12,6 +12,7 @@ NULL
 #' @param multisite_type string indicating the utilized approach for spatial multi-site dependence description. Default is \code{wilks}.
 #' @param tolerance_wilks see \code{tolerance} used by \code{\link{omega_inv}} through \code{\link{CCGamma}}
 #' @param origin character string (yyyy-dd-mm) indicating the date of the first row of \code{"x"}.
+#' @param p auto-regression order 
 #' @param ... further arguments
 #' 
 #' 
@@ -72,10 +73,13 @@ NULL
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' origin=origin,multisite_type="wilks")
+#' 
 #' ### 
 #' 
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' origin=origin,multisite_type="logit")
 #' ### 
 PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),origin=origin,valmin=0.5,multisite_type="wilks",tolerance_wilks=0.001,p=2,...) {
 	

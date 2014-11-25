@@ -10,9 +10,9 @@ Description: This package contains functions and S3 methods for spatial
     Bugs/comments/questions/collaboration of any kind are warmly welcomed.
 Version: 1.0
 Repository: CRAN
-Date: 2014-07-22
+Date: 2014-11-19
 Depends:
     R (>= 3.0),
     copula,
-    RGENERATE,RMAWGEN,blockmatrix,Matrix
+    RGENERATE,RMAWGEN,blockmatrix,Matrix,stringr
 URL: https://github.com/ecor/RGENERATEPREC

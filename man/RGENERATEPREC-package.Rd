@@ -13,7 +13,7 @@ Bugs/comments/questions/collaboration of any kind are
 warmly welcomed.
 
 \tabular{ll}{ Package: \tab RMARAINGEN\cr Type: \tab
-Package\cr Version: \tab 1.0\cr Date: \tab 2014-07-22\cr
+Package\cr Version: \tab 1.0\cr Date: \tab 2014-11-19\cr
 License: \tab GPL (>= 2)
 
 \cr LazyLoad: \tab yes\cr Depends: see DESCRIPTION file \cr

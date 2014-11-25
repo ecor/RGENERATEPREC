@@ -1,5 +1,6 @@
 \name{predict.PrecipitationOccurenceModel}
 \alias{predict}
+\alias{predict.PrecipitationAmountModel}
 \alias{predict.PrecipitationOccurenceModel}
 \alias{predict.PrecipitationOccurenceMultiSiteModel}
 \title{Prediction of a  \code{PrecipitationOccurenceModel} model object}
@@ -7,8 +8,10 @@
 \method{predict}{PrecipitationOccurenceModel}(object, newdata = NULL,
   type = "response", previous = NULL, endogenous = NULL, ...)
 
-\method{predict}{PrecipitationOccurenceMultiSiteModel}(object, exogen = NULL,
-  ...)
+\method{predict}{PrecipitationOccurenceMultiSiteModel}(object, ...)
+
+\method{predict}{PrecipitationAmountModel}(object, newdata = NULL,
+  origin_newdata = NA, precipitation.value.random.generation = FALSE, ...)
 }
 \arguments{
   \item{object}{model returned by
@@ -20,7 +23,12 @@
   \code{"response"}}
 
   \item{previous}{logical vector containing previously
-  occurred states}
+  occurred states.}
+
+  \item{endogenous}{String vector containing the name of
+  the endogenous variables. It is used if the endogenous
+  variables ar more than one, otherwise is set
+  \code{NULL}(Default).}
 
   \item{...}{further arguments}
 }
@@ -60,7 +68,7 @@ prec_mes <- prec_mes[,accepted]
 
 Tx_mes <- Tx_mes[,accepted]
 Tn_mes <- Tn_mes[,accepted]
-origin <- origin(year_min,1,1,sep="-")
+origin <- paste(year_min,1,1,sep="-")
 
 
 prec_occurence_mes <- prec_mes>=valmin
@@ -86,8 +94,7 @@ probs[row_test]==probs2
 
 
 
-Tx_mes <- Tx_mes[,accepted]
-Tn_mes <- Tn_mes[,accepted]
+
 prec_occurence_mes <- prec_mes>=valmin
 
 station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
@@ -100,10 +107,10 @@ prec_mes <- prec_mes[,station]
 exogen <- Tx_mes-Tn_mes
 months <- factor(prec_mes$month)
 
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks",origin=origin)
+model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
 ###
 
-model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",origin=origin)
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
 ###
 
 probs_multimodel  <- predict(model_multisite_logit)
@@ -111,6 +118,6 @@ probs_multimodel  <- predict(model_multisite_logit)
 \seealso{
 \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
 
-\code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+\code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationAmountModel}}
 }
 

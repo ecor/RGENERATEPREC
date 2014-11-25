@@ -19,6 +19,8 @@ PrecipitationOccurenceModel(x, exogen = NULL, p = 1,
   \item{valmin}{minimum admitted value for daily
   precipitation amount}
 
+  \item{id.name}{identification name of the station}
+
   \item{...}{further arguments}
 }
 \value{

@@ -79,7 +79,7 @@ NULL
 #' ### MultiSite Generation 
 #' 
 #' 
-#' station <- station[1:4]
+#' station <- station[1:2]
 #' exogen <- Tx_mes[,station]-Tn_mes[,station]
 #' 
 #' months <- factor(prec_mes$month)
@@ -88,7 +88,7 @@ NULL
 #'
 #' 
 #' ## LOGIT-type Model 
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",station=station)
 #' 
 #' 
 #' obs_multisite <- prec_mes[,station]>=valmin

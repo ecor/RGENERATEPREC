@@ -1,14 +1,16 @@
 
 NULL
 
-#' Prediction of a  \code{PrecipitationOccurenceModel} model object
+#' @title Prediction of a  \code{PrecipitationOccurenceModel} model object
 #' 
-#' It is wrapper implementaion of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
+#' @description It is wrapper implementaion of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
 #' 
 #' @param object model returned by \code{\link{PrecipitationOccurenceModel}}
 #' @param newdata predictor or exogenous variables
 #' @param type see \code{\link{predict.glm}}. DEfault is \code{"response"}
-#' @param previous logical vector containing previously occurred states
+#' @param previous logical vector containing previously occurred states.
+#' @param endogenous String vector containing the name of the endogenous variables. 
+#' It is used if the endogenous variables ar more than one, otherwise is set \code{NULL}(Default).
 #' @param ... further arguments 
 #' 
 #' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
@@ -21,7 +23,7 @@ NULL
 ##### @importFrom predict stats
 #' 
 #' 
-#' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+#' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationAmountModel}}
 #' 
 #' @examples
 #' 
@@ -57,7 +59,7 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
-#' origin <- origin(year_min,1,1,sep="-")
+#' origin <- paste(year_min,1,1,sep="-")
 #' 
 #' 
 #' prec_occurence_mes <- prec_mes>=valmin
@@ -85,8 +87,7 @@ NULL
 #' 
 #' 
 #' 
-#' Tx_mes <- Tx_mes[,accepted]
-#' Tn_mes <- Tn_mes[,accepted]
+#'
 #' prec_occurence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
@@ -99,10 +100,10 @@ NULL
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
 #' 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks",origin=origin)
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
 #' ### 
 #' 
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",origin=origin)
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
 #' ### 
 #' 
 #' probs_multimodel  <- predict(model_multisite_logit)
@@ -193,7 +194,7 @@ NULL
 #' @aliases predict predict.PrecipitationOccurenceMultiSiteModel
 #' @rdname predict
 #'
-predict.PrecipitationOccurenceMultiSiteModel <- function(object,exogen=NULL,...) {
+predict.PrecipitationOccurenceMultiSiteModel <- function(object,...) { ## exogen=NULL commented
 	   	
 	out <- NULL
 	if (object$type=="wilks") {

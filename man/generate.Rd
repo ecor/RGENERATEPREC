@@ -1,8 +1,10 @@
 \name{generate.PrecipitationOccurenceModel}
 \alias{generate}
 \alias{generate.CCGammaObjectListPerEachMonth}
+\alias{generate.PrecipitationAmountModel}
 \alias{generate.PrecipitationOccurenceModel}
 \alias{generate.PrecipitationOccurenceMultiSiteModel}
+\alias{predict.PrecipitationAmountModel}
 \title{Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object}
 \usage{
 \method{generate}{PrecipitationOccurenceModel}(x, newdata = NULL,
@@ -14,6 +16,8 @@
 \method{generate}{PrecipitationOccurenceMultiSiteModel}(x, exogen, n = 10,
   origin = "1961-1-1", end = "1990-1-1", previous = NULL,
   monthly.factor = NULL, ...)
+
+\method{generate}{PrecipitationAmountModel}(x, ...)
 }
 \arguments{
   \item{x}{model returned by
@@ -98,7 +102,7 @@ gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
 ### MultiSite Generation
 
 
-station <- station[1:4]
+station <- station[1:2]
 exogen <- Tx_mes[,station]-Tn_mes[,station]
 
 months <- factor(prec_mes$month)
@@ -107,7 +111,7 @@ model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exo
 
 
 ## LOGIT-type Model
-model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",station=station)
 
 
 obs_multisite <- prec_mes[,station]>=valmin

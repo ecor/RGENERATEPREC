@@ -29,6 +29,8 @@ PrecipitationOccurenceMultiSiteModel(x, exogen = NULL, station = names(x),
   \item{origin}{character string (yyyy-dd-mm) indicating
   the date of the first row of \code{"x"}.}
 
+  \item{p}{auto-regression order}
+
   \item{...}{further arguments}
 }
 \value{
@@ -96,10 +98,13 @@ station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
 station <- station[1:4]
 exogen <- Tx_mes-Tn_mes
 months <- factor(prec_mes$month)
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
+model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+origin=origin,multisite_type="wilks")
+
 ###
 
-model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
+model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+origin=origin,multisite_type="logit")
 ###
 }
 \seealso{

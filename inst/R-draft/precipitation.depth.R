@@ -5,7 +5,7 @@
 
 
 #'
-#' Generetion of daily precipitation amount taking into accont a previous generation of precipitation occurence with \code{\link{generate}}
+#' Generetion of daily precipitation amount taking into account a previous generation of precipitation occurence with \code{\link{generate}}
 #' 
 #' @title Generation of Precipitation Amount 
 #' 
