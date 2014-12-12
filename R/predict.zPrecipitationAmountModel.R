@@ -1,6 +1,11 @@
 NULL
 
 #' 
+#' @param origin_newdata charachter string containing the date corresponding the first row of \code{newdata} 
+#' @param precipitation.value.random.generation logical value. 
+#' If it is \code{FALSE} (Default) the method \code{predict.PrecipitationAmountModel} returns conditioned random values, 
+#' otherwise these values are converted to precipitation values  through their observed non-parametric distributions.
+#' 
 #' @export 
 #' @method predict PrecipitationAmountModel
 #' @S3method predict PrecipitationAmountModel
@@ -72,7 +77,7 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	
 	
-	
+	####precipitation.value.random.generation <- FALSE 
 	if (precipitation.value.random.generation==TRUE)  {
 		
 		

@@ -1,6 +1,6 @@
 \name{CCGamma}
 \alias{CCGamma}
-\title{This function extends \code{\link{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurence.}
+\title{This function extends \code{\link[RMAWGEN]{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurence.}
 \usage{
 CCGamma(data, lag = 0, p0_v1 = NULL, p = NA, valmin = 0.5,
   nearPD = (lag >= 0), interval = c(-1, 1),
@@ -12,12 +12,12 @@ CCGamma(data, lag = 0, p0_v1 = NULL, p = NA, valmin = 0.5,
   \item{data}{data frame or 'zoo' R object containing daily
   precipitation time series for several gauges (one gauge
   time series per column). See
-  \code{\link{continuity_ratio}}.}
+  \code{\link[RMAWGEN]{continuity_ratio}}.}
 
   \item{lag}{numeric lag (expressed as number of days) used
   for computation for "cross" continuity ratio and joint
   probability of prercipitation (no)occurence. See
-  \code{\link{continuity_ratio}}.}
+  \code{\link[RMAWGEN]{continuity_ratio}}.}
 
   \item{p}{positive integer parameter. Default is
   \code{NA}, otherwise, \code{lag} is calculated as the
@@ -26,7 +26,7 @@ CCGamma(data, lag = 0, p0_v1 = NULL, p = NA, valmin = 0.5,
   \item{valmin}{threshold precipitation value [mm] for
   wet/dry day indicator. If precipitation is lower than
   \code{valmin}, day is considered dry. Default is 0.5 mm.
-  See \code{\link{continuity_ratio}}.}
+  See \code{\link[RMAWGEN]{continuity_ratio}}.}
 
   \item{p0_v1}{vector for marginal probablities, see
   \code{\link{omega}} and \code{\link{omega_inv}}.}
@@ -64,15 +64,16 @@ CCGamma(data, lag = 0, p0_v1 = NULL, p = NA, valmin = 0.5,
 An object which is a list containing the following fields:
 
 \code{continuity_ratio} : \code{lag}-day lagged continuity
-ratio, as returned by \code{\link{continuity_ratio}};
+ratio, as returned by
+\code{\link[RMAWGEN]{continuity_ratio}};
 
 \code{occurence} : joint probability of \code{lag}-day
 lagged precipitation occurence, as returned by
-\code{\link{continuity_ratio}};
+\code{\link[RMAWGEN]{continuity_ratio}};
 
 \code{nooccurence} : joint probability of \code{lag}-day
 lagged no precipitation occurence, as returned by
-\code{\link{continuity_ratio}};
+\code{\link[RMAWGEN]{continuity_ratio}};
 
 \code{lag} : number of days lagged between the two compared
 events (see argument \code{lag});
@@ -93,8 +94,9 @@ than one, the function returns a list of the above-cited
 return object for each value of the vector \code{lag}.
 }
 \description{
-This function extends \code{\link{continuity_ratio}} and
-adds the corresponding gaussian correlation matrix for
+This function extends
+\code{\link[RMAWGEN]{continuity_ratio}} and adds the
+corresponding gaussian correlation matrix for
 no-precipitation occurence.
 }
 \note{
@@ -140,6 +142,6 @@ CCGamma <- CCGamma(data=prec_mes,lag=0,tolerance=0.001,only.matrix=FALSE)
 Emanuele Cordano
 }
 \seealso{
-\code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
+\code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
 }
 

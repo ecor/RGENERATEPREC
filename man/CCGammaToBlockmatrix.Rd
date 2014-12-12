@@ -75,6 +75,6 @@ CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p,tolerance=0.001)
 # A <- t(solve(CCGamma_0t,CCGamma_1t))
 }
 \seealso{
-\code{\link{CCGamma}},\code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
+\code{\link{CCGamma}},\code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
 }
 

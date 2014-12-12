@@ -4,7 +4,7 @@ NULL
 #' @export 
 #' @method generate PrecipitationAmountModel
 #' @S3method generate PrecipitationAmountModel
-#' @aliases generate predict.PrecipitationAmountModel
+#' @aliases generate generate.PrecipitationAmountModel
 #' @rdname generate
 #'
 generate.PrecipitationAmountModel <- function(x,...) {

@@ -2,7 +2,7 @@
 \alias{PrecipitationAmountModel}
 \title{....}
 \usage{
-PrecipitationAmountModel(x, valmin = 1, station = names(gen),
+PrecipitationAmountModel(x, valmin = 1, station = names(x),
   sample = "monthly", origin = "1961-1-1", ...)
 }
 \arguments{
@@ -15,8 +15,6 @@ PrecipitationAmountModel(x, valmin = 1, station = names(gen),
   \item{valmin}{maximum admitted value of precipitation
   depth}
 
-  \item{method}{see \code{\link{cor}}}
-
   \item{origin}{date of the day referred by he first row of
   \code{x}.}
 
@@ -25,7 +23,7 @@ PrecipitationAmountModel(x, valmin = 1, station = names(gen),
   month.}
 
   \item{...}{further agruments for
-  \code{\link{normalizeGaussian_severalstations}}}
+  \code{\link[RMAWGEN]{normalizeGaussian_severalstations}}}
 }
 \value{
 The function returns AN S3 OBJECT ...... the correlation
@@ -80,7 +78,9 @@ precamount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
 
 val <- predict(precamount)
 
-prec_gen <- genarate(precamount)  #####  predict(precamount,precipitation.value.random.generation==TRUE)
+prec_gen <- generate(precamount)
+
+
 
 
 month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
@@ -91,6 +91,6 @@ qqplot(prec_mes$T0083,prec_gen$T0083)
 abline(0,1)
 }
 \seealso{
-\code{\link{predict.PrecipitationAmonutModel}}
+\code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
 }
 

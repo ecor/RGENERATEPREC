@@ -22,8 +22,11 @@ NULL
 #' @aliases generate generate.PrecipitationOccurenceModel 
 #' @rdname generate
 #' 
+#'
+#' 
 #' @importFrom RGENERATE generate 
 #'
+#' 
 #' 
 #' @examples
 #' 
@@ -69,11 +72,19 @@ NULL
 #' it <- station[2]
 #' vect <- Tx_mes[,it]-Tn_mes[,it]
 #' months <- factor(prec_mes$month)
-#' model <- PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months,valmin=valmin)
 #' 
-#' obs <- prec_mes[,it]>=valmin
+#' #
+#' ### Not Run!!! 
+#' ###  Please uncomment the following lines to run them 
+#'  
 #' 
-#' gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
+#' #model <- 
+#' #PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
+#' #monthly.factor=months,valmin=valmin)
+#' #
+#' #obs <- prec_mes[,it]>=valmin
+#' #
+#' #gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
 #' 
 #' 
 #' ### MultiSite Generation 
@@ -84,18 +95,26 @@ NULL
 #' 
 #' months <- factor(prec_mes$month)
 #' 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin,multisite_type="wilks")
-#'
-#' 
+#' #
+#' ### Not Run!!! 
+#' ###  Please uncomment the following lines to run them 
+#'  
+#' #model_multisite <- 
+#' #PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
+#' #exogen=exogen,origin=origin,multisite_type="wilks")
+#' #
+#' #
 #' ## LOGIT-type Model 
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",station=station)
-#' 
-#' 
-#' obs_multisite <- prec_mes[,station]>=valmin
-#' 
-#' gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
-#' 
-#' gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
+#' #model_multisite_logit <- 
+#' #PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' #origin=origin,multisite_type="logit",station=station)
+#' #
+#' #
+#' #obs_multisite <- prec_mes[,station]>=valmin
+#' #
+#' #gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
+#' #
+#' #gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
 
 
 generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
@@ -142,27 +161,14 @@ generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=
 	
 	for (i in 1:n) {
 		
-	#	if (is.data.frame(newdata)) {
-			
-		##	newdata_loc <- newdata[i,]
-			
-#		} else {
-			
-#			newdata_loc <- newdata[i]
-#		}
-		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",enndogenous=endogenous,...)
+
+###		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",endogenous=endogenous,...)
+		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...) ## ec 20141208
 		out[i] <- random[i]>=prob
 		
-#		if (!is.null(endogenous)) {
+
 		previous  <- c(out[i],previous[-p])
-		
-#		} else {
-		
-#			previous[-1,] <- previous[-p,]
-#			previous[1,] <- out
-#			
-#			
-#		}	
+
 	}
 		
 	
@@ -328,7 +334,7 @@ generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="
 		}	else {
 			
 			
-			previous <- previous[,station]
+			previous <- previous[,x$station] ## ec 20141204
 		}
 	
 		out <- as.data.frame(array(NA,c(n,length(x$station))))
@@ -352,7 +358,7 @@ generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="
 				
 			}
 
-		    out[ncnt,] <- unlist(lapply(X=x[station],FUN=generate,previous=previous,endogenous=x$station,exogen=exogen[ncnt,],monthly.factor=factor(months)[ncnt],n=1,...))
+		    out[ncnt,] <- unlist(lapply(X=x[x$station],FUN=generate,previous=previous,endogenous=x$station,exogen=exogen[ncnt,],monthly.factor=factor(months)[ncnt],n=1,...))
 
 			previous[-1,] <- previous[-x$p,]
 			previous[1,] <- out[ncnt,]

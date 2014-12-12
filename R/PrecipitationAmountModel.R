@@ -4,16 +4,16 @@ NULL
 #' @param x observed precipitation amount time series (data frame)
 #' @param station string vector containing station identification codes
 #' @param valmin maximum admitted value of precipitation depth 
-#' @param method see \code{\link{cor}}
+#### @param method see \code{\link{cor}}
 #' @param origin date of the day referred by he first row of \code{x}. 
 #' @param sample character string. If it is \code{"monthly"} (Default), the corralaton matrix is calculeted per each month.  
-#' @param ... further agruments for \code{\link{normalizeGaussian_severalstations}}
+#' @param ... further agruments for \code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
 #' 
 #' 
 #' @return The function returns AN S3 OBJECT ...... the correlation matrix of precipitation amount values (excluding the zeros). 
 #' In case \code{sample=="monthly"} the runction return a \code{MonlthyList} S3 object.
 #' 
-#' @seealso \code{\link{predict.PrecipitationAmonutModel}}
+#' @seealso \code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
 ############# ,\code{\link{generate}},\code{\link{random.precipitation.values}},\code{\link{cor}}
 #' 
 #' @export
@@ -63,7 +63,9 @@ NULL
 #' 
 #' val <- predict(precamount)
 #' 
-#' prec_gen <- genarate(precamount)  #####  predict(precamount,precipitation.value.random.generation==TRUE)
+#' prec_gen <- generate(precamount)  
+#' 
+#' 
 #' 
 #' 
 #' month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
@@ -81,7 +83,7 @@ NULL
 
 
 
-PrecipitationAmountModel <- function(x,valmin=1,station=names(gen),sample="monthly",origin="1961-1-1",...) {
+PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly",origin="1961-1-1",...) {
 	
 	if (!is.null(station)) {
 		

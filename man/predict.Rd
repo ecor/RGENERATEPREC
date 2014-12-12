@@ -31,6 +31,16 @@
   \code{NULL}(Default).}
 
   \item{...}{further arguments}
+
+  \item{origin_newdata}{charachter string containing the
+  date corresponding the first row of \code{newdata}}
+
+  \item{precipitation.value.random.generation}{logical
+  value. If it is \code{FALSE} (Default) the method
+  \code{predict.PrecipitationAmountModel} returns
+  conditioned random values, otherwise these values are
+  converted to precipitation values through their observed
+  non-parametric distributions.}
 }
 \description{
 It is wrapper implementaion of \code{\link{predict.glm}}
@@ -107,13 +117,20 @@ prec_mes <- prec_mes[,station]
 exogen <- Tx_mes-Tn_mes
 months <- factor(prec_mes$month)
 
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="wilks")
-###
 
-model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit")
-###
+### Not Run
+### Please uncomment the following lines to run them
 
-probs_multimodel  <- predict(model_multisite_logit)
+
+#model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#exogen=exogen,origin=origin,multisite_type="wilks")
+#
+#
+#model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#exogen=exogen,origin=origin,multisite_type="logit")
+#
+#
+#probs_multimodel  <- predict(model_multisite_logit)
 }
 \seealso{
 \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}

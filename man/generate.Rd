@@ -4,7 +4,6 @@
 \alias{generate.PrecipitationAmountModel}
 \alias{generate.PrecipitationOccurenceModel}
 \alias{generate.PrecipitationOccurenceMultiSiteModel}
-\alias{predict.PrecipitationAmountModel}
 \title{Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object}
 \usage{
 \method{generate}{PrecipitationOccurenceModel}(x, newdata = NULL,
@@ -92,11 +91,19 @@ station <- names(prec_mes)[!(names(prec_mes) \%in\% c("day","month","year"))]
 it <- station[2]
 vect <- Tx_mes[,it]-Tn_mes[,it]
 months <- factor(prec_mes$month)
-model <- PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months,valmin=valmin)
 
-obs <- prec_mes[,it]>=valmin
+#
+### Not Run!!!
+###  Please uncomment the following lines to run them
 
-gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
+
+#model <-
+#PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
+#monthly.factor=months,valmin=valmin)
+#
+#obs <- prec_mes[,it]>=valmin
+#
+#gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
 
 
 ### MultiSite Generation
@@ -107,18 +114,26 @@ exogen <- Tx_mes[,station]-Tn_mes[,station]
 
 months <- factor(prec_mes$month)
 
-model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],exogen=exogen,origin=origin,multisite_type="wilks")
+#
+### Not Run!!!
+###  Please uncomment the following lines to run them
 
-
+#model_multisite <-
+#PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
+#exogen=exogen,origin=origin,multisite_type="wilks")
+#
+#
 ## LOGIT-type Model
-model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,multisite_type="logit",station=station)
-
-
-obs_multisite <- prec_mes[,station]>=valmin
-
-gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
-
-gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
+#model_multisite_logit <-
+#PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#origin=origin,multisite_type="logit",station=station)
+#
+#
+#obs_multisite <- prec_mes[,station]>=valmin
+#
+#gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
+#
+#gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
 }
 \seealso{
 \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}

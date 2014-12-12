@@ -17,6 +17,7 @@ NULL
 #' In case \code{x} is a correlation/covariance matrix the marginal probabilities are given as a vector through the argument \code{p0_v1}.
 #' 
 #' @seealso \code{\link{normalCopula}},\code{\link{pcopula}}
+#' 
 #' @import copula
 #' @export
 #' @examples 

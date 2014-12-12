@@ -2,13 +2,13 @@
 #
 NULL
 #'
-#' This function extends \code{\link{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurence. 
+#' This function extends \code{\link[RMAWGEN]{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurence. 
 #'
-#' @param data data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link{continuity_ratio}}.
-#' @param lag numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurence. See \code{\link{continuity_ratio}}.
+#' @param data data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link[RMAWGEN]{continuity_ratio}}.
+#' @param lag numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurence. See \code{\link[RMAWGEN]{continuity_ratio}}.
 #' @param p positive integer parameter. Default is \code{NA}, otherwise, \code{lag} is calculated as the vector \code{0:p}. 
 #' @param valmin threshold precipitation value [mm] for wet/dry day indicator. 
-#' If precipitation is lower than \code{valmin}, day is considered dry. Default is 0.5 mm. See \code{\link{continuity_ratio}}.
+#' If precipitation is lower than \code{valmin}, day is considered dry. Default is 0.5 mm. See \code{\link[RMAWGEN]{continuity_ratio}}.
 #' @param p0_v1 vector for marginal probablities, see \code{\link{omega}} and \code{\link{omega_inv}}. 
 #' @param nearPD see \code{\link{omega_inv}}. Default is \code{(lag==0)}.
 #' @param interval,tolerance see \code{\link{omega_inv}}
@@ -23,11 +23,11 @@ NULL
 #' 
 #' @return  An object which is a list containing the following fields: 
 #'
-#' \code{continuity_ratio} : \code{lag}-day lagged  continuity ratio, as returned by \code{\link{continuity_ratio}}; 
+#' \code{continuity_ratio} : \code{lag}-day lagged  continuity ratio, as returned by \code{\link[RMAWGEN]{continuity_ratio}}; 
 #'
-#' \code{occurence}  : joint probability of \code{lag}-day lagged precipitation occurence, as returned by \code{\link{continuity_ratio}}; 
+#' \code{occurence}  : joint probability of \code{lag}-day lagged precipitation occurence, as returned by \code{\link[RMAWGEN]{continuity_ratio}}; 
 #' 
-#' \code{nooccurence} : joint probability of \code{lag}-day lagged no precipitation occurence, as returned by \code{\link{continuity_ratio}};
+#' \code{nooccurence} : joint probability of \code{lag}-day lagged no precipitation occurence, as returned by \code{\link[RMAWGEN]{continuity_ratio}};
 #' 
 #' \code{lag} : number of days lagged between the two compared events (see argument \code{lag});
 #' 
@@ -47,8 +47,8 @@ NULL
 #'  
 #' See the R code for major details
 #' 
-#' @seealso \code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
-#' @import RMAWGEN
+#' @seealso \code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
+##@import RMAWGEN str_
 #' @examples 
 #' 
 #' data(trentino)

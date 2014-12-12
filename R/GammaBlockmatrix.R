@@ -16,7 +16,7 @@ NULL
 #' 
 #' @import blockmatrix Matrix
 # @rdaname CCGamma
-#' @seealso  \code{\link{CCGamma}},\code{\link{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
+#' @seealso  \code{\link{CCGamma}},\code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
 #' @examples 
 #' 
 #' data(trentino)
