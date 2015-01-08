@@ -8,7 +8,7 @@ PrecipitationOccurenceMultiSiteModel(x, exogen = NULL, station = names(x),
 }
 \arguments{
   \item{x}{data frame (each column is a site) of variable
-  utilized for the auto-regression of its occurence, e.g.
+  utilized for the auto-regression of its occurrence, e.g.
   daily precipitaton}
 
   \item{exogen}{exogenous predictors}
@@ -21,7 +21,7 @@ PrecipitationOccurenceMultiSiteModel(x, exogen = NULL, station = names(x),
 
   \item{multisite_type}{string indicating the utilized
   approach for spatial multi-site dependence description.
-  Default is \code{wilks}.}
+  Default is \code{"wilks"}.}
 
   \item{tolerance_wilks}{see \code{tolerance} used by
   \code{\link{omega_inv}} through \code{\link{CCGamma}}}
@@ -46,7 +46,7 @@ station) code
 i.e. matices of Gaussian Inter-Site Correlation returned by
 \code{\link{CCGamma}};
 
-\code{type} Tstring indicating the utilized approach for
+\code{type} string indicating the utilized approach for
 spatial multi-site dependence description, only
 \code{"wilks"} type is implemented;
 

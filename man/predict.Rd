@@ -19,20 +19,20 @@
 
   \item{newdata}{predictor or exogenous variables}
 
-  \item{type}{see \code{\link{predict.glm}}. DEfault is
-  \code{"response"}}
+  \item{type}{see \code{\link{predict.glm}}. Default is
+  \code{"response"}. See \code{\link{predict.glm}}.}
 
   \item{previous}{logical vector containing previously
   occurred states.}
 
   \item{endogenous}{String vector containing the name of
   the endogenous variables. It is used if the endogenous
-  variables ar more than one, otherwise is set
+  variables are more than one, otherwise is set
   \code{NULL}(Default).}
 
   \item{...}{further arguments}
 
-  \item{origin_newdata}{charachter string containing the
+  \item{origin_newdata}{character string containing the
   date corresponding the first row of \code{newdata}}
 
   \item{precipitation.value.random.generation}{logical
@@ -43,9 +43,8 @@
   non-parametric distributions.}
 }
 \description{
-It is wrapper implementaion of \code{\link{predict.glm}}
-method for the a \code{PrecipitationOccurenceModel} model
-object S3 class.
+It is a wrapper of \code{\link{predict.glm}} method for the
+a \code{PrecipitationOccurenceModel} model object S3 class.
 }
 \examples{
 library(RGENERATEPREC)

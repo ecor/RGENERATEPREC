@@ -6,7 +6,7 @@
 
 NULL
 #'
-#' It calculates th number of wet days for each month and each year
+#' It calculates the number of wet days for each month and each year
 #' 
 #' @param data data frame R object containing daily precipitation time series for several gauges (one gauge time series per column). 
 #' @param valmin threshold precipitation value [mm] for wet/dry day indicator.

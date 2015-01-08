@@ -49,10 +49,22 @@
   \item{...}{further arguments}
 }
 \description{
-It is an implentation \code{\link{generate}} method
+It is an implentation of \code{\link{generate}} method
 }
 \examples{
 library(RGENERATEPREC)
+
+
+## A function example can be found in the following script file:
+scriptfile <- system.file("example.generate.R",package="RGENERATEPREC")
+## The corrent file path is given by 'scriptfile' variable:
+print(scriptfile)
+## To run the example file, launch the file with 'source' command (uncomment the following line)
+#source(scriptfile)
+
+## ALTERNATIVELY you can run the following lines:
+
+
 
 data(trentino)
 
@@ -134,6 +146,19 @@ months <- factor(prec_mes$month)
 #gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
 #
 #gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
+}
+\references{
+D.S. Wilks (1998), Multisite Generalization of a Daily
+Stochastic Precipitation Generation Model, Journal of
+Hydrology, Volume 210, Issues 1-4, September 1998, Pages
+178-191,
+\url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
+
+Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic
+Space-Time Model for the Generation of Daily Rainfall in
+the Gaza Strip, International Journal of Climatology,
+Volume 32, Issue 7, pages 1098-1112,
+\url{http://dx.doi.org/10.1002/joc.2305}
 }
 \seealso{
 \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}

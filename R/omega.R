@@ -15,9 +15,19 @@ NULL
 #'   and \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863} (See fig. 1 and par. 3.2) 
 #' If the argument \code{p0_v2}, the two marginal probabily values must be given as a vector through the  argument \code{p0_v1}: \code{p0_v1=c(p0_v1,p0_v2)} . 
 #' In case \code{x} is a correlation/covariance matrix the marginal probabilities are given as a vector through the argument \code{p0_v1}.
+#'
+#' @references
+#' D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
+#' \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
+#' 
+#' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
+#' \url{http://dx.doi.org/10.1002/joc.2305}
+#' 
+#'  
+#'  
 #' 
 #' @seealso \code{\link{normalCopula}},\code{\link{pcopula}}
-#' 
+
 #' @import copula
 #' @export
 #' @examples 
@@ -26,7 +36,7 @@ NULL
 #' p00 <- omega(x=rho,p0_v1=0.5,p0_v2=0.5)
 #' cor00 <- omega(x=rho,p0_v1=0.5,p0_v2=0.5,correlation=TRUE)
 
-
+## str
 
 omega <- function(x=0.5,p0_v1=0.5,p0_v2=NA,correlation=FALSE) {
 	

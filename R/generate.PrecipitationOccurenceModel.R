@@ -3,7 +3,7 @@ NULL
 
 #' Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object
 #' 
-#' It is an implentation \code{\link{generate}} method 
+#' It is an implentation of \code{\link{generate}} method 
 #' 
 #' @param x model returned by \code{\link{PrecipitationOccurenceModel}} or \code{\link{PrecipitationOccurenceMultiSiteModel}}
 #' @param newdata predictor or exogenous variables. See \code{\link{predict.PrecipitationOccurenceModel}}
@@ -21,16 +21,33 @@ NULL
 #' @S3method generate PrecipitationOccurenceModel
 #' @aliases generate generate.PrecipitationOccurenceModel 
 #' @rdname generate
-#' 
+#' @importFrom RGENERATE generate
 #'
+#' @references
+#' D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
+#' \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
 #' 
-#' @importFrom RGENERATE generate 
-#'
+#' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
+#' \url{http://dx.doi.org/10.1002/joc.2305}
 #' 
 #' 
+#' 
+#'  
 #' @examples
 #' 
 #' library(RGENERATEPREC)
+#' 
+#' 
+#' ## A function example can be found in the following script file: 
+#' scriptfile <- system.file("example.generate.R",package="RGENERATEPREC")
+#' ## The corrent file path is given by 'scriptfile' variable:
+#' print(scriptfile)
+#' ## To run the example file, launch the file with 'source' command (uncomment the following line)
+#' #source(scriptfile)
+#' 
+#' ## ALTERNATIVELY you can run the following lines:
+#' 
+#' 
 #' 
 #' data(trentino)
 #' 
@@ -340,14 +357,13 @@ generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="
 		out <- as.data.frame(array(NA,c(n,length(x$station))))
 		names(out) <- x$station
 		
-##		str(exogen)
+
 		percs <- seq(from=0,to=100,by=5)
 		npercs <- trunc(percs/100*n)
 		
 		
 		
-	##	str(exogen)
-	##	str(previous)
+
 		for (ncnt in 1:n) {
 			
 			if (ncnt %in% npercs) {

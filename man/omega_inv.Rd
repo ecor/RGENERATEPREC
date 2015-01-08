@@ -12,7 +12,7 @@ omega_inv(p0 = NULL, p0_v1 = 0.5, p0_v2 = p0_v1, p00 = p0_v1 * p0_v2,
   values}
 
   \item{p0_v1,p0_v2}{probablity of no precipitatin
-  occurences for the v1 and v2 time series respectively.}
+  occurrences for the v1 and v2 time series respectively.}
 
   \item{p00}{probability of no precipitation occurence in
   both v1 and v2 simultanously returned by
@@ -57,17 +57,17 @@ This function is the inverse of \code{\link{omega}}
 function
 }
 \note{
-This function find the zero of the \code{\link{omega_root}}
-function by calling \code{\link{uniroot}}. If the argument
-\code{p0} is not \code{NULL} and is a matrix of joint
-probabilities, the function returns a correlation matrix by
-using the elements of \code{p0} ass joint probabilities for
-each couple and \code{p0_v1} as a vector of marginal
-probability of each occurence/no-occurence (In this case if
-the length of \code{p0_v1} does not correspond to the
-number of columns of \code{p0}, the marginal probabilities
-are taken from the diagonal of \code{p0}). See the R code
-for major details
+This function finds the zero of the
+\code{\link{omega_root}} function by calling
+\code{\link{uniroot}}. If the argument \code{p0} is not
+\code{NULL} and is a matrix of joint probabilities, the
+function returns a correlation matrix by using the elements
+of \code{p0} ass joint probabilities for each couple and
+\code{p0_v1} as a vector of marginal probability of each
+occurence/no-occurence (In this case if the length of
+\code{p0_v1} does not correspond to the number of columns
+of \code{p0}, the marginal probabilities are taken from the
+diagonal of \code{p0}). See the R code for major details.
 }
 \examples{
 x <- omega_inv(p0_v1=0.5,p0_v2=0.5,p00=1.1*0.5*0.5)

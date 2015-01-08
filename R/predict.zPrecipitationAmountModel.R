@@ -1,7 +1,7 @@
 NULL
 
 #' 
-#' @param origin_newdata charachter string containing the date corresponding the first row of \code{newdata} 
+#' @param origin_newdata character string containing the date corresponding the first row of \code{newdata} 
 #' @param precipitation.value.random.generation logical value. 
 #' If it is \code{FALSE} (Default) the method \code{predict.PrecipitationAmountModel} returns conditioned random values, 
 #' otherwise these values are converted to precipitation values  through their observed non-parametric distributions.
@@ -18,8 +18,8 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	if (is.na(origin_newdata)) origin_newdata <- object$origin
 	
-	str(object$x)
-	str(object$valmin)
+	###str(object$x)
+	###str(object$valmin)
 	
 	if (is.null(newdata)) newdata <- as.data.frame(object$x[,object$station]>=object$valmin)
 	

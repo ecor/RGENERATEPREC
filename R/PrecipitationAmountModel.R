@@ -17,6 +17,8 @@ NULL
 ############# ,\code{\link{generate}},\code{\link{random.precipitation.values}},\code{\link{cor}}
 #' 
 #' @export
+#' @importFrom RMAWGEN normalizeGaussian_severalstations
+#' 
 #'@examples 
 #' library(RGENERATEPREC)
 #' 

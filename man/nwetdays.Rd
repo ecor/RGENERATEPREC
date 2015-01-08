@@ -1,6 +1,6 @@
 \name{nwetdays}
 \alias{nwetdays}
-\title{It calculates th number of wet days for each month and each year}
+\title{It calculates the number of wet days for each month and each year}
 \usage{
 nwetdays(data, valmin = 0.5, origin = "1961-1-1", station = names(data))
 }
@@ -23,8 +23,8 @@ Function returns a list of data frames containing the spell
 length expressed in days
 }
 \description{
-It calculates th number of wet days for each month and each
-year
+It calculates the number of wet days for each month and
+each year
 }
 \examples{
 data(trentino)

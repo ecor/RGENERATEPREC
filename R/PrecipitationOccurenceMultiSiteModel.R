@@ -5,11 +5,11 @@ NULL
 #' 
 #' This functions creates a stochastic Occurence Multi-Site Model for the variable  \code{x} (\code{PrecipitationOccurenceMultiSiteModel} S3 object) through a calibration from observed data.     
 #' 
-#' @param x data frame (each column is a site) of variable utilized for the auto-regression of its occurence, e.g. daily precipitaton 
+#' @param x data frame (each column is a site) of variable utilized for the auto-regression of its occurrence, e.g. daily precipitaton 
 #' @param exogen exogenous predictors
 #' @param station character string vectors containing the codes of the station used for model calibration
 #' @param valmin minimum admitted value for daily precipitation amount 
-#' @param multisite_type string indicating the utilized approach for spatial multi-site dependence description. Default is \code{wilks}.
+#' @param multisite_type string indicating the utilized approach for spatial multi-site dependence description. Default is \code{"wilks"}.
 #' @param tolerance_wilks see \code{tolerance} used by \code{\link{omega_inv}} through \code{\link{CCGamma}}
 #' @param origin character string (yyyy-dd-mm) indicating the date of the first row of \code{"x"}.
 #' @param p auto-regression order 
@@ -22,7 +22,7 @@ NULL
 #' 
 #' \code{ccgama} \code{CCGammaObjectListPerEachMonth} object, i.e. matices of Gaussian Inter-Site  Correlation returned by \code{\link{CCGamma}};
 #' 
-#' \code{type} Tstring indicating the utilized approach for spatial multi-site dependence description, only \code{"wilks"} type is implemented;
+#' \code{type} string indicating the utilized approach for spatial multi-site dependence description, only \code{"wilks"} type is implemented;
 #' 
 #' \code{station} character string vectors containing the codes of the station used in \code{PrecipitationMultiSiteOccurenceModel}.
 #' 
@@ -165,14 +165,13 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 		if (p>0) {
 			ndf <- nrow(df)
 			rows <- ((p+1):ndf)
-		###	df <- df[rows,]
-		##   print(station)
+	
 			for (l in 1:p) {
 				rows_l <- ((l+1):ndf)
 				
 				label <- sprintf("_endog_l%02d",l)
 				names_label <- paste(station,label,sep="")
-			###	print(names_label)
+		
 				df[,names_label]  <- NA
 				df[rows_l,names_label] <- x[rows_l-l,station]
 	

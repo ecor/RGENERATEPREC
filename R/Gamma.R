@@ -20,6 +20,17 @@ NULL
 #' @param ... additional agruments of \code{\link{omega_inv}} or \code{\link{CCGamma}}
 
 #' @author Emanuele Cordano
+#'
+#' @references
+#' D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
+#' \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
+#' 
+#' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
+#' \url{http://dx.doi.org/10.1002/joc.2305}
+#' 
+#' 
+#' 
+#' 
 #' 
 #' @return  An object which is a list containing the following fields: 
 #'
@@ -48,7 +59,7 @@ NULL
 #' See the R code for major details
 #' 
 #' @seealso \code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
-##@import RMAWGEN str_
+#' @importFrom RMAWGEN adddate
 #' @examples 
 #' 
 #' data(trentino)
@@ -155,8 +166,8 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 					### NOOCCURENCE_CORRELATION 
 					out$lag <- lag
 					out$p0_v1 <- p0_v1
-					print("lag")
-					print(lag)
+					message("lag")
+					message(lag)
 					out$nooccurence_correlation <- out[[text]]
 					
 					#### CORRECTION HERE FOR p0v

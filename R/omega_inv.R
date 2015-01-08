@@ -6,7 +6,7 @@ NULL
 #'
 # @param x value of expected correlation between the corresponding Gaussian-distributed variables 
 #' @param p0 matrix of joint probabilities. Default is \code{NULL}, otherwise functions returns a matrix with values 
-#' @param p0_v1,p0_v2 probablity of no precipitatin occurences for the v1 and v2 time series respectively. 
+#' @param p0_v1,p0_v2 probablity of no precipitatin occurrences for the v1 and v2 time series respectively. 
 #' @param p00 probability of no precipitation occurence in both v1 and v2 simultanously returned by \code{\link{omega}}
 #' @param only.value logical value. If \code{TRUE} (Default) the only Gaussian correletion (\code{x} input variable of \code{\link{omega}}) is returned, 
 #' otherwise  the complete output of \code{\link{uniroot}} is returned.
@@ -21,10 +21,12 @@ NULL
 #' 
 #' @return  value of expected correlation between the corresponding Gaussian-distributed variables (see \code{x} input argument of \code{\link{omega}}.
 #' 
-#' @note This function find the zero of the  \code{\link{omega_root}} function by calling \code{\link{uniroot}}. 
+#' @note This function finds the zero of the  \code{\link{omega_root}} function by calling \code{\link{uniroot}}. 
 #' If the argument \code{p0} is not \code{NULL} and is a matrix of joint probabilities, the function returns a correlation matrix by using the elements of \code{p0} ass joint probabilities for each couple and \code{p0_v1} as a vector of marginal probability of each occurence/no-occurence
 #' (In this case if the length of \code{p0_v1} does not correspond to the number of columns of \code{p0}, the marginal probabilities are taken from the diagonal of \code{p0}).
-#' See the R code for major details
+#' See the R code for major details. 
+#' 
+#' 
 #' @import Matrix
 #' @seealso \code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}}(and reference URLs therein)
 #' @export
@@ -56,15 +58,14 @@ omega_inv <- function(p0=NULL,p0_v1=0.5,p0_v2=p0_v1,p00=p0_v1*p0_v2,correlation=
 	
 	if (!is.null(p0)) {
 		out <- NULL
-		print ("Hmm... p0 - first argument - must be a matrix of probabilities!!!" )
+		message("Hmm... p0 - first argument - must be a matrix of probabilities!!!" )
 	
 		out <- array(NA,c(nrow(p0),ncol(p0)))
 		if (length(p0_v1)!=nrow(p0)) p0_v1 <- diag(p0)
 		
 		for (r in 1:nrow(p0)) {
 			for (c in 1:ncol(p0)) {
-				# print(c(r,c))
-				# print(p0[r,c])
+			
 				
 				
 				
@@ -101,21 +102,16 @@ omega_inv <- function(p0=NULL,p0_v1=0.5,p0_v2=p0_v1,p00=p0_v1*p0_v2,correlation=
         names(p00) <- "p00"
 		names(p00max) <- "p00max"
 		names(p00max) <- "p00min"
-		print(p0_v1) 
-		print(p0_v2)
-		print(p00)
-		print(p00max)
-		print(p00min)
-		print(.Machine$double.eps)
+		message(p0_v1) 
+		message(p0_v2)
+		message(p00)
+		message(p00max)
+		message(p00min)
+		message(.Machine$double.eps)
 		stop("Error in omega_inv: p00 out of bounds!!")
 		#stop()
 	}
-##	print(p0_v1)
-#	print(p0_v2)
-#	print(p00)
-#	print(p00max)
-#	print(p00min)
-	
+
 	out <- uniroot(omega_root,p0_v1=p0_v1,p0_v2=p0_v2,p00=p00,correlation=correlation,interval=interval,...)
 	
 	if (only.value) out <- out$root

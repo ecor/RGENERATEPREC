@@ -14,10 +14,12 @@ NULL
 #' @param origin character string \code{"yyyy-mm-dd"} indicated the date of the first row of \code{"data"}. 
 #' @param extract string charecter referred to the state to be extracted, eg. \code{"dry"} or \code{"wet"}
 #' @param month integer vectors containing the considered months. Default is \code{1:12} (all the year). 
-#' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Dafault is \code{FALSE}.
+#' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Default is \code{FALSE}.
 #' 
 #' @export
 #'
+#' @importFrom RMAWGEN adddate
+#' @importFrom RMAWGEN continuity_ratio
 #' 
 #' @return Function returns a list of data frames containing the spell length expressed in days
 #' 
@@ -138,9 +140,9 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 			index_out <- sprintf("%04d-%02d-%02d",out[[i]]$year,out[[i]]$month,out[[i]]$day)
 			index_out <- as.Date(index_out)
 			out_df[,i] <- 0*NA
-			str(index_out)
-			print(length(which(out_df$Date %in% index_out)))
-			str(out[[i]])
+			
+		
+		
 			out_df[out_df$Date %in% index_out,i] <- out[[i]]$spell_length
 			
 		

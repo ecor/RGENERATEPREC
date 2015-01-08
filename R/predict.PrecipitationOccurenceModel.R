@@ -3,14 +3,14 @@ NULL
 
 #' @title Prediction of a  \code{PrecipitationOccurenceModel} model object
 #' 
-#' @description It is wrapper implementaion of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
+#' @description It is a wrapper of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
 #' 
 #' @param object model returned by \code{\link{PrecipitationOccurenceModel}}
 #' @param newdata predictor or exogenous variables
-#' @param type see \code{\link{predict.glm}}. DEfault is \code{"response"}
+#' @param type see \code{\link{predict.glm}}. Default is \code{"response"}. See \code{\link{predict.glm}}.
 #' @param previous logical vector containing previously occurred states.
 #' @param endogenous String vector containing the name of the endogenous variables. 
-#' It is used if the endogenous variables ar more than one, otherwise is set \code{NULL}(Default).
+#' It is used if the endogenous variables are more than one, otherwise is set \code{NULL}(Default).
 #' @param ... further arguments 
 #' 
 #' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
@@ -21,7 +21,7 @@ NULL
 #' 
 #' @rdname predict
 ##### @importFrom predict stats
-#' 
+#' @importFrom RMAWGEN normalizeGaussian_severalstations
 #' 
 #' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationAmountModel}}
 #' 
@@ -158,10 +158,7 @@ predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="respon
 				newdata[,names_label] <- previous[,l]
 				labels <- c(labels,names_label)
 			}	
-		###	print(labels)
-		###	str(newdata)
-		###	print("predictor:")
-		###	str(object$predictor)
+		
 			names(newdata)[!(names(newdata) %in% labels)] <- names(object$predictor)[!(names(object$predictor) %in% labels)]
 		}	
 		

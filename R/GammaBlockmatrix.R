@@ -99,29 +99,6 @@ CCGammaToBlockmatrix <- function(data,lag=0,p=3,...) {
 	
 	out <- blockmatrix(value=matrix,list=out)
 	
-#	if (nearPD) {
-#		
-#		nrow <- nrow(out)
-#		ncol <- ncol(out)
-#		
-#		out <- as.matrix(out)
-#		
-#		out <- as.matrix(nearPD(out,corr=TRUE)$mat)
-#	#	str(out)
-#		out <- as.blockmatrix(out,nrow=nrow,ncol=ncol)
-#	#	names <- names(out)
-#	#	class(out) <- "list"
-#	#	list <- out[names]
-#	#	names 
-#	#	names(list) <- as.vector(matrix)
-#	#	str(list)
-#	#	out <- blockmatrix(value=matrix,list=list)
-#		
-#		
-#		
-#	} 
-	
-	
 	return(out)
 	
 }

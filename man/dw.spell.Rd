@@ -23,7 +23,7 @@ dw.spell(data, valmin = 0.5, origin = "1961-1-1", extract = NULL,
   months. Default is \code{1:12} (all the year).}
 
   \item{melting.df}{logical value. If it \code{TRUE} the
-  output is melted into a data frame. Dafault is
+  output is melted into a data frame. Default is
   \code{FALSE}.}
 }
 \value{
