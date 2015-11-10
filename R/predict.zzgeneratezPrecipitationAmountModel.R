@@ -3,7 +3,7 @@ NULL
 #' 
 #' @export 
 #' @method generate PrecipitationAmountModel
-#' @S3method generate PrecipitationAmountModel
+#### @S3method generate PrecipitationAmountModel
 #' @aliases generate generate.PrecipitationAmountModel
 #' @rdname generate
 #'

@@ -8,7 +8,7 @@ NULL
 #' 
 #' @export 
 #' @method predict PrecipitationAmountModel
-#' @S3method predict PrecipitationAmountModel
+#### @S3method predict PrecipitationAmountModel
 #' @aliases predict predict.PrecipitationAmountModel
 #' @rdname predict
 #'

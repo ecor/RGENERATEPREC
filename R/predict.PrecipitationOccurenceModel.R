@@ -16,7 +16,7 @@ NULL
 #' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
 #' @export 
 #' @method predict PrecipitationOccurenceModel
-#' @S3method predict PrecipitationOccurenceModel
+#### @S3method predict PrecipitationOccurenceModel
 #' @aliases predict predict.PrecipitationOccurenceModel 
 #' 
 #' @rdname predict
@@ -194,7 +194,7 @@ NULL
 #' 
 #' @export 
 #' @method predict PrecipitationOccurenceMultiSiteModel
-#' @S3method predict PrecipitationOccurenceMultiSiteModel
+#### @S3method predict PrecipitationOccurenceMultiSiteModel
 #' @aliases predict predict.PrecipitationOccurenceMultiSiteModel
 #' @rdname predict
 #'

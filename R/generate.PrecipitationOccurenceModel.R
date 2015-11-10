@@ -18,7 +18,7 @@ NULL
 #' @seealso \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}
 #' @export 
 #' @method generate PrecipitationOccurenceModel
-#' @S3method generate PrecipitationOccurenceModel
+#### @S3method generate PrecipitationOccurenceModel
 #' @aliases generate generate.PrecipitationOccurenceModel 
 #' @rdname generate
 #' @importFrom RGENERATE generate
@@ -200,7 +200,7 @@ NULL
 #' 
 #' @export 
 #' @method generate CCGammaObjectListPerEachMonth
-#' @S3method generate CCGammaObjectListPerEachMonth
+#### @S3method generate CCGammaObjectListPerEachMonth
 #' @aliases generate generate.CCGammaObjectListPerEachMonth
 #' @rdname generate
 #' 
@@ -226,7 +226,7 @@ NULL
 #' 
 #' @export 
 #' @method generate PrecipitationOccurenceMultiSiteModel
-#' @S3method generate PrecipitationOccurenceMultiSiteModel
+#### @S3method generate PrecipitationOccurenceMultiSiteModel
 #' @aliases generate generate.PrecipitationOccurenceMultiSiteModel
 #' @rdname generate
 #' 
