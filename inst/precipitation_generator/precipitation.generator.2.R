@@ -55,7 +55,7 @@ temp_file <- system.file("examples/precipitation_generation/temperature",package
 prec_file <- system.file("examples/precipitation_generation/precipitation",package="RGENERATEPREC")
 
 
-temp_file <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
+temp_file <- "/home/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
 		
 	###	paste(temp_file,"results_uncoupled_temperature_generator_P06.rda",sep="/")
 ####prec_file <- paste(prec_file,"output_precipitation.rda",sep="/")
@@ -174,7 +174,8 @@ str(gen_mn)
 
 
 
-wpath <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article"
+####wpath <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article"
+wpath <- '/home/ecor/Dropbox/R-packages/RGENERATEPREC/inst/plot' 
 
 plotccgamma=TRUE ### TRUE 
 ####return.values=c("nooccurence","occurence","continuity_ratio","nooccurence_gcorrelation","nooccurence_correlation")
@@ -362,10 +363,45 @@ if (qqplot_prec==TRUE) for (it in stationlist) {
 
 
 test.list <- c("precvalue.list.test","nwetday.list.test","dw.spell.test.dry","dw.spell.test.wet")
-file <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/tests/test.rda"
-save(list=test.list,file=file)
+
 
 #####
 help(xtable)
 #####
+
+nmonth <- 12
+pvalue_ks <- list()
+for (it in test.list) {
+	
+	out_ <- get(it)
+	out <- array(NA,c(length(out_),nmonth))
+	
+	for (r in 1:nrow(out)) {
+		for (c in 1:ncol(out)) { 
+		
+			
+			
+			out[r,c] <- out_[[r]][[c]]$ks.test$p.value
+			
+			
+			
+		}
+		
+		
+	}
+	rownames(out) <- names(out_)
+	colnames(out) <- sprintf("%02d",1:ncol(out))
+	
+	
+	
+	pvalue_ks[[it]] <- out
+	
+}
+
+
+test.list <- c(test.list,"pvalue_ks")
+file <- '/home/ecor/Dropbox/R-packages/RGENERATEPREC/inst/plot/test.rda'   ### "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/tests/test.rda"
+save(list=test.list,file=file)
+
+
 

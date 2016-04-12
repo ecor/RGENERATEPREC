@@ -1,5 +1,3 @@
-
-#
 NULL
 #' Precipitation Occurence Multi-Site Model
 #' 
@@ -26,7 +24,7 @@ NULL
 #' 
 #' \code{station} character string vectors containing the codes of the station used in \code{PrecipitationMultiSiteOccurenceModel}.
 #' 
-#'  @export
+#' @export
 #' 
 #' @seealso \code{\link{PrecipitationOccurenceModel}},\code{\link{CCGamma}} 
 #' 
