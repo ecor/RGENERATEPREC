@@ -55,8 +55,8 @@ temp_file <- system.file("examples/precipitation_generation/temperature",package
 prec_file <- system.file("examples/precipitation_generation/precipitation",package="RGENERATEPREC")
 
 
-temp_file <- "/home/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
-		
+##temp_file <- "/home/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
+temp_file <- "/home/ecor/Dropbox/R-packages/RGENERATEPREC/inst/temperature/results_uncoupled_temperature_generator_P06.rda"
 	###	paste(temp_file,"results_uncoupled_temperature_generator_P06.rda",sep="/")
 ####prec_file <- paste(prec_file,"output_precipitation.rda",sep="/")
 
@@ -182,7 +182,7 @@ plotccgamma=TRUE ### TRUE
 return.values=c("nooccurence","occurence","nooccurence_occurence","occurence_nooccurence","continuity_ratio","probability_continuity_ratio","nooccurence_gcorrelation","nooccurence_correlation")
 titles_long <- c("Joint probabilities that station pairs are both dry","Joint probabilities that station pairs are both wet","Joint probabilities that one station is dry and the other one is wet","Joint probabilities that one station is wet and the other one is dry",
 		"Continuity Ratio","Occurrence Continuity Ratio","Wilks Gaussian Correlation that station pairs are both dry"
-		,"Binomial Correlation of Precipitetion Occurence")           
+		,"Binomial Correlation of Precipitation Occurence")           
 titles <- titles_long
 
 titles[1] <- "Dry-Dry Probability"
