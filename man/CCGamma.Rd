@@ -91,17 +91,15 @@ prec_mes <- prec_mes[,accepted]
 prec_mes <- prec_mes[,1:2]
 
 CCGamma <- CCGamma(data=prec_mes,lag=0,tolerance=0.001,only.matrix=FALSE)
+\dontrun{
 ## Not Run in the examples, uncomment to run the following line
-## CCGamma <- CCGamma(data=prec_mes,lag=0:2,tolerance=0.001,only.matrix=FALSE)
+ CCGamma <- CCGamma(data=prec_mes,lag=0:2,tolerance=0.001,only.matrix=FALSE)
 
 ## Not Run in the examples, uncomment to run the following line
-## CCGamma_monthly <- CCGamma(data=prec_mes,lag=0,tolerance=0.001,only.matrix=FALSE,
-#                     sample="monthly",origin=origin)
-
-
+ CCGamma_monthly <- CCGamma(data=prec_mes,lag=0,tolerance=0.001,only.matrix=FALSE,
+                     sample="monthly",origin=origin)
 }
-\author{
-Emanuele Cordano
+
 }
 \references{
 D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
@@ -113,4 +111,6 @@ Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for th
 \seealso{
 \code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}},\code{\link{CCGammaToBlockmatrix}}
 }
-
+\author{
+Emanuele Cordano
+}

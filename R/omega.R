@@ -28,7 +28,18 @@ NULL
 #' 
 #' @seealso \code{\link{normalCopula}},\code{\link{pcopula}}
 
-#' @import copula
+#' @import copula 
+#' 
+#' 
+#' @importFrom stats glm lm pnorm predict residuals rnorm runif sd uniroot
+#' @importFrom utils str
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' @export
 #' @examples 
 

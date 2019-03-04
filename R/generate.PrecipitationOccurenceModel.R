@@ -90,19 +90,17 @@ NULL
 #' vect <- Tx_mes[,it]-Tn_mes[,it]
 #' months <- factor(prec_mes$month)
 #' 
-#' #
-#' ### Not Run!!! 
-#' ###  Please uncomment the following lines to run them 
+
 #'  
+#' \dontrun{
+#' model <- 
+#' PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
+#' monthly.factor=months,valmin=valmin)
 #' 
-#' #model <- 
-#' #PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
-#' #monthly.factor=months,valmin=valmin)
-#' #
-#' #obs <- prec_mes[,it]>=valmin
-#' #
-#' #gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
+#' obs <- prec_mes[,it]>=valmin
 #' 
+#' gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
+#' }
 #' 
 #' ### MultiSite Generation 
 #' 
@@ -112,27 +110,26 @@ NULL
 #' 
 #' months <- factor(prec_mes$month)
 #' 
-#' #
-#' ### Not Run!!! 
-#' ###  Please uncomment the following lines to run them 
+#' 
+#' \dontrun{
 #'  
-#' #model_multisite <- 
-#' #PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
-#' #exogen=exogen,origin=origin,multisite_type="wilks")
-#' #
-#' #
+#' model_multisite <- 
+#' PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
+#' exogen=exogen,origin=origin,multisite_type="wilks")
+#' 
+#' 
 #' ## LOGIT-type Model 
-#' #model_multisite_logit <- 
-#' #PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
-#' #origin=origin,multisite_type="logit",station=station)
-#' #
-#' #
-#' #obs_multisite <- prec_mes[,station]>=valmin
-#' #
-#' #gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
-#' #
-#' #gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
-
+#' model_multisite_logit <- 
+#' PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' origin=origin,multisite_type="logit",station=station)
+#' 
+#' 
+#' obs_multisite <- prec_mes[,station]>=valmin
+#' 
+#' gen_multisite <- generate(model_multisite,exogen=exogen,origin=origin,end=end)
+#' 
+#' gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
+#' }
 
 generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
 	

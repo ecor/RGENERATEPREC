@@ -30,9 +30,6 @@ rho <- 0.4
 p00 <- omega(x=rho,p0_v1=0.5,p0_v2=0.5)
 cor00 <- omega(x=rho,p0_v1=0.5,p0_v2=0.5,correlation=TRUE)
 }
-\author{
-Emanuele Cordano
-}
 \references{
 D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
 \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
@@ -43,4 +40,6 @@ Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for th
 \seealso{
 \code{\link{normalCopula}},\code{\link{pcopula}}
 }
-
+\author{
+Emanuele Cordano
+}

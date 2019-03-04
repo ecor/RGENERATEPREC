@@ -1,5 +1,5 @@
 NULL
-
+#'
 #' 
 #' @param origin_newdata character string containing the date corresponding the first row of \code{newdata} 
 #' @param precipitation.value.random.generation logical value. 
@@ -8,10 +8,11 @@ NULL
 #' 
 #' @export 
 #' @method predict PrecipitationAmountModel
-#### @S3method predict PrecipitationAmountModel
 #' @aliases predict predict.PrecipitationAmountModel
 #' @rdname predict
 #'
+#' 
+#' 
 predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=NA,precipitation.value.random.generation=FALSE,...) {
 	
 	if (is.null(origin_newdata)) origin_newdata <- NA
@@ -77,7 +78,7 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	
 	
-	####precipitation.value.random.generation <- FALSE 
+	
 	if (precipitation.value.random.generation==TRUE)  {
 		
 		
@@ -104,7 +105,7 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 		out <- as.data.frame(out_m)
 		
 		
-		####out <- normalizeGaussian_severalstations(x=newgauss,data=obs,mean=0,sd=1,inverse=TRUE,sample=sample,origin_x=origin,origin_data=origin,...)
+		
 		
 	} else{
 		

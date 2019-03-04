@@ -93,4 +93,3 @@ probs0 <- predict(model,newdata=newdata)
 \seealso{
 \code{\link{glm}}
 }
-

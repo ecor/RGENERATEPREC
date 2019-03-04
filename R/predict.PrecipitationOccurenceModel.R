@@ -100,20 +100,22 @@ NULL
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
 #' 
-#' 
+#' \dontrun{
 #' ### Not Run 
 #' ### Please uncomment the following lines to run them 
 #' 
 #' 
-#' #model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
-#' #exogen=exogen,origin=origin,multisite_type="wilks")
-#' #
-#' #
-#' #model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
-#' #exogen=exogen,origin=origin,multisite_type="logit")
-#' #
-#' #
-#' #probs_multimodel  <- predict(model_multisite_logit)
+#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#' exogen=exogen,origin=origin,multisite_type="wilks")
+#' 
+#' 
+#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#' exogen=exogen,origin=origin,multisite_type="logit")
+#' 
+#' 
+#' probs_multimodel  <- predict(model_multisite_logit)
+#' 
+#' }
 #' 
 #' 
 

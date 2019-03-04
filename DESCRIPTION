@@ -4,13 +4,13 @@ License: GPL (>= 2)
 Title: Tools to Generate Daily-Precipitation Time Series
 Type: Package
 Author: Emanuele Cordano
-Description: The method 'generate' is extended for spatial multi-site
+Description: The method 'generate()' is extended for spatial multi-site
     stochastic generation of daily precipitation. It generates precipitation
     occurrence in several sites using logit regression (Generalized Linear
     Models) and D.S. Wilks' approach (Journal of Hydrology, 1998).
-Version: 1.2
+Version: 1.2.1
 Repository: CRAN
-Date: 2017-02-07
+Date: 2019-03-04
 Depends:
     R (>= 3.0),
     copula,
@@ -21,4 +21,4 @@ Depends:
 Imports:
     RMAWGEN
 URL: https://github.com/ecor/RGENERATEPREC
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.0

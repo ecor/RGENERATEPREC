@@ -41,33 +41,33 @@ NULL
 #' 
 #' p <- 1 ## try p <- 2 !!!  
 #' CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p,tolerance=0.001)
-#' 
+#' \dontrun{
 #' ## Not Run in the examples, uncomment to run the following line
-#' # CCGamma_1 <- CCGammaToBlockmatrix(data=prec_mes,lag=1,p=p,tolerance=0.001)
+#'  CCGamma_1 <- CCGammaToBlockmatrix(data=prec_mes,lag=1,p=p,tolerance=0.001)
 #' 
 #' 
 #' ### Alternatively, recommended ..... 
 #' ## Not Run in the examples, uncomment to run the following line
-#' # CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p+1,tolerance=0.001)
+#'  CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p+1,tolerance=0.001)
 #' 
-#' # CCGamma0 <- CCGamma[1:p,1:p]
-#' # CCGamma1 <- CCGamma[(1:p),(1:p)+1]
+#'  CCGamma0 <- CCGamma[1:p,1:p]
+#'  CCGamma1 <- CCGamma[(1:p),(1:p)+1]
 #' 
-#' # CCGamma0_inv <- solve(CCGamma0)
+#'  CCGamma0_inv <- solve(CCGamma0)
 #' 
 #' 
 #' ## Not Run in the examples, uncomment to run the following line
-#' #a1 <- blockmatmult(CCGamma0,CCGamma0_inv)
-#' # a2 <- blockmatmult(CCGamma1,CCGamma0_inv)
+#' a1 <- blockmatmult(CCGamma0,CCGamma0_inv)
+#' a2 <- blockmatmult(CCGamma1,CCGamma0_inv)
 #' 
 #' 
 #' 
-#' # CCGamma_1t <- t(CCGamma1)
-#' #CCGamma_0t <- t(CCGamma0)
+#' CCGamma_1t <- t(CCGamma1)
+#' CCGamma_0t <- t(CCGamma0)
 #' 
-#' # A <- t(solve(CCGamma_0t,CCGamma_1t))
+#'  A <- t(solve(CCGamma_0t,CCGamma_1t))
 #' 
-#' 
+#' }
 #' 
 #' @export
 

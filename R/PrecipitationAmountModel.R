@@ -1,5 +1,5 @@
 NULL
-#' ....
+#' Creates a Precipitation Occurrence Model
 #' 
 #' @param x observed precipitation amount time series (data frame)
 #' @param station string vector containing station identification codes
@@ -166,27 +166,6 @@ PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly
 
 	
 }
-
-
-#NULL
-#
-##'
-##' @param model 
-##' 
-##' 
-##' @export 
-##' 
-##' 
-#
-#
-#filling.precipitaation.amount <- function(model=NULL,occ,origin_occ,...) {
-#	
-#	
-#	occ <- 
-#	
-#	
-#	
-#}
 
 
 

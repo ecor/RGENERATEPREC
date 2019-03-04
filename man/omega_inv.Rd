@@ -4,8 +4,8 @@
 \alias{omega_inv}
 \title{This function is the inverse of \code{\link{omega}} function}
 \usage{
-omega_inv(p0 = NULL, p0_v1 = 0.5, p0_v2 = p0_v1, p00 = p0_v1 * p0_v2,
-  correlation = NA, only.value = TRUE, interval = c(-1, 1),
+omega_inv(p0 = NULL, p0_v1 = 0.5, p0_v2 = p0_v1, p00 = p0_v1 *
+  p0_v2, correlation = NA, only.value = TRUE, interval = c(-1, 1),
   tolerance = 0.001, nearPD = TRUE, force.independence = TRUE, ...)
 }
 \arguments{
@@ -47,10 +47,9 @@ See the R code for major details.
 x <- omega_inv(p0_v1=0.5,p0_v2=0.5,p00=1.1*0.5*0.5)
 omega(x,p0_v1=0.5,p0_v2=0.5)
 }
-\author{
-Emanuele Cordano
-}
 \seealso{
 \code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}}(and reference URLs therein)
 }
-
+\author{
+Emanuele Cordano
+}

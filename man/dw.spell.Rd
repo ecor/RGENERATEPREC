@@ -58,4 +58,3 @@ hist(dw.spell.dry$T0001$spell_length)
 
 
 }
-
