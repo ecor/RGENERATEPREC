@@ -24,7 +24,11 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	if (is.null(newdata)) newdata <- as.data.frame(object$x[,object$station]>=object$valmin)
 	
-	
+	print("dd") ## EC20190410
+	str(newdata)
+	print("ee")
+	str(object$x)
+	print("cc")
 	sample <- object$sample
 	
 	if (is.null(sample)) sample <- NA
@@ -41,6 +45,7 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	
 	###newdata <- as.list(newdata)
+	str(newdata) ## ADDED EC20190410
 	
 	out <- lapply(X=object[object$station],FUN=function(x,nd=NULL,...) {
 				

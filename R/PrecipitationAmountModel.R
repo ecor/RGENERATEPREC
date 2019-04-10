@@ -78,6 +78,24 @@ NULL
 #' abline(0,1)
 #' 
 #' 
+#' ## SINGLE STATION
+#' 
+#' station <- "T0083"
+#' 
+#' precamount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
+#' 
+#' val <- predict(precamount)
+#' 
+#' prec_gen <- generate(precamount)  
+#' 
+#' 
+#' 
+#' month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
+#' #####plot(month,residuals(precamount$T0090))
+#' plot(factor(month),residuals(precamount$T0090))
+#' 
+#' qqplot(prec_mes$T0083,prec_gen$T0083)
+#' abline(0,1)
 #' 
 #' 
 
@@ -93,6 +111,18 @@ PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly
 
 		
 	}
+	
+	## EC 20190410
+	
+	if (!is.data.frame(x)) {
+		
+		x <- as.data.frame(x)
+		names(x) <- station
+		
+	}
+	
+	
+	## END EC 20190410
 	amount <- x
 	occurrence <- as.data.frame(x>=valmin)
 	
@@ -124,7 +154,7 @@ PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly
 		occurrence <- adddate(occurrence,origin=origin)
 		month <- factor(occurrence$month)
 		str(month)
-		occurence <- occurrence[,names]
+		occurence <- as.data.frame(occurrence[,names])
 		occurence$month <- month
 		
 	}
