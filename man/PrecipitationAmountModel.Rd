@@ -88,19 +88,31 @@ abline(0,1)
 
 station <- "T0083"
 
-precamount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
+precamount_single <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
 
-val <- predict(precamount)
+val_single <- predict(precamount_single)
 
-prec_gen <- generate(precamount)  
+prec_gen_single <- generate(precamount_single)  
 
 
 
-month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
-#####plot(month,residuals(precamount$T0090))
-plot(factor(month),residuals(precamount$T0090))
+month <- adddate(as.data.frame(residuals(precamount_single[[station[1]]])),origin=origin)$month
+plot(factor(month),residuals(precamount_single[[station[1]]]))
 
-qqplot(prec_mes$T0083,prec_gen$T0083)
+
+### Comparison (Q-Q plot) between multi and single sites. 
+
+qqplot(prec_mes$T0083,prec_gen$T0083,col=1)
+abline(0,1)
+points(sort(prec_mes$T0083),sort(prec_gen_single$T0083),pch=2,col=2)
+legend("bottomright",pch=c(1,2),col=c(1,2),legend=c("Multi Sites","Single Site"))
+
+
+
+
+
+
+
 abline(0,1)
 
 

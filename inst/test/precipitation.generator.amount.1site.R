@@ -6,6 +6,8 @@ rm(list=ls())
 
 library(RGENERATEPREC)
 source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zPrecipitationAmountModel.R') 
+source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/PrecipitationAmountModel.R')
+source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zzgeneratezPrecipitationAmountModel.R') 
 
 set.seed(1245)
 
@@ -50,7 +52,7 @@ val <- predict(precamount)
 
 prec_gen <- generate(precamount)  
 
-print
+##print
 
 
 month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
@@ -60,7 +62,7 @@ plot(factor(month),residuals(precamount$T0090))
 qqplot(prec_mes$T0083,prec_gen$T0083)
 abline(0,1)
 
-
+##stop("ll")
 ## SINGLE STATION
 
 station <- "T0083"
@@ -69,7 +71,7 @@ precamount_1station <- PrecipitationAmountModel(prec_mes,station=station,origin=
 
 val <- predict(precamount_1station)
 
-prec_1statio_gen <- generate(precamount_1station)  
+prec_1station_gen <- generate(precamount_1station)  
 
 
 
@@ -79,4 +81,12 @@ plot(factor(month),residuals(precamount$T0090))
 
 qqplot(prec_mes$T0083,prec_1station_gen$T0083)
 abline(0,1)
+
+### Comparison
+
+qqplot(prec_mes$T0083,prec_gen$T0083,col=1)
+abline(0,1)
+points(sort(prec_mes$T0083),sort(prec_1station_gen$T0083),pch=2,col=2)
+legend("bottomright",pch=c(1,2),col=c(1,2),legend=c("Multi Sites","Single Site"))
+
 

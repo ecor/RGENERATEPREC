@@ -82,19 +82,31 @@ NULL
 #' 
 #' station <- "T0083"
 #' 
-#' precamount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
+#' precamount_single <- PrecipitationAmountModel(prec_mes,station=station,origin=origin)
 #' 
-#' val <- predict(precamount)
+#' val_single <- predict(precamount_single)
 #' 
-#' prec_gen <- generate(precamount)  
+#' prec_gen_single <- generate(precamount_single)  
 #' 
 #' 
 #' 
-#' month <- adddate(as.data.frame(residuals(precamount$T0090)),origin=origin)$month
-#' #####plot(month,residuals(precamount$T0090))
-#' plot(factor(month),residuals(precamount$T0090))
+#' month <- adddate(as.data.frame(residuals(precamount_single[[station[1]]])),origin=origin)$month
+#' plot(factor(month),residuals(precamount_single[[station[1]]]))
 #' 
-#' qqplot(prec_mes$T0083,prec_gen$T0083)
+#' 
+#' ### Comparison (Q-Q plot) between multi and single sites. 
+#' 
+#' qqplot(prec_mes$T0083,prec_gen$T0083,col=1)
+#' abline(0,1)
+#' points(sort(prec_mes$T0083),sort(prec_gen_single$T0083),pch=2,col=2)
+#' legend("bottomright",pch=c(1,2),col=c(1,2),legend=c("Multi Sites","Single Site"))
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' abline(0,1)
 #' 
 #' 
@@ -151,11 +163,13 @@ PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly
 	
 	if (sample=="monthly") {
 		names <- names(occurrence)
+		
 		occurrence <- adddate(occurrence,origin=origin)
 		month <- factor(occurrence$month)
-		str(month)
-		occurence <- as.data.frame(occurrence[,names])
-		occurence$month <- month
+		
+		occurrence <- as.data.frame(as.matrix(occurrence[,names]))
+		names(occurrence) <- names
+		occurrence$month <- month
 		
 	}
 	
@@ -165,13 +179,19 @@ PrecipitationAmountModel <- function(x,valmin=1,station=names(x),sample="monthly
 	
 	for ( it in station) {
 				
-				df <- occurence 
-				df <- df[,names(df)!=it]
+				df <- occurrence 
+				ndf <- names(df)[which(names(df)!=it)]
+				
+				df <- as.data.frame(df[,ndf])
+				names(df) <- ndf
+				
+				
+				
 				df$gamount <- gauss[,it]
 				
 				
 				names <- c("gamount",names(df)[names(df)!="gamount"])
-				str(names)
+				
 				df <- df[,names]
 				df <- df[!is.na(df$gamount),]
 				

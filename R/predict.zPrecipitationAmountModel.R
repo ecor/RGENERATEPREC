@@ -22,13 +22,18 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	###str(object$x)
 	###str(object$valmin)
 	
-	if (is.null(newdata)) newdata <- as.data.frame(object$x[,object$station]>=object$valmin)
+	if (is.null(newdata)) newdata <- as.data.frame(as.matrix(object$x[,object$station]>=object$valmin))
+	###
+	if (length(object$station)==1) {
+		
+		names(newdata) <- object$station
+		###
+	} else {
+		
+		newdata <- newdata[,object$station]
+	}
 	
-	print("dd") ## EC20190410
-	str(newdata)
-	print("ee")
-	str(object$x)
-	print("cc")
+
 	sample <- object$sample
 	
 	if (is.null(sample)) sample <- NA
@@ -36,29 +41,41 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	if (sample=="monthly") {
 		
 		names <- names(newdata)
+		
 		newdata <- adddate(newdata,origin=origin_newdata)
 		month <- factor(newdata$month)
-		newdata <- newdata[,names]
-		newdata$month <- month
+		newdata <- as.data.frame(as.matrix(newdata[,names]))
 		
+		
+		names(newdata) <- names
+		
+		newdata$month <- month
 	}
 	
 	
 	###newdata <- as.list(newdata)
-	str(newdata) ## ADDED EC20190410
+	#str(newdata) ## ADDED EC20190410
 	
 	out <- lapply(X=object[object$station],FUN=function(x,nd=NULL,...) {
 				
 				id <- attr(x,"station")
 				
 				if (!is.null(nd)) {
-					
+					print(nrow(nd))
 					out <- array(NA,nrow(nd))
+				
 					rows <- which(nd[,id]==TRUE)
 					
 					nd <- nd[rows,]
+					nnd <- attr(x$terms,"term.labels")
+					nd <- data.frame(nd[,nnd])
+					names(nd) <- nnd
 					
-					nd <- nd[,attr(x$terms,"term.labels")]
+				    ####
+					
+					
+					####
+					
 					
 					out[rows] <- predict(x,newdata=nd,...)
 					
@@ -83,12 +100,12 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	
 	
 	
-	
 	if (precipitation.value.random.generation==TRUE)  {
 		
 		
 		resid <- lapply(X=object[object$station],FUN=function(x) {sd(residuals(x),na.rm=TRUE)})
 		names(resid) <- object$station
+		
 		out_generated <- lapply(X=resid,FUN=function(x,n) {rnorm(n,mean=0,sd=x)},n=length(out[[1]]))
 		
 		out <- as.data.frame(out)
