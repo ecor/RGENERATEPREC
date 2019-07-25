@@ -67,7 +67,7 @@ for (seas in names(seasons)) {
 	
 	season <- PRECIPITATION$month %in% seasons[[seas]] 
 	
-	p0_v <- diag(continuity_ratio(prec_mes[season,],lag=0)$nooccurence)
+	p0_v <- diag(continuity_ratio(prec_mes[season,],lag=0)$nooccurrence)
 	
 	names(p0_v) <-  names
 	

@@ -42,7 +42,7 @@ prec_mes <- prec_mes[,accepted]
 
 Tx_mes <- Tx_mes[,accepted]
 Tn_mes <- Tn_mes[,accepted]
-prec_occurence_mes <- prec_mes>=valmin
+prec_occurrence_mes <- prec_mes>=valmin
 
 station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 

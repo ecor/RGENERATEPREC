@@ -21,4 +21,4 @@ Depends:
 Imports:
     RMAWGEN
 URL: https://github.com/ecor/RGENERATEPREC
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

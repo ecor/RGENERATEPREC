@@ -3,13 +3,13 @@ NULL
 #' This function finds the bivariate joint probability or the binary correlation from the corresponding Gaussian correlation \code{x}
 #'
 #' @param x value of expected correlation between the corresponding Gaussian-distributed variables 
-#' @param p0_v1,p0_v2 probability of no precipitation occurences for the v1 and v2 time series respectively. See \code{Notes}.
+#' @param p0_v1,p0_v2 probability of no precipitation occurrences for the v1 and v2 time series respectively. See \code{Notes}.
 #' @param correlation logical numeric value. Default is \code{FALSE}. If \code{TRUE} the function returns the binary correlation like eq. 6 of Mhanna, et al.,2011.
 # @param ... 
 #' 
 #' @author Emanuele Cordano
 #' 
-#' @return probability of no precipitation occurence in both v1 and v2 simultaneously. It is a matrix if \code{x} is a matrix.
+#' @return probability of no precipitation occurrence in both v1 and v2 simultaneously. It is a matrix if \code{x} is a matrix.
 #' 
 #' @note This function makes use of normal copula. A graphical introduction to this function (with its inverse) makes is present in the following URL references:  \url{http://onlinelibrary.wiley.com/doi/10.1002/joc.2305/abstract} 
 #'   and \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863} (See fig. 1 and par. 3.2) 

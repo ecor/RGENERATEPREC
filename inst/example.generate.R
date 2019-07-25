@@ -60,7 +60,7 @@ prec_mes <- prec_mes[,accepted]
 
 Tx_mes <- Tx_mes[,accepted]
 Tn_mes <- Tn_mes[,accepted]
-prec_occurence_mes <- prec_mes>=valmin
+prec_occurrence_mes <- prec_mes>=valmin
 
 station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 it <- station[2]
@@ -73,7 +73,7 @@ months <- factor(prec_mes$month)
 
 
 model <-
-		PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
+		PrecipitationOccurrenceModel(x=prec_mes[,it],exogen=vect,
 				monthly.factor=months,valmin=valmin)
 #
 obs <- prec_mes[,it]>=valmin
@@ -94,13 +94,13 @@ months <- factor(prec_mes$month)
 ###  Please uncomment the following lines to run them
 
 model_multisite <-
-		PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
+		PrecipitationOccurrenceMultiSiteModel(x=prec_mes[,station],
 				exogen=exogen,origin=origin,multisite_type="wilks")
 
 #
 ## LOGIT-type Model
 model_multisite_logit <-
-		PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+		PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,
 				origin=origin,multisite_type="logit",station=station)
 #
 #

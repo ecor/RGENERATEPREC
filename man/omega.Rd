@@ -9,12 +9,12 @@ omega(x = 0.5, p0_v1 = 0.5, p0_v2 = NA, correlation = FALSE)
 \arguments{
 \item{x}{value of expected correlation between the corresponding Gaussian-distributed variables}
 
-\item{p0_v1, p0_v2}{probability of no precipitation occurences for the v1 and v2 time series respectively. See \code{Notes}.}
+\item{p0_v1, p0_v2}{probability of no precipitation occurrences for the v1 and v2 time series respectively. See \code{Notes}.}
 
 \item{correlation}{logical numeric value. Default is \code{FALSE}. If \code{TRUE} the function returns the binary correlation like eq. 6 of Mhanna, et al.,2011.}
 }
 \value{
-probability of no precipitation occurence in both v1 and v2 simultaneously. It is a matrix if \code{x} is a matrix.
+probability of no precipitation occurrence in both v1 and v2 simultaneously. It is a matrix if \code{x} is a matrix.
 }
 \description{
 This function finds the bivariate joint probability or the binary correlation from the corresponding Gaussian correlation \code{x}

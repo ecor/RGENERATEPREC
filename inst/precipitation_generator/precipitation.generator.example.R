@@ -146,7 +146,7 @@ tolerance_wilks=0.005 ###.Machine$double.eps*10^11
 #
 
 
-model_multisite_wilks <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
+model_multisite_wilks <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
 model_amount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin,valmin=valmin)
 
 

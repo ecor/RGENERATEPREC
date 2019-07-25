@@ -7,7 +7,7 @@ NULL
 # @param x value of expected correlation between the corresponding Gaussian-distributed variables 
 #' @param p0 matrix of joint probabilities. Default is \code{NULL}, otherwise functions returns a matrix with values 
 #' @param p0_v1,p0_v2 probablity of no precipitatin occurrences for the v1 and v2 time series respectively. 
-#' @param p00 probability of no precipitation occurence in both v1 and v2 simultanously returned by \code{\link{omega}}
+#' @param p00 probability of no precipitation occurrence in both v1 and v2 simultanously returned by \code{\link{omega}}
 #' @param only.value logical value. If \code{TRUE} (Default) the only Gaussian correletion (\code{x} input variable of \code{\link{omega}}) is returned, 
 #' otherwise  the complete output of \code{\link{uniroot}} is returned.
 #' @param correlation numerical value. DEfault is \code{NA}.  Binary correlation retured by \code{\link{omega}}  when the argumet \code{correlation=TRUE} (see \code{\link{omega_root}})
@@ -22,7 +22,7 @@ NULL
 #' @return  value of expected correlation between the corresponding Gaussian-distributed variables (see \code{x} input argument of \code{\link{omega}}.
 #' 
 #' @note This function finds the zero of the  \code{\link{omega_root}} function by calling \code{\link{uniroot}}. 
-#' If the argument \code{p0} is not \code{NULL} and is a matrix of joint probabilities, the function returns a correlation matrix by using the elements of \code{p0} ass joint probabilities for each couple and \code{p0_v1} as a vector of marginal probability of each occurence/no-occurence
+#' If the argument \code{p0} is not \code{NULL} and is a matrix of joint probabilities, the function returns a correlation matrix by using the elements of \code{p0} ass joint probabilities for each couple and \code{p0_v1} as a vector of marginal probability of each occurrence/no-occurrence
 #' (In this case if the length of \code{p0_v1} does not correspond to the number of columns of \code{p0}, the marginal probabilities are taken from the diagonal of \code{p0}).
 #' See the R code for major details. 
 #' 

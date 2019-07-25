@@ -3,11 +3,11 @@
 # Author: ecor
 ###############################################################################
 NULL
-#' Precipitation Occurence Model
+#' Precipitation Occurrence Model
 #' 
-#' This functions creates a stochastic Occurence Model for the variable  \code{x} (\code{PrecipitationOccurenceModel} S3 object) through a calibration from observed data.     
+#' This functions creates a stochastic Occurrence Model for the variable  \code{x} (\code{PrecipitationOccurrenceModel} S3 object) through a calibration from observed data.     
 #' 
-#' @param x variable utilized for the auto-regression of its occurence, e.g. daily precipitaton 
+#' @param x variable utilized for the auto-regression of its occurrence, e.g. daily precipitaton 
 #' @param p auto-regression order 
 #' @param exogen exogenous predictors
 #' @param monthly.factor vector of factors indicating the month of the days
@@ -16,7 +16,7 @@ NULL
 #' @param ... further arguments
 #' 
 #' 
-#' @return The function returns a \code{PrecipitationOccurenceModel-class} S3 object containing the following elements:
+#' @return The function returns a \code{PrecipitationOccurrenceModel-class} S3 object containing the following elements:
 #' 
 #' \code{predictor} data frame containg the endogenous and exogenous predictors of the logistic regression model;
 #' 
@@ -62,7 +62,7 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 
@@ -70,7 +70,7 @@ NULL
 #' vect <- Tx_mes[,it]-Tn_mes[,it]
 #' months <- factor(prec_mes$month)
 
-#' model <- PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months)
+#' model <- PrecipitationOccurrenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months)
 #' 
 #'probs <- predict(model$glm,type="response")
 #' 
@@ -88,7 +88,7 @@ NULL
 
 ###
 
-PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,valmin=0.5,id.name=NULL,...) {
+PrecipitationOccurrenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,valmin=0.5,id.name=NULL,...) {
 	
 	if (is.null(valmin)) valmin <- NA
 	if (!is.na(valmin)) variable <- x>=valmin
@@ -165,7 +165,7 @@ PrecipitationOccurenceModel <- function(x,exogen=NULL,p=1,monthly.factor=NULL,va
 		out$id.name <-  NA
 	}
 	
-	class(out) <- "PrecipitationOccurenceModel"
+	class(out) <- "PrecipitationOccurrenceModel"
 	return(out)
 	
 	

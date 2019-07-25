@@ -1,12 +1,12 @@
 
 NULL 
 
-#' Stochastic Generation of a  \code{PrecipitationOccurenceModel} or \code{PrecipitationOccurenceMultiSiteModel} model object
+#' Stochastic Generation of a  \code{PrecipitationOccurrenceModel} or \code{PrecipitationOccurrenceMultiSiteModel} model object
 #' 
 #' It is an implentation of \code{\link{generate}} method 
 #' 
-#' @param x model returned by \code{\link{PrecipitationOccurenceModel}} or \code{\link{PrecipitationOccurenceMultiSiteModel}}
-#' @param newdata predictor or exogenous variables. See \code{\link{predict.PrecipitationOccurenceModel}}
+#' @param x model returned by \code{\link{PrecipitationOccurrenceModel}} or \code{\link{PrecipitationOccurrenceMultiSiteModel}}
+#' @param newdata predictor or exogenous variables. See \code{\link{predict.PrecipitationOccurrenceModel}}
 #' @param exogen  predictor or exogenous variables
 #' @param monthly.factor vector of factors indicating the month of the days
 #' @param random vector of random or calculated numbers ranging between 0 and 1 
@@ -15,11 +15,11 @@ NULL
 #' @param previous logical vector containing previously occurred states
 #' @param ... further arguments 
 #' 
-#' @seealso \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationOccurenceMultiSiteModel}}
+#' @seealso \code{\link{generate}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurrenceModel}},\code{\link{PrecipitationOccurrenceMultiSiteModel}}
 #' @export 
-#' @method generate PrecipitationOccurenceModel
-#### @S3method generate PrecipitationOccurenceModel
-#' @aliases generate generate.PrecipitationOccurenceModel 
+#' @method generate PrecipitationOccurrenceModel
+#### @S3method generate PrecipitationOccurrenceModel
+#' @aliases generate generate.PrecipitationOccurrenceModel 
 #' @rdname generate
 #' @importFrom RGENERATE generate
 #'
@@ -82,7 +82,7 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 
@@ -94,7 +94,7 @@ NULL
 #'  
 #' \dontrun{
 #' model <- 
-#' PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,
+#' PrecipitationOccurrenceModel(x=prec_mes[,it],exogen=vect,
 #' monthly.factor=months,valmin=valmin)
 #' 
 #' obs <- prec_mes[,it]>=valmin
@@ -114,13 +114,13 @@ NULL
 #' \dontrun{
 #'  
 #' model_multisite <- 
-#' PrecipitationOccurenceMultiSiteModel(x=prec_mes[,station],
+#' PrecipitationOccurrenceMultiSiteModel(x=prec_mes[,station],
 #' exogen=exogen,origin=origin,multisite_type="wilks")
 #' 
 #' 
 #' ## LOGIT-type Model 
 #' model_multisite_logit <- 
-#' PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,
 #' origin=origin,multisite_type="logit",station=station)
 #' 
 #' 
@@ -131,7 +131,7 @@ NULL
 #' gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origin,end=end)
 #' }
 
-generate.PrecipitationOccurenceModel <- function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
+generate.PrecipitationOccurrenceModel <- function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
 	
 	p <- x$p
 	
@@ -222,13 +222,13 @@ NULL
 #' 
 #' 
 #' @export 
-#' @method generate PrecipitationOccurenceMultiSiteModel
-#### @S3method generate PrecipitationOccurenceMultiSiteModel
-#' @aliases generate generate.PrecipitationOccurenceMultiSiteModel
+#' @method generate PrecipitationOccurrenceMultiSiteModel
+#### @S3method generate PrecipitationOccurrenceMultiSiteModel
+#' @aliases generate generate.PrecipitationOccurrenceMultiSiteModel
 #' @rdname generate
 #' 
 
-generate.PrecipitationOccurenceMultiSiteModel <- function(x,exogen,n=10,origin="1961-1-1",end="1990-1-1",previous=NULL,monthly.factor=NULL,...) {
+generate.PrecipitationOccurrenceMultiSiteModel <- function(x,exogen,n=10,origin="1961-1-1",end="1990-1-1",previous=NULL,monthly.factor=NULL,...) {
 	
 	
 	out <- NULL 

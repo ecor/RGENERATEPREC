@@ -1,11 +1,11 @@
 
 NULL
 
-#' @title Prediction of a  \code{PrecipitationOccurenceModel} model object
+#' @title Prediction of a  \code{PrecipitationOccurrenceModel} model object
 #' 
-#' @description It is a wrapper of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurenceModel} model object S3 class. 
+#' @description It is a wrapper of \code{\link{predict.glm}} method for the a \code{PrecipitationOccurrenceModel} model object S3 class. 
 #' 
-#' @param object model returned by \code{\link{PrecipitationOccurenceModel}}
+#' @param object model returned by \code{\link{PrecipitationOccurrenceModel}}
 #' @param newdata predictor or exogenous variables
 #' @param type see \code{\link{predict.glm}}. Default is \code{"response"}. See \code{\link{predict.glm}}.
 #' @param previous logical vector containing previously occurred states.
@@ -13,17 +13,17 @@ NULL
 #' It is used if the endogenous variables are more than one, otherwise is set \code{NULL}(Default).
 #' @param ... further arguments 
 #' 
-#' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}}
+#' @seealso \code{\link{predict.glm}},\code{\link{PrecipitationOccurrenceModel}}
 #' @export 
-#' @method predict PrecipitationOccurenceModel
-#### @S3method predict PrecipitationOccurenceModel
-#' @aliases predict predict.PrecipitationOccurenceModel 
+#' @method predict PrecipitationOccurrenceModel
+#### @S3method predict PrecipitationOccurrenceModel
+#' @aliases predict predict.PrecipitationOccurrenceModel 
 #' 
 #' @rdname predict
 ##### @importFrom predict stats
 #' @importFrom RMAWGEN normalizeGaussian_severalstations
 #' 
-#' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurenceModel}},\code{\link{PrecipitationAmountModel}}
+#' @seealso \code{\link{predict.glm}},\code{\link{predict.glm}},\code{\link{PrecipitationOccurrenceModel}},\code{\link{PrecipitationAmountModel}}
 #' 
 #' @examples
 #' 
@@ -62,7 +62,7 @@ NULL
 #' origin <- paste(year_min,1,1,sep="-")
 #' 
 #' 
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 
@@ -70,7 +70,7 @@ NULL
 #' vect <- Tx_mes[,it]-Tn_mes[,it]
 #' months <- factor(prec_mes$month)
 
-#' model <- PrecipitationOccurenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months)
+#' model <- PrecipitationOccurrenceModel(x=prec_mes[,it],exogen=vect,monthly.factor=months)
 #' 
 #' probs <- predict(model)
 #' 
@@ -88,7 +88,7 @@ NULL
 #' 
 #' 
 #'
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 #' 
@@ -105,11 +105,11 @@ NULL
 #' ### Please uncomment the following lines to run them 
 #' 
 #' 
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#' model_multisite <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,
 #' exogen=exogen,origin=origin,multisite_type="wilks")
 #' 
 #' 
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,
+#' model_multisite_logit <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,
 #' exogen=exogen,origin=origin,multisite_type="logit")
 #' 
 #' 
@@ -120,7 +120,7 @@ NULL
 #' 
 
 
-predict.PrecipitationOccurenceModel <- function(object,newdata=NULL,type="response",previous=NULL,endogenous=NULL,...) {
+predict.PrecipitationOccurrenceModel <- function(object,newdata=NULL,type="response",previous=NULL,endogenous=NULL,...) {
 	
 	if (object$p<1) previous <- NULL
 	
@@ -195,12 +195,12 @@ NULL
 #' 
 #' 
 #' @export 
-#' @method predict PrecipitationOccurenceMultiSiteModel
-#### @S3method predict PrecipitationOccurenceMultiSiteModel
-#' @aliases predict predict.PrecipitationOccurenceMultiSiteModel
+#' @method predict PrecipitationOccurrenceMultiSiteModel
+#### @S3method predict PrecipitationOccurrenceMultiSiteModel
+#' @aliases predict predict.PrecipitationOccurrenceMultiSiteModel
 #' @rdname predict
 #'
-predict.PrecipitationOccurenceMultiSiteModel <- function(object,...) { ## exogen=NULL commented
+predict.PrecipitationOccurrenceMultiSiteModel <- function(object,...) { ## exogen=NULL commented
 	   	
 	out <- NULL
 	if (object$type=="wilks") {
