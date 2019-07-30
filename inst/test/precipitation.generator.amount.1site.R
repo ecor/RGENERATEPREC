@@ -5,9 +5,9 @@
 rm(list=ls())
 
 library(RGENERATEPREC)
-source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zPrecipitationAmountModel.R') 
-source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/PrecipitationAmountModel.R')
-source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zzgeneratezPrecipitationAmountModel.R') 
+#source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zPrecipitationAmountModel.R') 
+#source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/PrecipitationAmountModel.R')
+#source('/home/ecor/Dropbox/R-packages/RGENERATEPREC/R/predict.zzgeneratezPrecipitationAmountModel.R') 
 
 set.seed(1245)
 

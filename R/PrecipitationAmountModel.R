@@ -1,5 +1,5 @@
 NULL
-#' Creates a Precipitation Occurrence Model
+#' Creates a Precipitation Amount Model
 #' 
 #' @param x observed precipitation amount time series (data frame)
 #' @param station string vector containing station identification codes
