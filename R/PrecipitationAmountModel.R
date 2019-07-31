@@ -13,7 +13,7 @@ NULL
 #' @return The function returns AN S3 OBJECT ...... the correlation matrix of precipitation amount values (excluding the zeros). 
 #' In case \code{sample=="monthly"} the runction return a \code{MonlthyList} S3 object.
 #' 
-#' @seealso \code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
+#' @seealso \code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}},\code{\link{generate}}
 ############# ,\code{\link{generate}},\code{\link{random.precipitation.values}},\code{\link{cor}}
 #' 
 #' @export

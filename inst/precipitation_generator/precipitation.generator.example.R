@@ -56,7 +56,8 @@ prec_file <- system.file("examples/precipitation_generation/precipitation",packa
 
 
 temp_file <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
-		
+temp_file <- '/STORAGE/projects/R-Packages/RGENERATEPREC/inst/temperature/results_uncoupled_temperature_generator_P06.rda' 
+temp_file <- system.file('temperature/results_uncoupled_temperature_generator_P06.rda', package="RGENERATEPREC")
 	###	paste(temp_file,"results_uncoupled_temperature_generator_P06.rda",sep="/")
 ####prec_file <- paste(prec_file,"output_precipitation.rda",sep="/")
 

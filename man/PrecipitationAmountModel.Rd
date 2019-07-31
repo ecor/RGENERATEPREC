@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrecipitationAmountModel.R
 \name{PrecipitationAmountModel}
 \alias{PrecipitationAmountModel}
-\title{Creates a Precipitation Occurrence Model}
+\title{Creates a Precipitation Amount Model}
 \usage{
 PrecipitationAmountModel(x, valmin = 1, station = names(x),
   sample = "monthly", origin = "1961-1-1", ...)
@@ -25,7 +25,7 @@ The function returns AN S3 OBJECT ...... the correlation matrix of precipitation
 In case \code{sample=="monthly"} the runction return a \code{MonlthyList} S3 object.
 }
 \description{
-Creates a Precipitation Occurrence Model
+Creates a Precipitation Amount Model
 }
 \examples{
 library(RGENERATEPREC)
@@ -118,5 +118,5 @@ abline(0,1)
 
 }
 \seealso{
-\code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
+\code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}},\code{\link{generate}}
 }
