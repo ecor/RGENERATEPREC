@@ -53,13 +53,24 @@ NULL
 #' hist(dw.spell.dry$T0001$spell_length)
 #' 
 #' 
+#' ## Single Gauging Station
+#' 
+#' prec_mes <- prec_mes[,1]
+#' 
+#' origin <- paste(year_min,1,1,sep="-")
+#' dw.spell <- dw.spell(prec_mes,origin=origin)
+#' dw.spell.dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+#' 
+#' hist(dw.spell.dry$T0001$spell_length)
+
+
 
 
 dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE) {
 	
 	
 	out <- list()
-	
+	data <- as.data.frame(data)
 	data <- adddate(data,origin=origin)
 	nrdata <- nrow(data)
 	
