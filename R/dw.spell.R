@@ -47,10 +47,10 @@ NULL
 #' prec_mes <- prec_mes[,1:3]
 #' 
 #' origin <- paste(year_min,1,1,sep="-")
-#' dw.spell <- dw.spell(prec_mes,origin=origin)
-#' dw.spell.dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+#' dw_spell <- dw.spell(prec_mes,origin=origin)
+#' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
 #' 
-#' hist(dw.spell.dry$T0001$spell_length)
+#' hist(dw_spell_dry$T0001$spell_length)
 #' 
 #' 
 #' ## Single Gauging Station
@@ -58,10 +58,10 @@ NULL
 #' prec_mes <- prec_mes[,1]
 #' 
 #' origin <- paste(year_min,1,1,sep="-")
-#' dw.spell <- dw.spell(prec_mes,origin=origin)
-#' dw.spell.dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+#' dw_spell <- dw.spell(prec_mes,origin=origin)
+#' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
 #' 
-#' hist(dw.spell.dry$T0001$spell_length)
+#' hist(dw_spell_dry[[1]]$spell_length)
 
 
 
@@ -77,9 +77,9 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 	ignore.date <- !(names(data) %in% c("year","month","day"))
 	###data <- data[,!(names(data) %in% c("year","month","day"))]
 	
-	for (c in 1:ncol(data[,ignore.date])){
+	for (c in 1:ncol(as.data.frame(data[,ignore.date]))){
 		
-		val <- as.vector(data[,ignore.date][,c])
+		val <- as.vector(as.data.frame(data[,ignore.date])[,c])
 		
 		spell_state <- array("dry",length(val))
 		
@@ -122,7 +122,7 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 		
 	}
 	
-	names(out) <- names(data[,ignore.date])
+	names(out) <- names(as.data.frame(data[,ignore.date]))
 	
 	if (!is.null(extract)) {
 		
