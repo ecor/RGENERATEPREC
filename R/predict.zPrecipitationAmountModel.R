@@ -22,8 +22,14 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 	###str(object$x)
 	###str(object$valmin)
 	
-	if (is.null(newdata)) newdata <- as.data.frame(as.matrix(object$x[,object$station]>=object$valmin))
-	###
+	if (is.null(newdata)) {
+		newdata <- as.data.frame(as.matrix(object$x[,object$station]>=object$valmin))
+	} else {
+		
+		newdata <- as.data.frame(newdata)
+	}
+		
+		###
 	if (length(object$station)==1) {
 		
 		names(newdata) <- object$station
@@ -61,7 +67,7 @@ predict.PrecipitationAmountModel <- function(object,newdata=NULL,origin_newdata=
 				id <- attr(x,"station")
 				
 				if (!is.null(nd)) {
-					print(nrow(nd))
+				###	print(nrow(nd))
 					out <- array(NA,nrow(nd))
 				
 					rows <- which(nd[,id]==TRUE)

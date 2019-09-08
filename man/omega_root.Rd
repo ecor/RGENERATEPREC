@@ -10,9 +10,9 @@ omega_root(x = 0.5, p0_v1 = 0.5, p0_v2 = 0.5, p00 = p0_v1 * p0_v2,
 \arguments{
 \item{x}{value of expected correlation between the corresponding Gaussian-distributed variables}
 
-\item{p0_v1, p0_v2}{probablity of no precipitatin occurences for the v1 and v2 time series respectively.}
+\item{p0_v1, p0_v2}{probablity of no precipitatin occurrences for the v1 and v2 time series respectively.}
 
-\item{p00}{probability of no precipitation occurence in both v1 and v2 simultanously returned by \code{\link{omega}}}
+\item{p00}{probability of no precipitation occurrence in both v1 and v2 simultanously returned by \code{\link{omega}}}
 
 \item{correlation}{numerical value. DEfault is \code{NA}.  Binary correlation retured by \code{\link{omega}}  when the argumet \code{correlation=TRUE}}
 }

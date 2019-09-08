@@ -1,7 +1,7 @@
 NULL
-#' Precipitation Occurence Multi-Site Model
+#' Precipitation Occurrence Multi-Site Model
 #' 
-#' This functions creates a stochastic Occurence Multi-Site Model for the variable  \code{x} (\code{PrecipitationOccurenceMultiSiteModel} S3 object) through a calibration from observed data.     
+#' This functions creates a stochastic Occurrence Multi-Site Model for the variable  \code{x} (\code{PrecipitationOccurrenceMultiSiteModel} S3 object) through a calibration from observed data.     
 #' 
 #' @param x data frame (each column is a site) of variable utilized for the auto-regression of its occurrence, e.g. daily precipitaton 
 #' @param exogen exogenous predictors
@@ -14,19 +14,19 @@ NULL
 #' @param ... further arguments
 #' 
 #' 
-#' @return The function returns a \code{PrecipitationOccurenceModel-class} S3 object containing the following elements:
+#' @return The function returns a \code{PrecipitationOccurrenceModel-class} S3 object containing the following elements:
 #' 
-#' ... \code{\link{PrecipitationOccurenceModel}} S3 class objects for each analyzed site. The name is the site (or station) code
+#' ... \code{\link{PrecipitationOccurrenceModel}} S3 class objects for each analyzed site. The name is the site (or station) code
 #' 
 #' \code{ccgama} \code{CCGammaObjectListPerEachMonth} object, i.e. matices of Gaussian Inter-Site  Correlation returned by \code{\link{CCGamma}};
 #' 
 #' \code{type} string indicating the utilized approach for spatial multi-site dependence description, only \code{"wilks"} type is implemented;
 #' 
-#' \code{station} character string vectors containing the codes of the station used in \code{PrecipitationMultiSiteOccurenceModel}.
+#' \code{station} character string vectors containing the codes of the station used in \code{PrecipitationMultiSiteOccurrenceModel}.
 #' 
 #' @export
 #' 
-#' @seealso \code{\link{PrecipitationOccurenceModel}},\code{\link{CCGamma}} 
+#' @seealso \code{\link{PrecipitationOccurrenceModel}},\code{\link{CCGamma}} 
 #' 
 #' @import stringr
 #' @examples
@@ -64,7 +64,7 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 
@@ -74,16 +74,16 @@ NULL
 #' \dontrun{
 #' #' ### Not Run!! 
 #' # The following lines are commented to save example elapsed time!!
-#' model_multisite <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' model_multisite <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,
 #' origin=origin,multisite_type="wilks")
 #' 
 #' ### Not Run!! 
 #' #  The following lines are commented to save example elapsed time!!
-#' model_multisite_logit <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,
+#' model_multisite_logit <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,
 #' origin=origin,multisite_type="logit")
 #'  
 #' }
-PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),origin=origin,valmin=0.5,multisite_type="wilks",tolerance_wilks=0.001,p=2,...) {
+PrecipitationOccurrenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),origin=origin,valmin=0.5,multisite_type="wilks",tolerance_wilks=0.001,p=2,...) {
 	
 	x <- adddate(x,origin=origin)
 	monthly.factor <- factor(x$month)
@@ -122,7 +122,7 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 				exogen_loc <- exogen
 			}
 			
-			out[[it]] <- PrecipitationOccurenceModel(x=x[,it],exogen=exogen_loc,monthly.factor=monthly.factor,valmin=valmin,p=p,id.name=it,...)
+			out[[it]] <- PrecipitationOccurrenceModel(x=x[,it],exogen=exogen_loc,monthly.factor=monthly.factor,valmin=valmin,p=p,id.name=it,...)
 			
 		}
 		
@@ -187,7 +187,7 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 		out <- list()
 		for (it in station) { 
 			
-			out[[it]] <- PrecipitationOccurenceModel(x=x[,it],exogen=df,monthly.factor=monthly.factor,valmin=valmin,p=0,...)
+			out[[it]] <- PrecipitationOccurrenceModel(x=x[,it],exogen=df,monthly.factor=monthly.factor,valmin=valmin,p=0,...)
 			out[[it]]$p <- p
 		}
 		
@@ -214,7 +214,7 @@ PrecipitationOccurenceMultiSiteModel <- function(x,exogen=NULL,station=names(x),
 	out$type <- multisite_type
 	out$station <- station 
 	out$p <- p 
-	class(out) <- "PrecipitationOccurenceMultiSiteModel"
+	class(out) <- "PrecipitationOccurrenceMultiSiteModel"
 	return(out)
 	
 	

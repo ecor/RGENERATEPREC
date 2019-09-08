@@ -146,7 +146,7 @@ tolerance_wilks=0.005 ###.Machine$double.eps*10^11
 #
 
 
-model_multisite_wilks <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
+model_multisite_wilks <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
 model_amount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin,valmin=valmin)
 
 
@@ -178,11 +178,11 @@ str(gen_mn)
 wpath <- '/home/ecor/Dropbox/R-packages/RGENERATEPREC/inst/plot' 
 
 plotccgamma=TRUE ### TRUE 
-####return.values=c("nooccurence","occurence","continuity_ratio","nooccurence_gcorrelation","nooccurence_correlation")
-return.values=c("nooccurence","occurence","nooccurence_occurence","occurence_nooccurence","continuity_ratio","probability_continuity_ratio","nooccurence_gcorrelation","nooccurence_correlation")
+####return.values=c("nooccurrence","occurrence","continuity_ratio","nooccurrence_gcorrelation","nooccurrence_correlation")
+return.values=c("nooccurrence","occurrence","nooccurrence_occurrence","occurrence_nooccurrence","continuity_ratio","probability_continuity_ratio","nooccurrence_gcorrelation","nooccurrence_correlation")
 titles_long <- c("Joint probabilities that station pairs are both dry","Joint probabilities that station pairs are both wet","Joint probabilities that one station is dry and the other one is wet","Joint probabilities that one station is wet and the other one is dry",
 		"Continuity Ratio","Occurrence Continuity Ratio","Wilks Gaussian Correlation that station pairs are both dry"
-		,"Binomial Correlation of Precipitation Occurence")           
+		,"Binomial Correlation of Precipitation Occurrence")           
 titles <- titles_long
 
 titles[1] <- "Dry-Dry Probability"

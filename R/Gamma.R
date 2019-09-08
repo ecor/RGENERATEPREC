@@ -2,10 +2,10 @@
 #
 NULL
 #'
-#' This function extends \code{\link[RMAWGEN]{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurence. 
+#' This function extends \code{\link[RMAWGEN]{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurrence. 
 #'
 #' @param data data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link[RMAWGEN]{continuity_ratio}}.
-#' @param lag numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurence. See \code{\link[RMAWGEN]{continuity_ratio}}.
+#' @param lag numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurrence. See \code{\link[RMAWGEN]{continuity_ratio}}.
 #' @param p positive integer parameter. Default is \code{NA}, otherwise, \code{lag} is calculated as the vector \code{0:p}. 
 #' @param valmin threshold precipitation value [mm] for wet/dry day indicator. 
 #' If precipitation is lower than \code{valmin}, day is considered dry. Default is 0.5 mm. See \code{\link[RMAWGEN]{continuity_ratio}}.
@@ -14,7 +14,7 @@ NULL
 #' @param interval,tolerance see \code{\link{omega_inv}}
 #' @param only.matrix logical value. If \code{TRUE} the function returns only the gaussian correlaton matrix. Deafaul is \code{FALSE}.
 #' @param return.value string. If it is not either \code{NULL} (Default) and \code{NA}, function returns only the argument indicated by this argument.
-#' @param null.gcorrelation numerical value \code{nooccurence_gcorrelation}  under which is considered to be 0. 
+#' @param null.gcorrelation numerical value \code{nooccurrence_gcorrelation}  under which is considered to be 0. 
 #' @param sample character string indicated if function must be calculated differently for subset of the year, e.g. monthly. Admitted values are \code{NULL} (Default), \code{"all"} or \code{"monthly"}. 
 #' @param origin character string (yyyy-dd-mm) indicated the date of the first row of \code{"data"}. It is used if \code{data} and \code{sample} are not \code{NULL}. 
 #' @param ... additional agruments of \code{\link{omega_inv}} or \code{\link{CCGamma}}
@@ -36,20 +36,20 @@ NULL
 #'
 #' \code{continuity_ratio} : \code{lag}-day lagged  continuity ratio, as returned by \code{\link[RMAWGEN]{continuity_ratio}}; 
 #'
-#' \code{occurence}  : joint probability of \code{lag}-day lagged precipitation occurence, as returned by \code{\link[RMAWGEN]{continuity_ratio}}; 
+#' \code{occurrence}  : joint probability of \code{lag}-day lagged precipitation occurrence, as returned by \code{\link[RMAWGEN]{continuity_ratio}}; 
 #' 
-#' \code{nooccurence} : joint probability of \code{lag}-day lagged no precipitation occurence, as returned by \code{\link[RMAWGEN]{continuity_ratio}};
+#' \code{nooccurrence} : joint probability of \code{lag}-day lagged no precipitation occurrence, as returned by \code{\link[RMAWGEN]{continuity_ratio}};
 #' 
 #' \code{lag} : number of days lagged between the two compared events (see argument \code{lag});
 #' 
-#' \code{p0_v1} : vector of marginal probability of no precipitation occurence. If \code{lag}
-#' is 0, it corresponds to the diagonal of  \code{nooccurence} matrix (see argument \code{p0_v1});
+#' \code{p0_v1} : vector of marginal probability of no precipitation occurrence. If \code{lag}
+#' is 0, it corresponds to the diagonal of  \code{nooccurrence} matrix (see argument \code{p0_v1});
 #' 
-#' \code{nooccurence_gcorrelation} corresponding gaussian correlation for no precipitation occurence obtained by applying \code{\link{omega_inv}} to \code{nooccurence},
+#' \code{nooccurrence_gcorrelation} corresponding gaussian correlation for no precipitation occurrence obtained by applying \code{\link{omega_inv}} to \code{nooccurrence},
 #' 
 # ##### \code{TransintionMatrixMCFirstOrder} List of transition matrices (with condinitioned probability values) of the first-order Markov Chain.  See \code{\link{TransitionMatrixMCFirstOrder}}.
 #' 
-#' If the argument \code{only.matrix} is \code{TRUE}, only \code{nooccurence_gcorrelation} is returned as a matrix. 
+#' If the argument \code{only.matrix} is \code{TRUE}, only \code{nooccurrence_gcorrelation} is returned as a matrix. 
 #' In case the argument \code{lag} is a vector wirh length more than one, the function returns a list of the above-cited return object for each value of the vector \code{lag}.
 #' 
 #' 
@@ -146,7 +146,7 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 				
 				
 				out <- NULL 
-				text <- "nooccurence"
+				text <- "nooccurrence"
 				
 				if ((length(p0_v1)==0)) {
 					
@@ -169,18 +169,18 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 					out$p0_v1 <- p0_v1
 					message("lag")
 					message(lag)
-					out$nooccurence_correlation <- out[[text]]
+					out$nooccurrence_correlation <- out[[text]]
 					
 					#### CORRECTION HERE FOR p0v
 					
 					
 					
 					#####
-					for (r in 1:nrow(out$nooccurence_correlation)) {
-						for (c in 1:ncol(out$nooccurence_correlation)) {
+					for (r in 1:nrow(out$nooccurrence_correlation)) {
+						for (c in 1:ncol(out$nooccurrence_correlation)) {
 							
 							p0v <- diag(out[[text]])
-							out$nooccurence_correlation[r,c] <- (out[[text]][r,c]-p0_v1[r]*p0_v1[c])/(p0_v1[r]*p0_v1[c]*(1-p0_v1[r])*(1-p0_v1[c]))^0.5
+							out$nooccurrence_correlation[r,c] <- (out[[text]][r,c]-p0_v1[r]*p0_v1[c])/(p0_v1[r]*p0_v1[c]*(1-p0_v1[r])*(1-p0_v1[c]))^0.5
 							
 						}
 						
@@ -190,8 +190,8 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 					### NOOCCURENCE_CORRELATION
 				    
 					
-					out$nooccurence_gcorrelation <- omega_inv(p0=out[[text]],p0_v1=p0_v1,correlation=NA,only.value=TRUE,interval=interval,tolerance=tolerance,nearPD=nearPD,...)
-					out$nooccurence_gcorrelation[abs(out$nooccurence_gcorrelation)<null.gcorrelation] <- 0 ## added on 2014 03 18
+					out$nooccurrence_gcorrelation <- omega_inv(p0=out[[text]],p0_v1=p0_v1,correlation=NA,only.value=TRUE,interval=interval,tolerance=tolerance,nearPD=nearPD,...)
+					out$nooccurrence_gcorrelation[abs(out$nooccurrence_gcorrelation)<null.gcorrelation] <- 0 ## added on 2014 03 18
 			
 					### out$TransintionMatrixMCFirstOrder
 					
@@ -199,7 +199,7 @@ CCGamma <- function(data,lag=0,p0_v1=NULL,p=NA,valmin=0.5,nearPD=(lag>=0),interv
 		           
 		
 					if (only.matrix) {
-						out <- out$nooccurence_gcorrelation
+						out <- out$nooccurrence_gcorrelation
 					} else {
 						
 						class(out) <- "CCGammaObject"

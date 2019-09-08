@@ -1,5 +1,5 @@
 NULL
-#' Creates a Precipitation Occurrence Model
+#' Creates a Precipitation Amount Model
 #' 
 #' @param x observed precipitation amount time series (data frame)
 #' @param station string vector containing station identification codes
@@ -13,7 +13,7 @@ NULL
 #' @return The function returns AN S3 OBJECT ...... the correlation matrix of precipitation amount values (excluding the zeros). 
 #' In case \code{sample=="monthly"} the runction return a \code{MonlthyList} S3 object.
 #' 
-#' @seealso \code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}}
+#' @seealso \code{\link{predict.PrecipitationAmountModel}},\code{\link[RMAWGEN]{normalizeGaussian_severalstations}},\code{\link{generate}}
 ############# ,\code{\link{generate}},\code{\link{random.precipitation.values}},\code{\link{cor}}
 #' 
 #' @export
@@ -57,7 +57,7 @@ NULL
 #' 
 #' Tx_mes <- Tx_mes[,accepted]
 #' Tn_mes <- Tn_mes[,accepted]
-#' prec_occurence_mes <- prec_mes>=valmin
+#' prec_occurrence_mes <- prec_mes>=valmin
 #' 
 #' station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
 #' 

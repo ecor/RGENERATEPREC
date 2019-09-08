@@ -56,7 +56,8 @@ prec_file <- system.file("examples/precipitation_generation/precipitation",packa
 
 
 temp_file <- "/Users/ecor/Dropbox/R-packages/RGENERATEPRECVis/inst/article/temperature/results_uncoupled_temperature_generator_P06.rda"
-		
+temp_file <- '/STORAGE/projects/R-Packages/RGENERATEPREC/inst/temperature/results_uncoupled_temperature_generator_P06.rda' 
+temp_file <- system.file('temperature/results_uncoupled_temperature_generator_P06.rda', package="RGENERATEPREC")
 	###	paste(temp_file,"results_uncoupled_temperature_generator_P06.rda",sep="/")
 ####prec_file <- paste(prec_file,"output_precipitation.rda",sep="/")
 
@@ -146,7 +147,7 @@ tolerance_wilks=0.005 ###.Machine$double.eps*10^11
 #
 
 
-model_multisite_wilks <- PrecipitationOccurenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
+model_multisite_wilks <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,origin=origin,p=p,valmin=valmin,tolerance_wilks=tolerance_wilks,multisite_type="wilks",station=station)
 model_amount <- PrecipitationAmountModel(prec_mes,station=station,origin=origin,valmin=valmin)
 
 
