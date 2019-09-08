@@ -70,7 +70,7 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 	
 	
 	out <- list()
-	data <- as.data.frame(data)
+	
 	data <- adddate(data,origin=origin)
 	nrdata <- nrow(data)
 	
