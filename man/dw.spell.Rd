@@ -51,10 +51,19 @@ prec_mes <- prec_mes[,accepted]
 prec_mes <- prec_mes[,1:3]
 
 origin <- paste(year_min,1,1,sep="-")
-dw.spell <- dw.spell(prec_mes,origin=origin)
-dw.spell.dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+dw_spell <- dw.spell(prec_mes,origin=origin)
+dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
 
-hist(dw.spell.dry$T0001$spell_length)
+hist(dw_spell_dry$T0001$spell_length)
 
 
+## Single Gauging Station
+
+prec_mes <- prec_mes[,1]
+
+origin <- paste(year_min,1,1,sep="-")
+dw_spell <- dw.spell(prec_mes,origin=origin)
+dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+
+hist(dw_spell_dry[[1]]$spell_length)
 }
