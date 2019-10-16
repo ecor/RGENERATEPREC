@@ -60,13 +60,14 @@ NULL
 #' origin <- paste(year_min,1,1,sep="-")
 #' dw_spell <- dw.spell(prec_mes,origin=origin)
 #' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+#' dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",from.start=TRUE) ## rdry spell is referenced to the first day instead of the latest one as default. 
 #' 
 #' hist(dw_spell_dry[[1]]$spell_length)
 
 
 
 
-dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE) {
+dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE,from.start=FALSE) {
 	
 	
 	out <- list()
@@ -118,6 +119,16 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 		temp$spell_state <- spell_state
 		
 		
+		### FROM START ## mod EC 20191016
+		if (from.start==TRUE) {
+			
+		 end_date <- as.Date(paste(temp$year,temp$month,temp$day,sep="-"))
+		 start_date <- end_date-temp$spell_length+1
+		 temp$day <- as.numeric(as.character(start_date,format="%d"))
+		 temp$month <- as.numeric(as.character(start_date,format="%m"))
+		 temp$year <- as.numeric(as.character(start_date,format="%Y"))
+		 
+		}		
 		out[[c]] <- temp 
 		
 	}
