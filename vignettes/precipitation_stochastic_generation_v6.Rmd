@@ -4,9 +4,9 @@ author: "Emanuele Cordano"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Stochastic Generation of Daily Precipitation}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \VignetteEncoding{UTF-8}
 bibliography: bibliography.bib
 ---
 
@@ -648,11 +648,9 @@ dfp <- df[df$obs>valmin,]
 ```
 
 ```{r eval=TRUE,fig.width=7}
-color_month <- rep(c("red","green","blue"),4)[c(12,1:11)]
-google.cols <- yarrr::piratepal(palette = "google",trans = .2) 
-color_month <- google.cols[color_month] %>% str_sub(1,7)
-color_month <-  rep(c("#E6352F","#34A74B","#3D79F3" ),4)[c(12,1:11)]###"#E6352F" "#34A74B" "#3D79F3" "#E6352F" "#34A74B" "#3D79F3" "#E6352F"
-##[12] "#34A74B"
+
+color_month <-  rep(c("#E6352F","#34A74B","#3D79F3" ),4)[c(12,1:11)]
+
 gdens <- ggplot(data=dfp)+geom_density(aes(x=obs,color=month,group=month),trim=TRUE)+facet_grid(season ~ .)+theme_bw()
 gdens <- gdens+scale_color_manual(values = color_month)
 
