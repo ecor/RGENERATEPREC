@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ## Overview
 
 
-Stochastic generators of weather variables, called "Weather Generators" (WGs) have been widely developed in the recent decades for hydrological and agricultural applications[e.g.  @Richardson1981,@Racsko1991,@Semenov1997,@Parlange2000,@Liu2009,@Chen2012,@Chen2014,@Cordano2016,@Verdin2018]. These instruments have been used in several applications related to plant hooenology and agriculture [e.g. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4999131/ (INSESRT CITATION)@Benmoussa2018, @Alikadic2019] and hydroclimatic case studies [e.g. @Fu2018,@Ahn2018]. Former applications of WGs are the reproductions of daily weather time series from downscaled monthly climate predictions [@Mearns2001,@Wilks1999,@Qian2002,@Semenov2010]. If high-resolution application models are to be used with downscaled series, a meteorological consistence of generated series is required, suggesting the use of a multi-site weather generator. Algorithms to represent historical spatial dependences of weather variables have been developed e.g. by @Wilks1998,@Khalili2009,@Serinaldi2009,@Bardossy2009. @Wilks1998 simulated rainfall occurrences through a generation of combinations of Gaussian random variables and established a relationship for each pair of rain gauges between Gaussian variables correlation and binary precipitation occurrence values. In this way, weather generators can reproduce at least partially spatial correlations. This approach is widely cited in literature @Mehrotra2006,@Brissette2007,@Serinaldi2009,@Thompson2007,@Mhanna2011.  
+Stochastic generators of weather variables, called "Weather Generators" (WGs) have been widely developed in the recent decades for hydrological and agricultural applications[e.g.  @Richardson1981,@Racsko1991,@Semenov1997,@Parlange2000,@Liu2009,@Chen2012,@Chen2014,@Cordano2016,@Verdin2018]. These instruments have been used in several applications related to plant hooenology and agriculture [e.g. @Delerce2016, @Benmoussa2018, @Alikadic2019] and hydroclimatic case studies [e.g. @Fu2018,@Ahn2018]. Former applications of WGs are the reproductions of daily weather time series from downscaled monthly climate predictions [@Mearns2001,@Wilks1999,@Qian2002,@Semenov2010]. If high-resolution application models are to be used with downscaled series, a meteorological consistence of generated series is required, suggesting the use of a multi-site weather generator. Algorithms to represent historical spatial dependences of weather variables have been developed e.g. by @Wilks1998,@Khalili2009,@Serinaldi2009,@Bardossy2009. @Wilks1998 simulated rainfall occurrences through a generation of combinations of Gaussian random variables and established a relationship for each pair of rain gauges between Gaussian variables correlation and binary precipitation occurrence values. In this way, weather generators can reproduce at least partially spatial correlations. This approach is widely cited in literature @Mehrotra2006,@Brissette2007,@Serinaldi2009,@Thompson2007,@Mhanna2011.  
 In principle, **RMAWGEN** (RMultisite Auto-regressive Weather Generator) was developed to cope with the demand for high-resolution climatic scenarios but also  to create a flexible tool for engineers, climatologists, and environmental sciences modellers.
 Recently, statistical methods useful for weather generation, originally developed in environmetrics and econometrics, were made available in the R platform. **RMAWGEN**  uses  R's existing tools for vector auto-regressive models @vars, employed for generation of weather variables @Adenomon2013,@Luguterah2013,@Shahin2014,  and to let the end users work with other R spatio-temporal tools for data analysis and visualization @Bivand2008,@Loecher2012,@Kahle2013. **RMAWGEN** @RMAWGEN carries out generations of weather series through Vector Auto-regressive Models; the latter work generally well for time-continuous variables, but present some critical issues for intermittent weather variables like precipitation. Meanwhile, \citep{RGENERATE} has been created to create several the stochasic generation algorithms by using a unique S3/S4 method called starting from the ones  in *RMAWGEN* to other models, where stochastic weather generations follow different algorithms.   *RGENERATEPREC* contains an extension the *generate* methods in order to make a stochstic generation of precipitations, using logistic regression instead of linear regression used for the Gaussianized variables in *RMAWGEN*. 
 
@@ -152,6 +152,7 @@ head(prec_occurence_mes)
 ### Occurrence
 
 A precipitation occurrence generator model is created in order to reproduce a time series consistent with observed time series in:
+
 ```{r eval=TRUE}
 it1 <- "T0083" #station[2]
 it1
@@ -187,7 +188,7 @@ Then, a genaralized linear model :
 summary(model1$glm)
 ```
 
-The third element is the order of the autoregression, i.e. how many day before whise data are used for the regression in the genaralized linear model: 
+The third element is the order of the autoregression, i.e. the number of previous days whose data are used as predictors in the genaralized linear model: 
 
 ```{r eval=TRUE}
 model1$p
@@ -212,8 +213,10 @@ probs <- predict(model1$glm,type="response")
 ```
 
 where *probs* is the predicted probabability of precipitation occurrence releted to the time series of the observed values: each element of *probs* corresponds to the day of the corresponding row of the input dataset *prec_mes[,it]*. 
-In case of model is applied to a daily time series of precipitation occurrence and exogenous variale, i.e. predictors, they must be included as a new data frame equal to *newdata* argument: 
+In case that the model is applied to a daily time series of precipitation occurrence and exogenous variale, i.e. predictors, they must be included as a new data frame equal to *newdata* argument:
+
 ```{r eval=TRUE}
+
 row_test <- 2000:2007
 newdata <- model1$predictor[row_test,]
 ```
@@ -264,7 +267,7 @@ containing the following items:
 names(model1_amount)
 ```
 
-The  first item is a generalized linear model, in which Gaussianized value of precipitation depends on months: 
+The  first item is a generalized linear model, in which Gaussianized value of precipitation depends on month: 
 
 ```{r eval=TRUE}
 
@@ -306,7 +309,6 @@ The stochastic coherence between oberseved and generated time series is verified
 
 ```{r eval=TRUE,fig.width=12}
 
-###   https://mgimond.github.io/ES218/Week05b.html
 library(ggplot2)
 library(lubridate)
 library(reshape2)
@@ -412,32 +414,32 @@ and the remaining ones are:
 ```{r eval=TRUE}
 class(model$ccgamma)
 ```
-which is matrix of corresponding  Gaussian correlation of precipitation occurrances calculated with the algorithm introduced by  @Wilks1998 (related documentation under preperation); this method is used  alternatively to a complete logistic regression among stations that would have been computationally heavy;  
+in which *ccgamma* is a matrix of corresponding Gaussian correlation of precipitation occurrences calculated with the algorithm introduced by @Wilks1998; this method makes use of a bijective relationships between correlation of binomial processes and Gaussian processes and is used  alternatively to a complete logistic regression among stations that would have been computationally heavier;  
 
 ```{r eval=TRUE}
 class(model$K)
 ```
 
-which corresponds to the dimensionality (i.e. the number of the gauging stations);
+in which *K* corresponds to the dimensionality (i.e. the number of the gauging stations);
 
 ```{r eval=TRUE}
 class(model$type)
 ```
 
-which is the type of the model: in this case, it is based on Wilks' approach to handle the plurality of the gauging stations;
+in which *type* is the type of the model: in this case, it is based on Wilks' approach to handle the plurality of the gauging stations;
 
 ```{r eval=TRUE}
 class(model$station)
 ```
 
-which is a vector of the names of the gauging stations;
+in which *station* is a vector of the names of the gauging stations;
 
 
 ```{r eval=TRUE}
 class(model$p)
 ```
 
-which is the lag order of autoregression for the generalized linear model. 
+in which *p* is the lag order of autoregression for the generalized linear model. 
 Therefore, the stochastic generation is made by applying *generate* method to the model:  
 
 ```{r eval=TRUE}
@@ -448,7 +450,8 @@ str(prec_gen_occ)
 ### Amount 
 
 
-The precipitation amount stochastic generator is then built as follows: firt, a model is created:
+The precipitation amount stochastic generator is then built as follows: 
+
 ```{r eval=TRUE}
 
 model_amount <- PrecipitationAmountModel(prec_mes,station=they,origin=origin)
@@ -468,7 +471,7 @@ containing the following items:
 names(model_amount)
 ```
 
-The  first are generalized linear models, in which Gaussianized values of precipitation depend on month of the year:
+The  first elements are generalized linear models, in which Gaussianized values of precipitation depend on month of the year:
 
 ```{r eval=TRUE}
 for (its in model_amount$station) summary(model_amount[[its]])
@@ -601,7 +604,7 @@ The comparison of sample probability distribution between observed and generated
 
 
 
-In conclusion, the spatial statistical coherence between observed an generated time-series can be checked making use of *CCGamma* function:
+In conclusion, the spatial statistical correlation between observed and generated time series can be checked making use of *CCGamma* function:
 
 
 ```{r eval=TRUE,echo=TRUE,message=FALSE,fig.width=12}
@@ -610,7 +613,7 @@ str(prec_gen[,they])
 cc_mes <- CCGamma(prec_mes[,they],sample = "monthly",origin = origin)
 cc_gen <- CCGamma(prec_gen[,they],sample = "monthly",origin = origin)
 ```
-where *cc_mes* and *cc_gen* are list containing joint probability and correlation matrix among precipation occurrences for each couple of sites. In case of *sample=monthly* setting, these matrices replicated for each of the 12 months of the year. THe structures of  *cc_mes* and *cc_gen* can be displayed as follows:
+where *cc_mes* and *cc_gen* are lists containing joint probability and correlation matrices among precipitation occurrences for each couple of sites. In case of *sample=monthly* setting, these matrices are replicated for each of the 12 months of the year. The structures of  *cc_mes* and *cc_gen* can be displayed as follows:
 
 ```{r eval=TRUE,echo=TRUE,results="hide",fig.width=12}
 str(cc_mes)
@@ -630,7 +633,7 @@ cc_gen %>% lapply(function(x){x$nooccurrence_correlation})
 ## Adaptation on Precipitation Projection
 
 
-Let assume that once tested and verified the stochastic generation model, the precipitation stochastic generator may be used to generate a time series with specific probability distribution of daily precipitation (e.g. future climate change scenarios). The observed daily precipitation sample distribution for the reference station  is retrieved and plotted as follows:
+Let assume that once tested and verified the stochastic generation model, the precipitation stochastic generator may be used to generate a time series with specific probability distribution of daily precipitation (e.g. future climate change scenarios). The observed daily precipitation sample distribution for the reference station is retrieved and plotted as follows:
 
 ```{r eval=TRUE}
 df <- data.frame(obs=prec_mes[,it1],gen=prec_gen1[,it1])
@@ -643,8 +646,6 @@ df$season[df$month %in% c(6,7,8)] <-  "3.JJA"
 df$season[df$month %in% c(9,10,11)] <-  "4.SON"
 
 dfp <- df[df$obs>valmin,] 
-
-###prec_val  <- split(df$obs,f=df$month) %>% lapply(FUN=function(x,valmin){x[x>valmin]},valmin=valmin)
 ```
 
 ```{r eval=TRUE,fig.width=7}
@@ -658,7 +659,7 @@ show(gdens)
 
 ```
 
-Though L-momemnt method @lmom , the samples of daily precipitation are fitted with a LN3 (@Sangal1970) distribution, in most of months the null hypothesis of the Kolgormov-Smirnov test can be accepted  (*pvalue>0.1*):  
+Though L-momemnt method @lmom , the monthly samples of daily precipitation are fitted with a LN3 (@Sangal1970) distribution, in most of months the null hypothesis of the Kolgormov-Smirnov test can be accepted  (*pvalue>0.1*):  
 
 ```{r eval=TRUE}
 
@@ -666,7 +667,7 @@ library(lmom)
 
 prec_val_m <- dfp$obs %>% split(dfp$month) 
 lmoms <- prec_val_m %>% lapply(FUN=samlmu) 
-##prec_val is missing ## SOLVE THIS ISSUE!!!
+
 params <- lmoms %>% lapply(FUN=pelln3,bound=valmin) 
 kstest <-params %>% mapply(FUN=ks.test,x=prec_val_m,y="cdfln3",SIMPLIFY=FALSE) 
 
@@ -723,7 +724,7 @@ names(prec_mod) <- it1
 model1_amount_mod <- PrecipitationAmountModel(prec_mod,station=it1,origin=origin)
 prec_gen1_mod <- generate(model1_amount_mod,newdata=prec_gen1_occ)
 str(prec_gen1_mod)
-##
+
 ```
 
 
@@ -767,22 +768,9 @@ show(g)
 ```
 
 
-
-
-
-
-
-<!-- https://stackoverflow.com/questions/6989015/ecdf-on-the-same-plot-using-ggplot2 -->
-
 ## Conclusions
 
-An examples of the usage of the precipitation stochastic generation containd in **RGENERATEPREC** package has been showed. Qisualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing) the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series can be chacked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has showed an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability) has been finally illustrated.
-
-<!-- For historical resaon, *tidyverse* dialact were not used in this vigngette, the reader is free to use **RGENERATEPREC** and adpt the snippet of code towards **tidyverse** dialect. -->
-
-<!-- This vignette shoes an example of a stochastic generation based on  a single observed time series in a rainfall gauging station and a generation of several time series based on a network of rainfall gauging stations. Therefore, an examples of stochastic generator of daily time series based on monthly climate future projections. The examples makes used of the example dataset already presented in **RMAWGEN** package, dataset already imported by **RGENERATEPREC**. -->
-
-
+An example of the usage of the precipitation stochastic generation containd in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing) the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series can be chacked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has showed an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability) has been finally illustrated.
 
 
 ## References 
