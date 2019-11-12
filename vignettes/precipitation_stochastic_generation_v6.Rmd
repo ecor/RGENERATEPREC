@@ -630,7 +630,7 @@ cc_gen %>% lapply(function(x){x$nooccurrence_correlation})
 ```
 
 
-## Adaptation on Precipitation Projection
+## Modifying Precipitation Distribution (e.g. Precipitation Futture Projection)
 
 
 Let assume that once tested and verified the stochastic generation model, the precipitation stochastic generator may be used to generate a time series with specific probability distribution of daily precipitation (e.g. future climate change scenarios). The observed daily precipitation sample distribution for the reference station is retrieved and plotted as follows:
@@ -659,7 +659,7 @@ show(gdens)
 
 ```
 
-Though L-momemnt method @lmom , the monthly samples of daily precipitation are fitted with a LN3 (@Sangal1970) distribution, in most of months the null hypothesis of the Kolgormov-Smirnov test can be accepted  (*pvalue>0.1*):  
+Though thw method of L-moments (@lmom) , the monthly samples of daily precipitation are fitted with a LN3 (@Sangal1970) distribution, in most of months the null hypothesis of the Kolgormov-Smirnov test can be accepted  (*pvalue>0.1*):  
 
 ```{r eval=TRUE}
 
@@ -770,7 +770,7 @@ show(g)
 
 ## Conclusions
 
-An example of the usage of the precipitation stochastic generation containd in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing) the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series can be chacked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has showed an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability) has been finally illustrated.
+An example of the usage of the precipitation stochastic generation containd in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing) the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series can be chacked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has shown an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability or future projections) has been finally illustrated.
 
 
 ## References 
