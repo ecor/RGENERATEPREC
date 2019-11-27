@@ -1,0 +1,783 @@
+---
+title: "Stochastic Generation of Daily Precipitation"
+author: "Emanuele Cordano"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stochastic Generation of Daily Precipitation}
+  %\VignetteEngine{knitr::rmarkdown}
+  \VignetteEncoding{UTF-8}
+bibliography: bibliography.bib
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+## Overview
+
+
+Stochastic generators of weather variables, called "Weather Generators" (WGs) have been widely developed in the recent decades for hydrological and agricultural applications  (e.g.  @Richardson1981 @Racsko1991, @Semenov1997, @Parlange2000,@Liu2009,@Chen2012,@Chen2014,@Cordano2016, @Verdin2018 ). These instruments have been used in several applications related to plant hooenology and agriculture (e.g. @Delerce2016, @Benmoussa2018, @Alikadic2019) and hydroclimatic case studies (e.g. @Fu2018, @Ahn2018). Former applications of WGs are the reproductions of daily weather time series from downscaled monthly climate predictions (@Mearns2001,@Wilks1999,@Qian2002,@Semenov2010). If high-resolution application models are to be used with downscaled series, a meteorological consistence of generated series is required, suggesting the use of a multi-site weather generator. Algorithms to represent historical spatial dependences of weather variables have been developed by @Wilks1998,@Khalili2009,@Serinaldi2009 and @Bardossy2009. @Wilks1998 simulated rainfall occurrences through a generation of combinations of Gaussian random variables and established a relationship for each pair of rain gauges between Gaussian variables correlation and binary precipitation occurrence values. In this way, weather generators can reproduce at least partially spatial correlations. This approach is widely cited in literature (e.g. @Mehrotra2006,@Brissette2007,@Serinaldi2009,@Thompson2007,@Mhanna2011).  
+In principle, **RMAWGEN** (RMultisite Auto-regressive Weather Generator) was developed to cope with the demand for high-resolution climatic scenarios but also  to create a flexible tool for engineers, climatologists, and environmental sciences modellers.
+Recently, statistical methods useful for weather generation, originally developed in environmetrics and econometrics, were made available in the R platform. **RMAWGEN**  uses  R's existing tools for vector auto-regressive models (@vars), employed for generation of weather variables (@Adenomon2013,@Luguterah2013,@Shahin2014),  and to let the end users work with other R spatio-temporal tools for data analysis and visualization (@Bivand2008,@Loecher2012,@Kahle2013). **RMAWGEN** (@RMAWGEN) carries out generations of weather series through Vector Auto-regressive Models; the latter work generally well for time-continuous variables, but present some critical issues for intermittent weather variables like precipitation. Meanwhile, **RGENERATE** (@RGENERATE) has been created to create several the stochasic generation algorithms by using a unique S3/S4 method called starting from the ones  in **RMAWGEN** to other models, where stochastic weather generations follow different algorithms.   **RGENERATEPREC** contains an extension the *generate* methods in order to make a stochstic generation of precipitations, using logistic regression instead of linear regression used for the Gaussianized variables in **RMAWGEN**. 
+
+
+## Introduction 
+
+The scope of this vignette is a generation of stochastic times series of daily precipitatoion with the same stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) of the observed one(s). The weather generator can work with one or more time series generating scenarios for several sites and mantainig their spatial cross-correlation. This vignette shows an example of a stochastic generation based on  a single observed time series in a rainfall gauging station and a generation of several time series based on a network of rainfall gauging stations. Therefore, an examples of stochastic generator of daily time series based on climate possible projections when precipitation amount probability distribution is assigned. The examples make used of the example dataset already presented in **RMAWGEN** package, dataset already imported by **RGENERATEPREC**.
+Therefore, package *RGENARATEPREC* and other necessary packages are loaded as follows:
+
+
+```{r eval=TRUE,echo=TRUE,results='hide',warning=FALSE,message=FALSE}
+
+library(RGENERATEPREC)
+library(lubridate)
+```
+
+## Trentino Example Dataset
+
+The _trentino_ dataset, provided by __RMAWGEN__ package, is a collection of daily values of precipitation, minimum temperature, maximum temperature in a 50-year long temporal window from 1958-01-01 to 2007-12-31 . 
+```{r eval=TRUE}
+
+data(trentino)
+
+```
+The stations are spread in a territory covering Trentino and its neighbourhood (@leaflet).
+
+```{r,echo=FALSE,return=TRUE,warning=FALSE,results='markup',message=FALSE,fig.width=7}
+URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
+ATTRIBUTION = 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+library(leaflet)
+
+leaf <- leaflet() %>% addTiles(urlTemplate=URL,attribution=ATTRIBUTION) 
+# leaf %>% addRasterImage(basin,opacity=opacity,col=color) %>% addLegend(position="bottomright",pal=color,values=basin[],opacity=opacity,title="Elevation [m]") %>% 
+# addCircleMarkers(lng=meteoloc$x,lat=meteoloc$y,label="Meteo",opacity=opacity,radius=2,color="red") %>% 
+#   addScaleBar()
+
+leaf <- leaf  %>% addMarkers(STATION_LATLON[,1],STATION_LATLON[,2],label=STATION_NAMES)
+leaf %>% setView(lng=mean(STATION_LATLON[,1]),lat=mean(STATION_LATLON[,2]),zoom=10)
+
+
+```
+
+Weather data are contained in three data frames (one for each variable) where the first 3 columns refer to year, month and day whereas the other columns refer to each gauging station. 
+
+```{r eval=TRUE,results='hide',message=FALSE}
+
+str(TEMPERATURE_MAX)
+str(TEMPERATURE_MIN)
+str(PRECIPITATION)
+  
+```
+A reference period between 1961 and 1990 is taken:
+```{r eval=TRUE}
+year_min <- 1961
+year_max <- 1990
+
+origin <- paste(year_min,1,1,sep="-")
+period <- PRECIPITATION$year>=year_min & PRECIPITATION$year<=year_max
+period_temp <- TEMPERATURE_MAX$year>=year_min & TEMPERATURE_MAX$year<=year_max
+```
+The time series in the reference period are saved as new variables: *prec_mes*,*Tx_mes* and *Tn_mes*:
+
+```{r eval=TRUE}
+prec_mes <- PRECIPITATION[period,]
+Tx_mes <- TEMPERATURE_MAX[period_temp,]
+Tn_mes <- TEMPERATURE_MIN[period_temp,]
+```
+
+The analysis has been focused only on the stations whose time series is completed within the reference period. 
+
+```{r eval=TRUE}
+accepted <- array(TRUE,length(names(prec_mes)))
+names(accepted) <- names(prec_mes)
+for (it in names(prec_mes)) {
+	acc <- TRUE
+	acc <- (length(which(!is.na(Tx_mes[,it])))==length(Tx_mes[,it]))
+	acc <- (length(which(!is.na(Tn_mes[,it])))==length(Tn_mes[,it])) & acc
+	accepted[it]  <- (length(which(!is.na(prec_mes[,it])))==length(prec_mes[,it])) & acc
+	
+}
+
+
+```
+The station involved in the computation are then the following:
+
+```{r eval=TRUE}
+names(accepted)
+
+```
+Three data frames for observed values of daily precipitation:
+```{r eval=TRUE}
+
+prec_mes <- prec_mes[,accepted]
+head(prec_mes)
+```
+
+;maximum temparature:
+
+```{r eval=TRUE}
+Tx_mes <- Tx_mes[,accepted]
+head(Tx_mes)
+```
+and minimum temparature:
+
+```{r eval=TRUE}
+Tn_mes <- Tn_mes[,accepted]
+head(Tn_mes)
+```
+
+are created.
+Rainy or wet day is defined as a day where precipition occurs and  its precipitation value is equal or greater than 1 mm. If precipation is lower or zero, the day is defined as dry. Therefore, a data frame of logical values containing precipitation occurrence is created:
+
+```{r eval=TRUE}
+valmin <- 1.0
+prec_occurence_mes <- prec_mes
+station <- names(prec_mes)[!(names(prec_mes) %in% c("day","month","year"))]
+prec_occurence_mes[,station] <- prec_mes[,station]>=valmin
+head(prec_occurence_mes)
+```
+
+
+
+
+## Generation of Precipitation in One Station
+
+
+### Occurrence
+
+A precipitation occurrence generator model is created in order to reproduce a time series consistent with observed time series in:
+
+```{r eval=TRUE}
+it1 <- "T0083" #station[2]
+it1
+```
+
+Let assume that precipitation occurrence also depend on the diurnal temperature variation which is taken into account as an exogenous variable. Therefore, a model based on a logistic regression with a generalized linear model is created and saved as _model1_ variable;
+```{r eva=TRUE}
+exogen <- Tx_mes[,it1]-Tn_mes[,it1]
+months <- factor(prec_mes$month)
+model1 <- PrecipitationOccurrenceModel(x=prec_mes[,it1],exogen=exogen,monthly.factor=months)
+```
+
+The model is an S3 opject:
+
+```{r eval=TRUE}
+class(model1)
+```
+
+constituting of a list of 5 elements:
+
+```{r eval=TRUE}
+class(unclass(model1))
+names(model1)
+```
+The first element is a data frame containing the predictor values: the exogenous variable, the month of the year and the precipiation occurrence at the previous days:
+
+```{r eval=TRUE}
+str(model1$predictor)
+```
+
+Then, a genaralized linear model :
+```{r eval=TRUE}
+summary(model1$glm)
+```
+
+The third element is the order of the autoregression, i.e. the number of previous days whose data are used as predictors in the genaralized linear model: 
+
+```{r eval=TRUE}
+model1$p
+```
+
+The minimum daily precipitation value above which the day ids considered as wet, e.g. 1 mm:
+
+```{r eval=TRUE}
+model1$valmin
+```
+
+Then, a field name is considered:
+
+```
+model$id.name
+```
+
+Once built the model, the time series of daily probabilities of precipitation occurrence can be predicted: 
+
+```{r eval=TRUE}
+probs <- predict(model1$glm,type="response")
+```
+
+where *probs* is the predicted probabability of precipitation occurrence releted to the time series of the observed values: each element of *probs* corresponds to the day of the corresponding row of the input dataset *prec_mes[,it]*. 
+In case that the model is applied to a daily time series of precipitation occurrence and exogenous variale, i.e. predictors, they must be included as a new data frame equal to *newdata* argument:
+
+```{r eval=TRUE}
+
+row_test <- 2000:2007
+newdata <- model1$predictor[row_test,]
+```
+
+For instance, subsetting the observiations, a new dataset is created:
+
+```{r eval=TRUE}
+
+head(newdata)
+newdata$probs2 <- predict(model1,newdata=newdata)
+
+head(newdata)
+```
+
+Once obtained the model, a random stochastic time series of daily precipitation occurrence is generated through *generate* method. First of all, the following predictors are needed:
+
+- a time series of exogenous variables is needeed.
+- a time series of month factor indicating the corresponding month of the year for each day of the new stochastically generated time series; 
+
+These two time series must be of the same length which corresponds to the length of the time series that is about to generate. For instance, if the time series is a replication of the observed one, it is:
+
+```{r eval=TRUE}
+exogen <- exogen
+months <- factor(prec_mes$month)
+set.seed(1235)
+prec_gen1_occ <- generate(model1,exogen=exogen,monthly.factor=months,n=length(months))
+
+```
+
+### Amount
+
+Once generated precipitation occurrence values, precipitation amount values are genereted through a stochastic generator model. The precipitation amount stochastic generator is built as follows: 
+
+```{r eval=TRUE}
+
+model1_amount <- PrecipitationAmountModel(prec_mes,station=it1,origin=origin)
+```
+
+where *model_amount* is an S3 object: 
+
+```{r eval=TRUE}
+class(model1_amount)
+```
+
+containing the following items:
+
+```{r eval=TRUE}
+names(model1_amount)
+```
+
+The  first item is a generalized linear model, in which Gaussianized value of precipitation depends on month: 
+
+```{r eval=TRUE}
+
+summary(model1_amount[[it1]])
+
+```
+
+Other items are the following variables: names of the considered station (e.g. only *"T0083"*}), the origin date of the time series used to build the model and the minimum value of precipipition to consider as precipitation occurrence, in this case 1 mm. 
+
+```{r eval=TRUE}
+
+model1_amount$station
+model1_amount$sample
+model1_amount$origin
+model1_amount$valmin
+
+```
+
+Finally, the *x* item is the data frame containing observed time series of precipitation: 
+
+```{r eval=TRUE}
+
+str(model1_amount$x)
+
+```
+
+Finally, a time series, here called *prec_gen1* , is generate by applying *generate* method to the model of precipitation account:
+
+
+```{r eval=TRUE}
+
+prec_gen1 <- generate(model1_amount,newdata=prec_gen1_occ)
+str(prec_gen1)
+```
+
+### Comparison  
+
+The stochastic coherence between oberseved and generated time series is verified through the Quantile-Quantile plot:
+
+```{r eval=TRUE,fig.width=12}
+
+library(ggplot2)
+library(lubridate)
+library(reshape2)
+df <- data.frame(obs=prec_mes[,it1],gen=prec_gen1[,it1])
+df$date <- as.Date(origin)+days(1:nrow(df))-1
+df$month <- factor(month(df$date))
+df$season <- "none"
+df$season[df$month %in% c(12,2,1)] <- "`1.DJF"
+df$season[df$month %in% c(3,4,5)] <-  "2.MAM"
+df$season[df$month %in% c(6,7,8)] <-  "3.JJA"
+df$season[df$month %in% c(9,10,11)] <-  "4.SON"
+qqplot_ <- function(df) {
+  df <- as.list(df)
+  o <- qqplot(df[[1]],df[[2]],plot.it=FALSE)
+  names(o) <- names(df)[1:2]
+  o <- as.data.frame(o)
+  return(o)
+  
+}
+
+qqdf <- split(df,f=df$season) %>% lapply(FUN=qqplot_) %>% melt(id=names(df)[1:2])
+names(qqdf)[names(qqdf)=="L1"] <- "season"
+g <- ggplot(data=qqdf)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(. ~ season)+xlab("observed")+ylab("generated")
+show(g)
+
+```
+
+A comaparison of the dry/wet spells, considered as periods of consecutive dry/rainy days, between observed and generated time series are plotted below respectively. The following lines of codes makes use of *dw.spell* function that calculates the length expressed in days for the dry or wet spells:
+
+
+```{r eval=TRUE,echo=TRUE}
+dw <- list()
+dw$obs <- dw.spell(prec_mes[,it1],origin=origin)[[1]]
+dw$obs$variable <- "obs"
+dw$gen <- dw.spell(prec_gen1[,it1],origin=origin)[[1]]
+dw$gen$variable <- "gen"
+dw <- do.call(what=rbind,args=dw)
+dw$season <- "none"
+dw$season[dw$month %in% c(12,2,1)] <- "`1.DJF"
+dw$season[dw$month %in% c(3,4,5)] <-  "2.MAM"
+dw$season[dw$month %in% c(6,7,8)] <-  "3.JJA"
+dw$season[dw$month %in% c(9,10,11)] <-  "4.SON"  
+
+qqdw <- split(dw,f=paste(dw$spell_state,dw$season,sep="_")) %>% lapply(FUN=function(x){list(obs=x$spell_length[x$variable=="obs"],gen=x$spell_length[x$variable=="gen"])}) %>% lapply(FUN=qqplot_) %>% melt(id=c("obs","gen"))
+qqdw_add <- str_split(qqdw$L1,pattern="_") %>% do.call(what=rbind) %>% as.data.frame()
+names(qqdw_add) <- c("state","season")
+qqdw <- cbind(qqdw,qqdw_add)
+
+
+```
+Therefore, the quantile-quantile plots for the dry spells are: 
+```{r eval=TRUE,fig.width=12}
+qqdry <- qqdw[qqdw$state=="dry",]
+
+## ggplot plot
+ggdry <- ggplot(data=qqdry)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(. ~ season)+xlab("observed")+ylab("generated")
+show(ggdry)
+
+```
+Analogously for the wet spells it is: 
+```{r eval=TRUE,fig.width=12}
+qqwet <- qqdw[qqdw$state=="wet",]
+
+## ggplot plot
+ggwet <- ggplot(data=qqwet)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(. ~ season)+xlab("observed")+ylab("generated")
+show(ggwet)
+
+```
+
+It is a comparison of sample probability distributtions of daily precipitation, dry and wet spells between the one obtained by the observed time series and the generated time series.
+
+
+## Generation of Precipitation in Several Stations
+
+### Occurrence 
+
+Analogously as the one-site case, a precipitation occurrence generator is created from precipitation time series taken in several correlated sites belonging to a limited geographical area. For instance, a subset of Trentino dataset stations is taken into account: 
+
+```{r eval=TRUE,message=FALSE}
+they <- c("T0083","T0090") ##station
+exogen <- Tx_mes[,they]-Tn_mes[,they]
+months <- factor(prec_mes$month)
+model <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes[,they],exogen=exogen,origin=origin)
+
+
+
+```
+
+where *model* cotains the following elements: 
+
+```{r eval=TRUE}
+names(model)
+```
+
+in which the fist (all but the last 6) elements are single-site precipitation occurrene models, one for each gauge precipitation station:
+
+```{r eval=TRUE}
+class(model[[1]])
+```
+
+and the remaining ones are: 
+
+```{r eval=TRUE}
+class(model$ccgamma)
+```
+in which *ccgamma* is a matrix of corresponding Gaussian correlation of precipitation occurrences calculated with the algorithm introduced by @Wilks1998; this method makes use of a bijective relationships between correlation of binomial processes and Gaussian processes and is used  alternatively to a complete logistic regression among stations that would have been computationally heavier;  
+
+```{r eval=TRUE}
+class(model$K)
+```
+
+in which *K* corresponds to the dimensionality (i.e. the number of the gauging stations);
+
+```{r eval=TRUE}
+class(model$type)
+```
+
+in which *type* is the type of the model: in this case, it is based on Wilks' approach to handle the plurality of the gauging stations;
+
+```{r eval=TRUE}
+class(model$station)
+```
+
+in which *station* is a vector of the names of the gauging stations;
+
+
+```{r eval=TRUE}
+class(model$p)
+```
+
+in which *p* is the lag order of autoregression for the generalized linear model. 
+Therefore, the stochastic generation is made by applying *generate* method to the model:  
+
+```{r eval=TRUE}
+prec_gen_occ <- generate(model,exogen=exogen,monthly.factor=months,n=length(months))
+str(prec_gen_occ)
+```
+
+### Amount 
+
+
+The precipitation amount stochastic generator is then built as follows: 
+
+```{r eval=TRUE}
+
+model_amount <- PrecipitationAmountModel(prec_mes,station=they,origin=origin)
+names(model_amount)
+
+```
+
+where *model_amount* is an S3 object: 
+
+```{r eval=TRUE}
+class(model_amount)
+```
+
+containing the following items:
+
+```{r eval=TRUE}
+names(model_amount)
+```
+
+The  first elements are generalized linear models, in which Gaussianized values of precipitation depend on month of the year:
+
+```{r eval=TRUE}
+for (its in model_amount$station) summary(model_amount[[its]])
+```
+
+In the following, the model contains also a vector with the name of the gauging stations and other options like for the case with only one gauging station:
+
+```{r eval=TRUE}
+
+model_amount$station
+model_amount$sample
+model_amount$origin
+model_amount$valmin
+
+```
+
+Finally, a data frame with the generated times series for each gauging station site is obtained as follows:
+
+```{r eval=TRUE}
+
+prec_gen <- generate(model_amount,newdata=prec_gen_occ)
+
+names(prec_gen)
+```
+
+
+### Comparison
+
+Quantile-quantile plots for precipitation time series both station are created as follows (if not specified, measurment units are millimiters):
+
+```{r eval=TRUE,fig.width=12}
+
+library(ggplot2)
+library(lubridate)
+library(reshape2)
+
+str(prec_mes)
+str(prec_gen)
+
+df <- list(obs=prec_mes[names(prec_gen)],gen=prec_gen)
+for ( i in 1:length(df)) {
+  df[[i]]$date <- as.Date(origin)+days(1:nrow(df[[i]]))-1
+}
+
+
+df <- melt(df,id="date")
+names(df)[names(df)=="variable"] <- "station"
+names(df)[names(df)=="L1"] <- "variable"
+df$month <- factor(month(df$date))
+df$season <- "none"
+df$season[df$month %in% c(12,2,1)] <- "1.DJF"
+df$season[df$month %in% c(3,4,5)] <-  "2.MAM"
+df$season[df$month %in% c(6,7,8)] <-  "3.JJA"
+df$season[df$month %in% c(9,10,11)] <-  "4.SON"
+
+qqdf <- split(df,f=paste(df$station,df$season,sep="_")) %>% 
+lapply(FUN=function(x){list(obs=x$value[x$variable=="obs"],gen=x$value[x$variable=="gen"])}) %>% lapply(FUN=qqplot_) %>% melt(id=c("obs","gen"))
+qqdf_add <- str_split(qqdf$L1,pattern="_") %>% do.call(what=rbind) %>% as.data.frame()
+names(qqdf_add) <- c("station","season")
+qqdf <- cbind(qqdf,qqdf_add)
+
+## ggplot plot
+ggdf <- ggplot(data=qqdf)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(station ~ season)+xlab("observed")+ylab("generated")
+show(ggdry)
+show(ggdf)
+
+```
+
+As concerns the representation and analysis of dry/wet spells, the respective quantile-quantile plots has been produces as follows: 
+
+```{r eval=TRUE,echo=TRUE}
+dw <- list()
+dw$obs <- dw.spell(prec_mes[,they],origin=origin)
+nn <- names(dw$obs[[1]])
+dw$obs <- melt(dw$obs,id=nn)
+dw$obs$variable <- "obs"
+dw$gen <- dw.spell(prec_gen[,they],origin=origin) %>% melt(id=nn)
+dw$gen$variable <- "gen"
+
+dw <- do.call(what=rbind,args=dw)
+names(dw)[names(dw)=="L1"] <- "station"
+
+dw$season <- "none"
+dw$season[dw$month %in% c(12,2,1)] <- "`1.DJF"
+dw$season[dw$month %in% c(3,4,5)] <-  "2.MAM"
+dw$season[dw$month %in% c(6,7,8)] <-  "3.JJA"
+dw$season[dw$month %in% c(9,10,11)] <-  "4.SON"  
+
+qqdw <- split(dw,f=paste(dw$spell_state,dw$station,dw$season,sep="_")) %>% lapply(FUN=function(x){list(obs=x$spell_length[x$variable=="obs"],gen=x$spell_length[x$variable=="gen"])}) %>% lapply(FUN=qqplot_) %>% melt(id=c("obs","gen"))
+
+qqdw_add <- str_split(qqdw$L1,pattern="_") %>% do.call(what=rbind) %>% as.data.frame()
+names(qqdw_add) <- c("state","station","season")
+qqdw <- cbind(qqdw,qqdw_add)
+
+
+```
+
+Finally, the quantile-quantile plots for the dry spells are: 
+
+```{r eval=TRUE,fig.width=12}
+qqdry <- qqdw[qqdw$state=="dry",]
+
+## ggplot plot
+ggdry <- ggplot(data=qqdry)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(station  ~ season)+xlab("observed")+ylab("generated")
+show(ggdry)
+
+```
+and  the quantile-quantile plots for the wet spells are: 
+```{r eval=TRUE,fig.width=12}
+qqwet <- qqdw[qqdw$state=="wet",]
+
+## ggplot plot
+ggwet <- ggplot(data=qqwet)+geom_point(aes(x=obs,y=gen))+theme_bw()+geom_abline()+facet_grid(station  ~ season)+xlab("observed")+ylab("generated")
+show(ggwet)
+
+```
+
+The comparison of sample probability distribution between observed and generated timeseries has been tested for each month of the year:
+
+```{r eval=TRUE,warning=FALSE,output=FALSE}
+      months <- unique(prec_mes$month)
+      ks_test <- list()
+      for (m in months) {
+        
+        ks_test[[m]] <- ks.test(prec_mes[prec_mes$month==m,it1],prec_gen[prec_mes$month==m,it1])
+      }
+      ks_test
+
+```
+
+
+
+In conclusion, the spatial statistical correlation between observed and generated time series can be checked making use of *CCGamma* function:
+
+
+```{r eval=TRUE,echo=TRUE,message=FALSE,fig.width=12}
+str(prec_mes[,they])
+str(prec_gen[,they])
+cc_mes <- CCGamma(prec_mes[,they],sample = "monthly",origin = origin)
+cc_gen <- CCGamma(prec_gen[,they],sample = "monthly",origin = origin)
+```
+where *cc_mes* and *cc_gen* are lists containing joint probability and correlation matrices among precipitation occurrences for each couple of sites. In case of *sample=monthly* setting, these matrices are replicated for each of the 12 months of the year. The structures of  *cc_mes* and *cc_gen* can be displayed as follows:
+
+```{r eval=TRUE,echo=TRUE,results="hide",fig.width=12}
+str(cc_mes)
+str(cc_gen)
+```
+Then, the estimated correlation matrix of no-precipitation occurrence per each month of the year and for observed time series is:
+```{r eval=TRUE,echo=FALSE,fig.width=12}
+cc_mes %>% lapply(function(x){x$nooccurrence_correlation})
+```
+
+
+```{r eval=TRUE,echo=FALSE,fig.width=12}
+cc_gen %>% lapply(function(x){x$nooccurrence_correlation})
+```
+
+
+## Modifying Precipitation Distribution (e.g. Precipitation Futture Projection)
+
+
+Let assume that once tested and verified the stochastic generation model, the precipitation stochastic generator may be used to generate a time series with specific probability distribution of daily precipitation (e.g. future climate change scenarios). The observed daily precipitation sample distribution for the reference station is retrieved and plotted as follows:
+
+```{r eval=TRUE}
+df <- data.frame(obs=prec_mes[,it1],gen=prec_gen1[,it1])
+df$date <- as.Date(origin)+days(1:nrow(df))-1
+df$month <- factor(month(df$date))
+df$season <- "none"
+df$season[df$month %in% c(12,2,1)] <- "1.DJF"
+df$season[df$month %in% c(3,4,5)] <-  "2.MAM"
+df$season[df$month %in% c(6,7,8)] <-  "3.JJA"
+df$season[df$month %in% c(9,10,11)] <-  "4.SON"
+
+dfp <- df[df$obs>valmin,] 
+```
+
+```{r eval=TRUE,fig.width=7}
+
+color_month <-  rep(c("#E6352F","#34A74B","#3D79F3" ),4)[c(12,1:11)]
+
+gdens <- ggplot(data=dfp)+geom_density(aes(x=obs,color=month,group=month),trim=TRUE)+facet_grid(season ~ .)+theme_bw()
+gdens <- gdens+scale_color_manual(values = color_month)
+
+show(gdens)
+
+```
+
+Though the method of L-moments (@lmom) , the monthly samples of daily precipitation are fitted with a LN3 (@Sangal1970) distribution, in most of months the null hypothesis of the Kolgormov-Smirnov test can be accepted  (*pvalue>0.1*):  
+
+```{r eval=TRUE}
+
+library(lmom)
+
+prec_val_m <- dfp$obs %>% split(dfp$month) 
+lmoms <- prec_val_m %>% lapply(FUN=samlmu) 
+
+params <- lmoms %>% lapply(FUN=pelln3,bound=valmin) 
+kstest <-params %>% mapply(FUN=ks.test,x=prec_val_m,y="cdfln3",SIMPLIFY=FALSE) 
+
+kstest
+
+```
+
+Making the assumption that daily precipitation amount behaves as a random variable distributed with a LN3 probability distribution, a new scernario is created with a more flatten distrution than the estimated one from observations by increasing the value of 2th L-moment. Through the computation of quantiles a relationship between observed and artificial scenerios has been assessed for each month of the year and then plotted:
+
+```{r eval=TRUE,fig.width=7}
+
+modify_lmoments <- function(x){x[2] <- x[2]*1.3; return(x)}
+paraml <- function(x,valmin) {
+                  ip <- which(x>=valmin)
+                  x <- x[ip] 
+                  out <- list()
+                  lmomx <- samlmu(x)
+                  out$obs <- pelln3(lmom=lmomx,bound=valmin)
+                  lmomx_m <- modify_lmoments(lmomx)
+                  out$mod  <- pelln3(lmom=lmomx_m,bound=valmin)
+                  return(out)
+}
+
+modify_distribution <- function(x,paraml,valmin){
+                        
+                        out <- x
+                        ip <- which(x>=valmin)
+                        out[ip] <- x[ip] %>% cdfln3(para=paraml$obs) %>% qualn3(para=paraml$mod)
+                        return(out)
+    
+}
+
+
+para_monthly <- df$obs %>% split(df$month) %>% lapply(FUN=paraml,valmin=valmin)
+
+df$obs_mod <- df$obs
+for (mo in unique(df$month))  {
+  im <- which(df$month==mo)
+  
+  df$obs_mod[im] <- modify_distribution(x=df$obs[im],paraml=para_monthly[[mo]],valmin=valmin)
+}
+color_month <-  rep(c("#E6352F","#34A74B","#3D79F3" ),4)[c(12,1:11)]
+gg <- ggplot()+geom_line(data=df,mapping=aes(x=obs,y=obs_mod,col=month))+facet_grid(. ~ season)+theme_bw()
+gg <- gg+scale_color_manual(values = color_month)
+show(gg)
+```
+
+The above figure shows the relation of each month of the year between real observations (*obs*) and modified observations (*obs_mod*).  The shape looks like a parabolic one with an quasi-exponential increasing for high values (above 100 mm). This means that a daily precipitation value above 100 mm may become (if variabilty increases) 1.5 or 2  times higher. 
+Analogously, considering the scenorio gived by *obs_mod* time series, a precipitation amount model has been built and then used for a new stochastic generation: 
+
+```{r eval=TRUE}
+prec_mod <- as.data.frame(df$obs_mod) 
+names(prec_mod) <- it1
+model1_amount_mod <- PrecipitationAmountModel(prec_mod,station=it1,origin=origin)
+prec_gen1_mod <- generate(model1_amount_mod,newdata=prec_gen1_occ)
+str(prec_gen1_mod)
+
+```
+
+
+
+```{r eval=TRUE,fig.width=12}
+df$gen_mod <- prec_gen1_mod[,it1]
+
+qqplot__ <- function(df,i=1) {
+  df <- as.list(df)
+  o <- list()
+  nn <- names(df)
+  jv <- (1:length(df))[-i]
+  for (j in jv) {
+    ot <- qqplot(df[[i]],df[[j]],plot.it=FALSE)
+    ot <- as.data.frame(ot)
+    names(ot) <- names(df)[c(i,j)]
+    o[[j]] <- ot
+  }
+  ref <- o[[jv[1]]][,1]
+  for (j in jv[-1]) {
+    ref2 <-  o[[j]][,1]
+    cond <- all(ref==ref2)
+    if (cond==FALSE) stop("qqplot__ error")
+    
+    
+  }
+  o <- do.call(args=o[jv],what=cbind)
+  o <- o[,nn] %>% melt(id=1)
+  
+  
+  return(o)
+}
+
+nnn <- c("obs_mod","gen_mod","obs")
+
+qqdf <- split(df[,nnn],f=df$season) %>% lapply(FUN=qqplot__) %>% melt(id=1:3)
+names(qqdf)[names(qqdf)=="L1"] <- "season"
+g <- ggplot(data=qqdf)+geom_point(aes(x=obs_mod,y=value,group=variable,color=variable))+theme_bw()+geom_abline()+facet_grid(. ~ season)+xlab("modified secenario through observated values [mm]")+ylab("generated / observated [mm]")
+show(g)
+
+```
+
+
+## Conclusions
+
+An example of the usage of the precipitation stochastic generation contained in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing), the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series hes been checked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has shown an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability or adaptations to future projections) has been finally illustrated.
+
+
+## References 
+
+```{r generateBibliography,echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,print=FALSE,results="hide"}
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "bibliography.bib")
+
+
+```
+

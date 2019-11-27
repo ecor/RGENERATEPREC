@@ -15,6 +15,7 @@ NULL
 #' @param extract string charecter referred to the state to be extracted, eg. \code{"dry"} or \code{"wet"}
 #' @param month integer vectors containing the considered months. Default is \code{1:12} (all the year). 
 #' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Default is \code{FALSE}.
+#' @param from.start logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.
 #' 
 #' @export
 #'
@@ -60,13 +61,18 @@ NULL
 #' origin <- paste(year_min,1,1,sep="-")
 #' dw_spell <- dw.spell(prec_mes,origin=origin)
 #' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
+#' dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",from.start=TRUE) ## dry spell 
+#' ## is referenced to the first day instead of the latest one as default. 
 #' 
 #' hist(dw_spell_dry[[1]]$spell_length)
+#' 
+#' 
 
 
 
 
-dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE) {
+
+dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,melting.df=FALSE,from.start=FALSE) {
 	
 	
 	out <- list()
@@ -118,6 +124,16 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 		temp$spell_state <- spell_state
 		
 		
+		### FROM START ## mod EC 20191016
+		if (from.start==TRUE) {
+			
+		 end_date <- as.Date(paste(temp$year,temp$month,temp$day,sep="-"))
+		 start_date <- end_date-temp$spell_length+1
+		 temp$day <- as.numeric(as.character(start_date,format="%d"))
+		 temp$month <- as.numeric(as.character(start_date,format="%m"))
+		 temp$year <- as.numeric(as.character(start_date,format="%Y"))
+		 
+		}		
 		out[[c]] <- temp 
 		
 	}
