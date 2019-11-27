@@ -10,7 +10,7 @@ Description: The method 'generate()' is extended for spatial multi-site
     Models) and D.S. Wilks' approach (Journal of Hydrology, 1998).
 Version: 1.2.5
 Repository: CRAN
-Date: 2019-10-16
+Date: 2019-11-27
 Depends:
     R (>= 3.0),
     copula,
