@@ -4,8 +4,7 @@
 \alias{nwetdays}
 \title{It calculates the number of wet days for each month and each year}
 \usage{
-nwetdays(data, valmin = 0.5, origin = "1961-1-1",
-  station = names(data))
+nwetdays(data, valmin = 0.5, origin = "1961-1-1", station = names(data))
 }
 \arguments{
 \item{data}{data frame R object containing daily precipitation time series for several gauges (one gauge time series per column).}

@@ -4,8 +4,16 @@
 \alias{dw.spell}
 \title{It calculates dry/wet spell duration.}
 \usage{
-dw.spell(data, valmin = 0.5, origin = "1961-1-1", extract = NULL,
-  month = 1:12, melting.df = FALSE, from.start = FALSE)
+dw.spell(
+  data,
+  valmin = 0.5,
+  origin = "1961-1-1",
+  extract = NULL,
+  month = 1:12,
+  melting.df = FALSE,
+  from.start = FALSE,
+  only.inner = FALSE
+)
 }
 \arguments{
 \item{data}{data frame R object containing daily precipitation time series for several gauges (one gauge time series per column).}
@@ -21,6 +29,8 @@ dw.spell(data, valmin = 0.5, origin = "1961-1-1", extract = NULL,
 \item{melting.df}{logical value. If it \code{TRUE} the output is melted into a data frame. Default is \code{FALSE}.}
 
 \item{from.start}{logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.}
+
+\item{only.inner}{logical vaalue. It is used in case \code{extract} is not \code{NULL}, in case it is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}.}
 }
 \value{
 Function returns a list of data frames containing the spell length expressed in days
@@ -66,7 +76,8 @@ prec_mes <- prec_mes[,1]
 origin <- paste(year_min,1,1,sep="-")
 dw_spell <- dw.spell(prec_mes,origin=origin)
 dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
-dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",from.start=TRUE) ## dry spell 
+dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE) ## dry spell 
+dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
 ## is referenced to the first day instead of the latest one as default. 
 
 hist(dw_spell_dry[[1]]$spell_length)

@@ -4,8 +4,15 @@
 \alias{PrecipitationOccurrenceModel}
 \title{Precipitation Occurrence Model}
 \usage{
-PrecipitationOccurrenceModel(x, exogen = NULL, p = 1,
-  monthly.factor = NULL, valmin = 0.5, id.name = NULL, ...)
+PrecipitationOccurrenceModel(
+  x,
+  exogen = NULL,
+  p = 1,
+  monthly.factor = NULL,
+  valmin = 0.5,
+  id.name = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{variable utilized for the auto-regression of its occurrence, e.g. daily precipitaton}

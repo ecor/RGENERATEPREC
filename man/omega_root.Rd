@@ -4,8 +4,13 @@
 \alias{omega_root}
 \title{This is the target function whose zero is searched to crete the inverse function of  \code{\link{omega}}.}
 \usage{
-omega_root(x = 0.5, p0_v1 = 0.5, p0_v2 = 0.5, p00 = p0_v1 * p0_v2,
-  correlation = NA)
+omega_root(
+  x = 0.5,
+  p0_v1 = 0.5,
+  p0_v2 = 0.5,
+  p00 = p0_v1 * p0_v2,
+  correlation = NA
+)
 }
 \arguments{
 \item{x}{value of expected correlation between the corresponding Gaussian-distributed variables}
