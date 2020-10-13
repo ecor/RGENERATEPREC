@@ -4,9 +4,17 @@
 \alias{PrecipitationOccurrenceMultiSiteModel}
 \title{Precipitation Occurrence Multi-Site Model}
 \usage{
-PrecipitationOccurrenceMultiSiteModel(x, exogen = NULL,
-  station = names(x), origin = origin, valmin = 0.5,
-  multisite_type = "wilks", tolerance_wilks = 0.001, p = 2, ...)
+PrecipitationOccurrenceMultiSiteModel(
+  x,
+  exogen = NULL,
+  station = names(x),
+  origin = origin,
+  valmin = 0.5,
+  multisite_type = "wilks",
+  tolerance_wilks = 0.001,
+  p = 2,
+  ...
+)
 }
 \arguments{
 \item{x}{data frame (each column is a site) of variable utilized for the auto-regression of its occurrence, e.g. daily precipitaton}

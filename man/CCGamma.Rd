@@ -4,11 +4,22 @@
 \alias{CCGamma}
 \title{This function extends \code{\link[RMAWGEN]{continuity_ratio}} and adds the corresponding gaussian correlation matrix for no-precipitation occurrence.}
 \usage{
-CCGamma(data, lag = 0, p0_v1 = NULL, p = NA, valmin = 0.5,
-  nearPD = (lag >= 0), interval = c(-1, 1),
-  tolerance = .Machine$double.eps, only.matrix = FALSE,
-  return.value = NULL, null.gcorrelation = 1e-05, sample = NULL,
-  origin = "1961-1-1", ...)
+CCGamma(
+  data,
+  lag = 0,
+  p0_v1 = NULL,
+  p = NA,
+  valmin = 0.5,
+  nearPD = (lag >= 0),
+  interval = c(-1, 1),
+  tolerance = .Machine$double.eps,
+  only.matrix = FALSE,
+  return.value = NULL,
+  null.gcorrelation = 1e-05,
+  sample = NULL,
+  origin = "1961-1-1",
+  ...
+)
 }
 \arguments{
 \item{data}{data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link[RMAWGEN]{continuity_ratio}}.}

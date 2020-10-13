@@ -9,15 +9,29 @@
 \alias{generate.PrecipitationAmountModel}
 \title{Stochastic Generation of a  \code{PrecipitationOccurrenceModel} or \code{PrecipitationOccurrenceMultiSiteModel} model object}
 \usage{
-\method{generate}{PrecipitationOccurrenceModel}(x, newdata = NULL,
-  previous = NULL, n = 30, random = runif(n, min = 0, max = 1),
-  exogen = NULL, monthly.factor = NULL, ...)
+\method{generate}{PrecipitationOccurrenceModel}(
+  x,
+  newdata = NULL,
+  previous = NULL,
+  n = 30,
+  random = runif(n, min = 0, max = 1),
+  exogen = NULL,
+  monthly.factor = NULL,
+  ...
+)
 
 \method{generate}{CCGammaObjectListPerEachMonth}(x, ...)
 
-\method{generate}{PrecipitationOccurrenceMultiSiteModel}(x, exogen,
-  n = 10, origin = "1961-1-1", end = "1990-1-1", previous = NULL,
-  monthly.factor = NULL, ...)
+\method{generate}{PrecipitationOccurrenceMultiSiteModel}(
+  x,
+  exogen,
+  n = 10,
+  origin = "1961-1-1",
+  end = "1990-1-1",
+  previous = NULL,
+  monthly.factor = NULL,
+  ...
+)
 
 \method{generate}{PrecipitationAmountModel}(x, ...)
 }

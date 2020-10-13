@@ -8,14 +8,24 @@
 \alias{predict.PrecipitationAmountModel}
 \title{Prediction of a  \code{PrecipitationOccurrenceModel} model object}
 \usage{
-\method{predict}{PrecipitationOccurrenceModel}(object, newdata = NULL,
-  type = "response", previous = NULL, endogenous = NULL, ...)
+\method{predict}{PrecipitationOccurrenceModel}(
+  object,
+  newdata = NULL,
+  type = "response",
+  previous = NULL,
+  endogenous = NULL,
+  ...
+)
 
 \method{predict}{PrecipitationOccurrenceMultiSiteModel}(object, ...)
 
-\method{predict}{PrecipitationAmountModel}(object, newdata = NULL,
-  origin_newdata = NA, precipitation.value.random.generation = FALSE,
-  ...)
+\method{predict}{PrecipitationAmountModel}(
+  object,
+  newdata = NULL,
+  origin_newdata = NA,
+  precipitation.value.random.generation = FALSE,
+  ...
+)
 }
 \arguments{
 \item{object}{model returned by \code{\link{PrecipitationOccurrenceModel}}}

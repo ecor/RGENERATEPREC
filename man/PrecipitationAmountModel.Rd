@@ -4,8 +4,14 @@
 \alias{PrecipitationAmountModel}
 \title{Creates a Precipitation Amount Model}
 \usage{
-PrecipitationAmountModel(x, valmin = 1, station = names(x),
-  sample = "monthly", origin = "1961-1-1", ...)
+PrecipitationAmountModel(
+  x,
+  valmin = 1,
+  station = names(x),
+  sample = "monthly",
+  origin = "1961-1-1",
+  ...
+)
 }
 \arguments{
 \item{x}{observed precipitation amount time series (data frame)}
@@ -28,8 +34,8 @@ In case \code{sample=="monthly"} the runction return a \code{MonlthyList} S3 obj
 Creates a Precipitation Amount Model
 }
 \examples{
-library(RGENERATEPREC)
 
+\dontrun{
 set.seed(1245)
 
 data(trentino)
@@ -115,6 +121,7 @@ legend("bottomright",pch=c(1,2),col=c(1,2),legend=c("Multi Sites","Single Site")
 
 abline(0,1)
 
+}
 
 }
 \seealso{

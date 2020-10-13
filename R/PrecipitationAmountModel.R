@@ -20,8 +20,8 @@ NULL
 #' @importFrom RMAWGEN normalizeGaussian_severalstations
 #' 
 #'@examples 
-#' library(RGENERATEPREC)
 #' 
+#' \dontrun{
 #' set.seed(1245)
 #' 
 #' data(trentino)
@@ -109,8 +109,8 @@ NULL
 #' 
 #' abline(0,1)
 #' 
+#' }
 #' 
-
 
 
 
