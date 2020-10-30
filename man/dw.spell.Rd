@@ -30,7 +30,7 @@ dw.spell(
 
 \item{from.start}{logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.}
 
-\item{only.inner}{logical vaalue. It is used in case \code{extract} is not \code{NULL}, in case it is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}.}
+\item{only.inner}{logical vaalue. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}.}
 }
 \value{
 Function returns a list of data frames containing the spell length expressed in days
@@ -76,8 +76,10 @@ prec_mes <- prec_mes[,1]
 origin <- paste(year_min,1,1,sep="-")
 dw_spell <- dw.spell(prec_mes,origin=origin)
 dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
-dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE) ## dry spell 
-dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
+dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",
+	month=5:8,from.start=TRUE) ## dry spell 
+	dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
+month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
 ## is referenced to the first day instead of the latest one as default. 
 
 hist(dw_spell_dry[[1]]$spell_length)

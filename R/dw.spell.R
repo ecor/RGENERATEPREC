@@ -16,7 +16,7 @@ NULL
 #' @param month integer vectors containing the considered months. Default is \code{1:12} (all the year). 
 #' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Default is \code{FALSE}.
 #' @param from.start logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.
-#' @param only.inner logical vaalue. It is used in case \code{extract} is not \code{NULL}, in case it is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}. 
+#' @param only.inner logical vaalue. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}. 
 #' 
 #' @export
 #'
@@ -62,8 +62,10 @@ NULL
 #' origin <- paste(year_min,1,1,sep="-")
 #' dw_spell <- dw.spell(prec_mes,origin=origin)
 #' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
-#' dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE) ## dry spell 
-#' dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
+#' dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",
+#' 	month=5:8,from.start=TRUE) ## dry spell 
+#' 	dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
+#' month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
 #' ## is referenced to the first day instead of the latest one as default. 
 #' 
 #' hist(dw_spell_dry[[1]]$spell_length)
