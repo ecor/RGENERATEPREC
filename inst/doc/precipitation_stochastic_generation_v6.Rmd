@@ -774,7 +774,10 @@ An example of the usage of the precipitation stochastic generation contained in 
 
 ```{r generateBibliography,echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,print=FALSE,results="hide"}
 
-if (!require("knitcitations")) {remotes::install_github("ecor/knitcitations")}
+if (!require("knitcitations")) {
+	remotes::install_github("ropensci/RefManageR")
+	remotes::install_github("ecor/knitcitations")
+	}
 knitcitations::cleanbib()
 options("citation_format" = "pandoc")
 knitcitations::read.bibtex(file = "bibliography.bib")
