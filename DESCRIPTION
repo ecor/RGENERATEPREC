@@ -20,7 +20,7 @@ Depends:
     stringr
 Imports:
     RMAWGEN
-Suggests: knitr,rmarkdown,lubridate,leaflet,lmom,knitcitations,ggplot2,reshape2
+Suggests: knitr,rmarkdown,lubridate,leaflet,lmom,remotes,knitcitations,ggplot2,reshape2
 VignetteBuilder: knitr
 URL: https://github.com/ecor/RGENERATEPREC
 RoxygenNote: 7.1.1
