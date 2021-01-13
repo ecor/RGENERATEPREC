@@ -27,7 +27,7 @@ citEntry(entry ="article",
  citEntry(entry ="manual",
     title = "RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series",
     author = "Emanuele Cordano",
-    year = "2019",
+    year = "2021",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATEPREC",
     textVersion="Emanuele Cordano (2019). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC"
