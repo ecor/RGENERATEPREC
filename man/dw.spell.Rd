@@ -22,7 +22,7 @@ dw.spell(
 
 \item{origin}{character string \code{"yyyy-mm-dd"} indicated the date of the first row of \code{"data"}.}
 
-\item{extract}{string charecter referred to the state to be extracted, eg. \code{"dry"} or \code{"wet"}}
+\item{extract}{string character referred to the state to be extracted, eg. \code{"dry"} or \code{"wet"}}
 
 \item{month}{integer vectors containing the considered months. Default is \code{1:12} (all the year).}
 
