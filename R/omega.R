@@ -11,17 +11,17 @@ NULL
 #' 
 #' @return probability of no precipitation occurrence in both v1 and v2 simultaneously. It is a matrix if \code{x} is a matrix.
 #' 
-#' @note This function makes use of normal copula. A graphical introduction to this function (with its inverse) makes is present in the following URL references:  \url{http://onlinelibrary.wiley.com/doi/10.1002/joc.2305/abstract} 
-#'   and \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863} (See fig. 1 and par. 3.2) 
+#' @note This function makes use of normal copula. A graphical introduction to this function (with its inverse) makes is present in the following URL references:  \url{ https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/joc.2305} 
+#'   and \url{https://www.sciencedirect.com/science/article/pii/S0022169498001863} (See fig. 1 and par. 3.2) 
 #' If the argument \code{p0_v2}, the two marginal probabily values must be given as a vector through the  argument \code{p0_v1}: \code{p0_v1=c(p0_v1,p0_v2)} . 
 #' In case \code{x} is a correlation/covariance matrix the marginal probabilities are given as a vector through the argument \code{p0_v1}.
 #'
 #' @references
 #' D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
-#' \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
+#' \url{https://www.sciencedirect.com/science/article/pii/S0022169498001863}
 #' 
 #' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
-#' \url{http://dx.doi.org/10.1002/joc.2305}
+#' \doi{10.1002/joc.2305}, \url{https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/joc.2305}
 #' 
 #'  
 #'  

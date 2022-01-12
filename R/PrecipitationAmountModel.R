@@ -21,7 +21,7 @@ NULL
 #' 
 #'@examples 
 #' 
-#' \dontrun{
+#' \donttest{
 #' set.seed(1245)
 #' 
 #' data(trentino)

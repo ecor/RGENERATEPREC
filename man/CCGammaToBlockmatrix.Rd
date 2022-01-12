@@ -2,7 +2,7 @@
 % Please edit documentation in R/GammaBlockmatrix.R
 \name{CCGammaToBlockmatrix}
 \alias{CCGammaToBlockmatrix}
-\title{This return a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.}
+\title{This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.}
 \usage{
 CCGammaToBlockmatrix(data, lag = 0, p = 3, ...)
 }
@@ -15,8 +15,11 @@ CCGammaToBlockmatrix(data, lag = 0, p = 3, ...)
 
 \item{...}{further argments of \code{\link{CCGamma}}}
 }
+\value{
+A \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.
+}
 \description{
-This return a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.
+This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.
 }
 \details{
 This a wrapper for \code{\link{CCGamma}} with the option \code{only.matrix=TRUE} and the function value is transformed into a \code{\link{blockmatrix}} object.
@@ -45,7 +48,7 @@ prec_mes <- prec_mes[,1:2]
 
 p <- 1 ## try p <- 2 !!!  
 CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p,tolerance=0.001)
-\dontrun{
+\donttest{
 ## Not Run in the examples, uncomment to run the following line
  CCGamma_1 <- CCGammaToBlockmatrix(data=prec_mes,lag=1,p=p,tolerance=0.001)
 
