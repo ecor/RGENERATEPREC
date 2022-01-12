@@ -127,10 +127,10 @@ predict.PrecipitationOccurrenceModel <- function(object,newdata=NULL,type="respo
 	
 	if (!is.null(previous)) {
 		
-		previous <- as.vector(previous)
+		previous <- as.matrix(previous) ##as.vector(previous) ##EC 1.2.9 20220111
 		
 		previous[!is.logical(previous)] <- previous[!is.logical(previous)]>=object$valmin
-		
+	
 		if(is.null(newdata)) newdata <- object$predictor
 		
 		newdata <- as.data.frame(newdata)

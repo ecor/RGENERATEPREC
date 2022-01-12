@@ -370,11 +370,11 @@ generate.PrecipitationOccurrenceMultiSiteModel <- function(x,exogen,n=10,origin=
 				message(message)
 				
 			}
-
-		    out[ncnt,] <- unlist(lapply(X=x[x$station],FUN=generate,previous=previous,endogenous=x$station,exogen=exogen[ncnt,],monthly.factor=factor(months)[ncnt],n=1,...))
-
-			previous[-1,] <- previous[-x$p,]
-			previous[1,] <- out[ncnt,]
+	  
+	    out[ncnt,] <- unlist(lapply(X=x[x$station],FUN=generate,previous=previous,endogenous=x$station,exogen=exogen[ncnt,],monthly.factor=factor(months)[ncnt],n=1,...))
+	  
+	    previous[-1,] <- previous[-x$p,]
+	    previous[1,] <- out[ncnt,]
 			
 		}
 		

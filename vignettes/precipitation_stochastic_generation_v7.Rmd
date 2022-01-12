@@ -302,7 +302,7 @@ str(prec_gen1)
 
 ### Comparison  
 
-The stochastic coherence between oberseved and generated time series is verified through the Quantile-Quantile plot:
+The stochastic coherence between observed and generated time series is verified through the Quantile-Quantile plot:
 
 ```{r eval=TRUE,fig.width=12}
 
@@ -333,7 +333,7 @@ show(g)
 
 ```
 
-A comaparison of the dry/wet spells, considered as periods of consecutive dry/rainy days, between observed and generated time series are plotted below respectively. The following lines of codes makes use of *dw.spell* function that calculates the length expressed in days for the dry or wet spells:
+A comparison of the dry/wet spells, considered as periods of consecutive dry/rainy days, between observed and generated time series are plotted below respectively. The following lines of codes makes use of *dw.spell* function that calculates the length expressed in days for the dry or wet spells:
 
 
 ```{r eval=TRUE,echo=TRUE}
