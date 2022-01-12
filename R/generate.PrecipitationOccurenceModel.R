@@ -22,13 +22,13 @@ NULL
 #' @aliases generate generate.PrecipitationOccurrenceModel 
 #' @rdname generate
 #' @importFrom RGENERATE generate
-#'
+#' @return A vector or a data frame reporting generated time series for each station.
 #' @references
 #' D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
-#' \url{http://www.sciencedirect.com/science/article/pii/S0022169498001863}
+#' \url{https://www.sciencedirect.com/science/article/pii/S0022169498001863}
 #' 
 #' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
-#' \url{http://dx.doi.org/10.1002/joc.2305}
+#' \doi{10.1002/joc.2305}, \url{https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/joc.2305}
 #' 
 #' 
 #' 
@@ -92,7 +92,7 @@ NULL
 #' 
 
 #'  
-#' \dontrun{
+#' \donttest{
 #' model <- 
 #' PrecipitationOccurrenceModel(x=prec_mes[,it],exogen=vect,
 #' monthly.factor=months,valmin=valmin)
@@ -111,7 +111,7 @@ NULL
 #' months <- factor(prec_mes$month)
 #' 
 #' 
-#' \dontrun{
+#' \donttest{
 #'  
 #' model_multisite <- 
 #' PrecipitationOccurrenceMultiSiteModel(x=prec_mes[,station],

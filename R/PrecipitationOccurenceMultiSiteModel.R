@@ -71,7 +71,7 @@ NULL
 #' station <- station[1:2] # to save example elapsed time!!
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
-#' \dontrun{
+#' \donttest{
 #' #' ### Not Run!! 
 #' # The following lines are commented to save example elapsed time!!
 #' model_multisite <- PrecipitationOccurrenceMultiSiteModel(x=prec_mes,exogen=exogen,

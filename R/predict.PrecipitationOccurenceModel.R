@@ -18,7 +18,7 @@ NULL
 #' @method predict PrecipitationOccurrenceModel
 #### @S3method predict PrecipitationOccurrenceModel
 #' @aliases predict predict.PrecipitationOccurrenceModel 
-#' 
+#' @return A vector or a data frame reporting predicted time series for each station.
 #' @rdname predict
 ##### @importFrom predict stats
 #' @importFrom RMAWGEN normalizeGaussian_severalstations
@@ -100,7 +100,7 @@ NULL
 #' exogen <- Tx_mes-Tn_mes
 #' months <- factor(prec_mes$month)
 #' 
-#' \dontrun{
+#' \donttest{
 #' ### Not Run 
 #' ### Please uncomment the following lines to run them 
 #' 

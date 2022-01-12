@@ -30,7 +30,7 @@ dw.spell(
 
 \item{from.start}{logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.}
 
-\item{only.inner}{logical vaalue. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}.}
+\item{only.inner}{logical value. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}.}
 }
 \value{
 Function returns a list of data frames containing the spell length expressed in days

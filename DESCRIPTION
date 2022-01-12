@@ -7,10 +7,10 @@ Author: Emanuele Cordano
 Description: The method 'generate()' is extended for spatial multi-site
     stochastic generation of daily precipitation. It generates precipitation
     occurrence in several sites using logit regression (Generalized Linear
-    Models) and D.S. Wilks' approach (Journal of Hydrology, 1998).
+    Models) and the approach by D.S. Wilks (1998) <doi:10.1016/S0022-1694(98)00186-3> . 
 Version: 1.2.8
 Repository: CRAN
-Date: 2020-12-23
+Date: 2021-01-19
 Depends:
     R (>= 3.0),
     copula,

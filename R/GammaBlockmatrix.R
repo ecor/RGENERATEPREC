@@ -5,7 +5,7 @@
 
 NULL
 #'
-#' This return a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices. 
+#' This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices. 
 #' 
 #' @param data data frame or 'zoo' R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link{CCGamma}}.
 #' @param lag numeric (expressed as number of days) used for the element [1,1] of the returned blockmatrix.  
@@ -17,6 +17,8 @@ NULL
 #' @import blockmatrix Matrix
 # @rdaname CCGamma
 #' @seealso  \code{\link{CCGamma}},\code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
+#' 
+#' @return A \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices. 
 #' @examples 
 #' 
 #' data(trentino)
@@ -41,7 +43,7 @@ NULL
 #' 
 #' p <- 1 ## try p <- 2 !!!  
 #' CCGamma <- CCGammaToBlockmatrix(data=prec_mes,lag=0,p=p,tolerance=0.001)
-#' \dontrun{
+#' \donttest{
 #' ## Not Run in the examples, uncomment to run the following line
 #'  CCGamma_1 <- CCGammaToBlockmatrix(data=prec_mes,lag=1,p=p,tolerance=0.001)
 #' 

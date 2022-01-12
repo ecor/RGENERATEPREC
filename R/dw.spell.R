@@ -16,7 +16,7 @@ NULL
 #' @param month integer vectors containing the considered months. Default is \code{1:12} (all the year). 
 #' @param melting.df logical value. If it \code{TRUE} the output is melted into a data frame. Default is \code{FALSE}.
 #' @param from.start logical value. If is \code{TRUE} the spell is referenced to its first day, if it is \code{FALSE} (default) the spell is referenced to its last date.
-#' @param only.inner logical vaalue. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}. 
+#' @param only.inner logical value. It is used in case \code{extract} is not \code{NULL}, if the value is \code{TRUE}, it extracts dry/wet spells completely inside the selected \code{month} period. Default is \code{FALSE}. 
 #' 
 #' @export
 #'
