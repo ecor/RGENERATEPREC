@@ -46,42 +46,29 @@ data(trentino)
 ```
 The stations are spread in a territory covering Trentino and its neighbourhood (@leaflet).
 
-<!-- ```{r,echo=FALSE,return=TRUE,warning=FALSE,results='markup',message=FALSE,fig.width=7} -->
-<!-- URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png' -->
-<!-- ATTRIBUTION = 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)' -->
-<!-- library(leaflet) -->
-
-<!-- leaf <- leaflet() %>% addTiles(urlTemplate=URL,attribution=ATTRIBUTION)  -->
-<!-- # leaf %>% addRasterImage(basin,opacity=opacity,col=color) %>% addLegend(position="bottomright",pal=color,values=basin[],opacity=opacity,title="Elevation [m]") %>%  -->
-<!-- # addCircleMarkers(lng=meteoloc$x,lat=meteoloc$y,label="Meteo",opacity=opacity,radius=2,color="red") %>%  -->
-<!-- #   addScaleBar() -->
-
-<!-- leaf <- leaf  %>% addMarkers(STATION_LATLON[,1],STATION_LATLON[,2],label=STATION_NAMES) -->
-<!-- leaf %>% setView(lng=mean(STATION_LATLON[,1]),lat=mean(STATION_LATLON[,2]),zoom=10) -->
-
-
-<!-- ``` -->
-
 ```{r,echo=FALSE,return=TRUE,warning=FALSE,results='markup',message=FALSE,fig.width=7}
-#URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
-#ATTRIBUTION = 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-library(mapview)
+# URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
+# ATTRIBUTION = 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+# library(leaflet)
+# 
+# leaf <- leaflet() %>% addTiles(urlTemplate=URL,attribution=ATTRIBUTION) 
+# # leaf %>% addRasterImage(basin,opacity=opacity,col=color) %>% addLegend(position="bottomright",pal=color,values=basin[],opacity=opacity,title="Elevation [m]") %>% 
+# # addCircleMarkers(lng=meteoloc$x,lat=meteoloc$y,label="Meteo",opacity=opacity,radius=2,color="red") %>% 
+# #   addScaleBar()
+# 
+# leaf <- leaf  %>% addMarkers(STATION_LATLON[,1],STATION_LATLON[,2],label=STATION_NAMES)
+# leaf %>% setView(lng=mean(STATION_LATLON[,1]),lat=mean(STATION_LATLON[,2]),zoom=10)
+
+######
+######
 library(sf)
+library(mapview)
 
-uu <- data.frame(x=STATION_LATLON[,1],y=STATION_LATLON[,2],name=STATION_NAMES)
-####
-
-####
-
-
-#leaf <- leaflet() %>% addTiles(urlTemplate=URL,attribution=ATTRIBUTION) 
-# leaf %>% addRasterImage(basin,opacity=opacity,col=color) %>% addLegend(position="bottomright",pal=color,values=basin[],opacity=opacity,title="Elevation [m]") %>% 
-# addCircleMarkers(lng=meteoloc$x,lat=meteoloc$y,label="Meteo",opacity=opacity,radius=2,color="red") %>% 
-#   addScaleBar()
-
-leaf <- leaf  %>% addMarkers(STATION_LATLON[,1],STATION_LATLON[,2],label=STATION_NAMES)
-leaf %>% setView(lng=mean(STATION_LATLON[,1]),lat=mean(STATION_LATLON[,2]),zoom=10)
-
+trentino_stations <- data.frame(x=STATION_LATLON[,1],y=STATION_LATLON[,2],name=STATION_NAMES)
+######
+trentino_stations$geometry <- trentino_stations[,c("x","y")] %>% t() %>% as.data.frame() %>% as.list() %>% lapply(st_point) %>% st_sfc()
+trentino_stations <- st_sf(trentino_stations,geometry=trentino_stations$geometry,crs=4326)
+mapview(trentino_stations,col.regions="blue")
 
 ```
 
