@@ -12,7 +12,7 @@ Version: 1.2.9
 Repository: CRAN
 Date: 2022-01-11
 Depends:
-    R (>= 3.0),
+    R (>= 3.5.0),
     copula,
     RGENERATE,
     blockmatrix,
