@@ -7,6 +7,7 @@ vignette: >
   %\VignetteIndexEntry{Stochastic Generation of Daily Precipitation Time Series}
   %\VignetteEngine{knitr::rmarkdown}
   \VignetteEncoding{UTF-8}
+  
 bibliography: bibliography.bib
 ---
 
@@ -15,6 +16,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+knitr::opts_chunk$set(echo = TRUE)
+
 ```
 ## Overview
 
@@ -46,21 +49,8 @@ data(trentino)
 ```
 The stations are spread in a territory covering Trentino and its neighbourhood (@leaflet).
 
-```{r,echo=FALSE,return=TRUE,warning=FALSE,results='markup',message=FALSE,fig.width=7}
-# URL = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
-# ATTRIBUTION = 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-# library(leaflet)
-# 
-# leaf <- leaflet() %>% addTiles(urlTemplate=URL,attribution=ATTRIBUTION) 
-# # leaf %>% addRasterImage(basin,opacity=opacity,col=color) %>% addLegend(position="bottomright",pal=color,values=basin[],opacity=opacity,title="Elevation [m]") %>% 
-# # addCircleMarkers(lng=meteoloc$x,lat=meteoloc$y,label="Meteo",opacity=opacity,radius=2,color="red") %>% 
-# #   addScaleBar()
-# 
-# leaf <- leaf  %>% addMarkers(STATION_LATLON[,1],STATION_LATLON[,2],label=STATION_NAMES)
-# leaf %>% setView(lng=mean(STATION_LATLON[,1]),lat=mean(STATION_LATLON[,2]),zoom=10)
+```{r,echo=TRUE,return=TRUE,warning=FALSE,results='markup',message=FALSE,fig.width=7}
 
-######
-######
 library(sf)
 library(mapview)
 
@@ -777,7 +767,7 @@ show(g)
 
 ## Conclusions
 
-An example of the usage of the precipitation stochastic generation contained in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing), the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series hes been checked. The weather generator can work with one or more time series generating scenarios for several sites and mantainig their also spatial cross-correlation. This vignette has shown an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability or adaptations to future projections) has been finally illustrated.
+An example of the usage of the precipitation stochastic generation contained in **RGENERATEPREC** package has been shown. Visualization through quantile-quantile plots and statistical testing (e.g. Kolgomorov-Smirnov testing), the similarity of  the stastistical properties (e.g. probability distrubtions of precipitation occurrence, precipitation account, dry spell, wet spell per each month of the year) between observed and generated time series hes been checked. The weather generator can work with one or more time series generating scenarios for several sites and mantaining their also spatial cross-correlation. This vignette has shown an example applied to some stations of *trentino* dataset. An example on how to use the weather generator with data having different probabilistic distribution (e.g. more climate variability or adaptations to future projections) has been finally illustrated.
 
 
 ## References 

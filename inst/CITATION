@@ -16,10 +16,10 @@ citEntry(entry ="article",
  citEntry(entry ="manual",
     title = "RGENERATE: Tools To Generate Vector Time Series",
     author = "Emanuele Cordano",
-    year = "2017",
+    year = "2022",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATE",
-    textVersion="Emanuele Cordano (2017). RGENERATE: Tools To Generate Vector Time Series. R package, https://CRAN.R-project.org/package=RGENERATE"
+    textVersion="Emanuele Cordano (2022). RGENERATE: Tools To Generate Vector Time Series. R package, https://CRAN.R-project.org/package=RGENERATE"
     
   )
 
@@ -27,10 +27,10 @@ citEntry(entry ="article",
  citEntry(entry ="manual",
     title = "RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series",
     author = "Emanuele Cordano",
-    year = "2021",
+    year = "2022",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATEPREC",
-    textVersion="Emanuele Cordano (2019). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC"
+    textVersion="Emanuele Cordano (2022). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC"
     
 )
   
