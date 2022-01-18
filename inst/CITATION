@@ -7,7 +7,7 @@ citEntry(entry ="article",
   journal="Italian Journal of Agrometeorology",
   volume="3",
   doi="10.19199/2016.3.2038-5625.031",
-  url="http://www.patroneditore.com/fascicolo_italian_journal_of_agrometeorology-1098.html",
+  url="http://agrometeorologia.it/documenti/Rivista2016_3/tools_for_stochastic_weather_series_generation_in_r_environment.pdf",
   year="2016",
   textVersion = "Cordano E. and Eccel E. (2016), Tools for stochastic weather series generation in R environment,  Italian Journal of Agrometeorology ,doi:10.19199/2016.3.2038-5625.031"
 )
@@ -30,17 +30,17 @@ citEntry(entry ="article",
     year = "2022",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATEPREC",
-    textVersion="Emanuele Cordano (2022). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC"
+    textVersion="Emanuele Cordano (2017). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC"
     
 )
   
  citEntry(entry ="manual",
     title = "RMAWGEN: Multi-Site Auto-Regressive Weather GENerator",
     author = "Emanuele Cordano and Emanuele Eccel",
-    year = "2019",
+    year = "2017",
     note = "R package",
     url="https://CRAN.R-project.org/package=RMAWGEN",
-    textVersion= "Emanuele Cordano and Emanuele Eccel (2019). RMAWGEN: Multi-Site Auto-Regressive Weather GENerator. R Package, https://CRAN.R-project.org/package=RMAWGEN"
+    textVersion= "Emanuele Cordano and Emanuele Eccel (2017). RMAWGEN: Multi-Site Auto-Regressive Weather GENerator. R Package, https://CRAN.R-project.org/package=RMAWGEN"
     
 )
   
