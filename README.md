@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/23124682.svg)](https://zenodo.org/badge/latestdoi/23124682)
 
 ##  RGENERATEPREC:  generation methods for daily precipitation 
 
