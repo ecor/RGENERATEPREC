@@ -179,6 +179,12 @@ predict.PrecipitationOccurrenceModel <- function(object,newdata=NULL,type="respo
 #####	newdata <- newdata[,names(object$predictor)]
 	
 	out <- NULL
+	##EC 20230123 object02 <<- object
+	##EC 20230123 glm02 <<- object$glm
+	##EC 20230123 newdata02 <<- newdata
+	##EC 20230123 type02 <<- type
+	
+
 	out <- predict(object$glm,newdata=newdata,type=type,...)
 	if (is.null(newdata) & (object$p>0)) {
 		

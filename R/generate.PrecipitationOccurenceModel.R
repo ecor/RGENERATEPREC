@@ -102,6 +102,10 @@ NULL
 #' gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
 #' }
 #' 
+#' ## Only 10 generated realizations!!
+#' gen10 <- generate(model,exogen=vect,monthly.factor=months,n=10)
+#' 
+#' 
 #' ### MultiSite Generation 
 #' 
 #' 
@@ -177,7 +181,11 @@ generate.PrecipitationOccurrenceModel <- function(x,newdata=NULL,previous=NULL,n
 		
 
 ###		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",endogenous=endogenous,...)
-		prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...) ## ec 20141208
+	  ##EC 20230123x01 <<- x
+	  ##EC 20230123newdata01 <<- newdata[i,]
+	  ##EC 20230123previous01 <<- previous
+	  ##EC 20230123i01 <<- i
+	  prob <- 1-predict(x,newdata=newdata[i,],previous=previous,type="response",...) ## ec 20141208
 		out[i] <- random[i]>=prob
 		
 
@@ -228,13 +236,31 @@ NULL
 #' @rdname generate
 #' 
 
-generate.PrecipitationOccurrenceMultiSiteModel <- function(x,exogen,n=10,origin="1961-1-1",end="1990-1-1",previous=NULL,monthly.factor=NULL,...) {
+generate.PrecipitationOccurrenceMultiSiteModel <- function(x,exogen,n=NA,origin="1961-1-1",end="1990-1-1",previous=NULL,monthly.factor=NULL,...) {
 	
 	
 	out <- NULL 
+	## EC 20230123
+	
+	if (is.null(origin)) origin <- NA
+	if (is.null(end)) end <- NA
+	if (!is.na(n) & n>0) {
+	  
+	  if (!is.na(origin)) {
+	    end <- as.Date(origin)+lubridate::days(n-1)
+	  } else if (!is.na(end)) {  
+	    origin <-  as.Date(end)-lubridate::days(n-1)
+	  }  
+	  
+	}
+	  
+	 
 	if (is.null(monthly.factor)) {
 		
 		dates <- as.Date(origin):as.Date(end)
+		
+		
+		
 		months <- adddate(as.data.frame(dates),origin=origin)$month
 		
 		n <- length(months)
@@ -317,6 +343,14 @@ generate.PrecipitationOccurrenceMultiSiteModel <- function(x,exogen,n=10,origin=
 			### 
 			###function(x,newdata=NULL,previous=NULL,n=30,random=runif(n,min=0,max=1),exogen=NULL,monthly.factor=NULL,...) {
 			message(paste("Processing",it))
+			##EC 20230123	print(exogen_loc)
+			##EC 20230123print(n)
+			##EC 20230123exogen_loc00 <<- exogen_loc
+			##EC 20230123n00 <<- n
+			##EC 20230123ff00 <<- factor(months)
+			##EC 20230123xx00 <<- x[[it]]
+			##EC 20230123it00 <<- it
+			##EC 20230123random00 <<- gen_wilks[,it]
 			out[,it] <- generate(x[[it]],previous=previous_loc,exogen=exogen_loc,monthly.factor=factor(months),random=gen_wilks[,it],n=n)
 		
 			 

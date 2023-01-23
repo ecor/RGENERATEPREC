@@ -146,8 +146,9 @@ PrecipitationOccurrenceMultiSiteModel <- function(x,exogen=NULL,station=names(x)
 			variable <- x>=valmin
 			x <- as.data.frame(variable)
 		}
+		##EC 20230123exogen00 <<- exogen ## EC 20230123
 		
-		if (!is.null(exogen)) { as.data.frame(array(0*NA,c(nrow(x),0))) }
+		if (length(exogen)==0) {  exogen <- as.data.frame(array(0*NA,c(nrow(x),0))) } ## EC 20230123
 		if (!is.data.frame(exogen)) {
 			
 			stop("Option: multisty_type == logit, exogen must be a data frame or NULL!!!")
