@@ -1,6 +1,6 @@
 citHeader("To cite RMAWGEN, RGENERATE and RGENERATEPREC in publications, please use the following article and the respective package reference:")
 
-citEntry(entry ="article",
+bibentry("article",
   title="Tools for stochastic weather series generation
   in R environment",
   author="Cordano E. and Eccel E.",
@@ -17,7 +17,7 @@ citEntry(entry ="article",
 
 
 
- citEntry(entry ="manual",
+ bibentry("manual",
     title = "RGENERATE: Tools To Generate Vector Time Series",
     author = "Emanuele Cordano",
     year = "2017",
@@ -28,7 +28,7 @@ citEntry(entry ="article",
   )
 
 
- citEntry(entry ="manual",
+ bibentry("manual",
     title = "RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series",
     author = "Emanuele Cordano",
     year = "2017",
@@ -40,12 +40,12 @@ citEntry(entry ="article",
 
 )
 
- citEntry(entry ="manual",
+ bibentry("manual",
     title = "RMAWGEN: Multi-Site Auto-Regressive Weather GENerator",
     author = "Emanuele Cordano and Emanuele Eccel",
     year = "2017",
     note = "R package",
-    url="https://CRAN.R-project.org/package=RMAWGEN , https://doi.org/10.5281/zenodo.6891890",
+    url="https://CRAN.R-project.org/package=RMAWGEN,https://doi.org/10.5281/zenodo.6891890",
     textVersion= "Emanuele Cordano and Emanuele Eccel (2017). RMAWGEN: Multi-Site Auto-Regressive Weather GENerator. R Package, https://CRAN.R-project.org/package=RMAWGEN",
      doi ="10.5281/zenodo.6891949"
 

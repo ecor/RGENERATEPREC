@@ -22,7 +22,7 @@ NULL
 #'
 #' @importFrom RMAWGEN adddate
 #' @importFrom RMAWGEN continuity_ratio
-#' 
+#' @importFrom lubridate day month year
 #' @return Function returns a list of data frames containing the spell length expressed in days
 #' 
 #' @examples  
@@ -64,7 +64,7 @@ NULL
 #' dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
 #' dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",
 #' 	month=5:8,from.start=TRUE) ## dry spell 
-#' 	dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
+#' dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
 #' month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
 #' ## is referenced to the first day instead of the latest one as default. 
 #' 
@@ -130,13 +130,13 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 		temp$start_date <- temp$end_date-temp$spell_length+1
 		
 		### FROM START ## mod EC 20191016
-		if (from.start==TRUE) {  ## MOD EC 20201007
+		if (from.start==TRUE) {  ## MOD EC 202240508  ## MOD EC 20201007
 			
 		 ##temp$end_date <- as.Date(paste(temp$year,temp$month,temp$day,sep="-"))
 		 ##temp$start_date <- temp$end_date-temp$spell_length+1
-		 temp$day <- as.numeric(as.character(temp$start_date,format="%d"))
-		 temp$month <- as.numeric(as.character(temp$start_date,format="%m"))
-		 temp$year <- as.numeric(as.character(temp$start_date,format="%Y"))
+		 temp$day <- lubridate::day(temp$start_date) ## as.numeric(as.character(temp$start_date,format="%d"))
+		 temp$month <- lubridate::month(temp$start_date) ## as.numeric(as.character(temp$start_date,format="%m"))
+		 temp$year <- lubridate::year(temp$start_date) ##as.numeric(as.character(temp$start_date,format="%Y"))
 		 
 		}		
 		out[[c]] <- temp 

@@ -78,7 +78,7 @@ dw_spell <- dw.spell(prec_mes,origin=origin)
 dw_spell_dry <- dw.spell(prec_mes,origin=origin,extract="dry")
 dw_spell_dry_start <- dw.spell(prec_mes,origin=origin,extract="dry",
 	month=5:8,from.start=TRUE) ## dry spell 
-	dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
+dw_spell_dry_start_2 <- dw.spell(prec_mes,origin=origin,extract="dry",
 month=5:8,from.start=TRUE,only.inner=TRUE) ## dry spell 
 ## is referenced to the first day instead of the latest one as default. 
 
