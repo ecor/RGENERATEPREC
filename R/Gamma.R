@@ -26,7 +26,7 @@ NULL
 #' \url{https://www.sciencedirect.com/science/article/pii/S0022169498001863}
 #' 
 #' Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
-#' \doi{10.1002/joc.2305}, \url{https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.2305}
+#' \doi{10.1002/joc.2305}, https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.2305
 #' 
 #' 
 #' 
