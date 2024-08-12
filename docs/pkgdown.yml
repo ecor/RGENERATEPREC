@@ -1,0 +1,6 @@
+pandoc: 3.1.1
+pkgdown: 2.1.0
+pkgdown_sha: ~
+articles:
+  precipitation_stochastic_generation_v8: precipitation_stochastic_generation_v8.html
+last_built: 2024-08-12T17:02Z

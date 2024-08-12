@@ -1,0 +1,21 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/precipitation_stochastic_generation_v8.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/CCGamma.html</loc></url>
+<url><loc>/reference/CCGammaToBlockmatrix.html</loc></url>
+<url><loc>/reference/PrecipitationAmountModel.html</loc></url>
+<url><loc>/reference/PrecipitationOccurrenceModel.html</loc></url>
+<url><loc>/reference/PrecipitationOccurrenceMultiSiteModel.html</loc></url>
+<url><loc>/reference/dw.spell.html</loc></url>
+<url><loc>/reference/generate.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/nwetdays.html</loc></url>
+<url><loc>/reference/omega.html</loc></url>
+<url><loc>/reference/omega_inv.html</loc></url>
+<url><loc>/reference/omega_root.html</loc></url>
+<url><loc>/reference/predict.html</loc></url>
+</urlset>
+
