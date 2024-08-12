@@ -127,7 +127,7 @@ dw.spell <- function(data,valmin=0.5,origin="1961-1-1",extract=NULL,month=1:12,m
 		temp$spell_length <- spell_length
 		temp$spell_state <- spell_state
 		temp$end_date <- as.Date(paste(temp$year,temp$month,temp$day,sep="-"))
-		temp$start_date <- temp$end_date-temp$spell_length+1
+		temp$start_date <- temp$end_date-lubridate::days(temp$spell_length-1)
 		
 		### FROM START ## mod EC 20191016
 		if (from.start==TRUE) {  ## MOD EC 202240508  ## MOD EC 20201007
