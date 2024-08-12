@@ -14,4 +14,5 @@ install.packages("RGENERATEPREC")
 
 ```
 
-See package manual and vignette for more detailed info.
+See package webpage: https://ecor.github.io/RGENERATEPREC/ 
+or manual and vignette for more detailed info.
