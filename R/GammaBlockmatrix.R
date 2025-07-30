@@ -5,20 +5,20 @@
 
 NULL
 #'
-#' This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices. 
+#' This function returns a \code{\link[blockmatrix]{blockmatrix}} object containing the gaussian cross-correlation matrices. 
 #' 
 #' @param data data frame or 'zoo' R object containing daily precipitation time series for several gauges (one gauge time series per column). See \code{\link{CCGamma}}.
 #' @param lag numeric (expressed as number of days) used for the element [1,1] of the returned blockmatrix.  
 #' @param p numeric order $p$ of the auto-regeression 
 #' @param ... further argments of \code{\link{CCGamma}}
 #' 
-#' @details This a wrapper for \code{\link{CCGamma}} with the option \code{only.matrix=TRUE} and the function value is transformed into a \code{\link{blockmatrix}} object. 
+#' @details This a wrapper for \code{\link{CCGamma}} with the option \code{only.matrix=TRUE} and the function value is transformed into a \code{\link[blockmatrix]{blockmatrix}} object. 
 #' 
 #' @import blockmatrix Matrix
 # @rdaname CCGamma
 #' @seealso  \code{\link{CCGamma}},\code{\link[RMAWGEN]{continuity_ratio}},\code{\link{omega_inv}},\code{\link{omega}}
 #' 
-#' @return A \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices. 
+#' @return A \code{\link[blockmatrix]{blockmatrix}} object containing the gaussian cross-correlation matrices. 
 #' @examples 
 #' 
 #' data(trentino)

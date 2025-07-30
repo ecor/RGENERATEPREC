@@ -34,7 +34,7 @@ otherwise  the complete output of \code{\link{uniroot}} is returned.}
 
 \item{tolerance}{tolerance (numeric) parameter used for comparisons with the extreme value of marginal probabilities. Default is 0.001.}
 
-\item{nearPD}{logical. If \code{TRUE} (Default) a positive-definite correlation matrix is returned by applying \code{\link{nearPD}} in case \code{p0} is a matrix and not \code{NULL}.}
+\item{nearPD}{logical. If \code{TRUE} (Default) a positive-definite correlation matrix is returned by applying \code{\link[Matrix]{nearPD}} in case \code{p0} is a matrix and not \code{NULL}.}
 
 \item{force.independence}{logical value. Default is \code{TRUE}. If it is \code{TRUE}, no negative corelation is considered and negative values of correletion are forced to be 0 (independence).}
 
@@ -58,7 +58,7 @@ x <- omega_inv(p0_v1=0.5,p0_v2=0.5,p00=1.1*0.5*0.5)
 omega(x,p0_v1=0.5,p0_v2=0.5)
 }
 \seealso{
-\code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}}(and reference URLs therein)
+\code{\link[copula]{normalCopula}},\code{\link[copula]{pcopula}},\code{\link{omega}}(and reference URLs therein)
 }
 \author{
 Emanuele Cordano

@@ -35,13 +35,7 @@
       <a href="../articles/precipitation_stochastic_generation_v8.html">Stochastic Generation of Daily Precipitation Time Series</a>
     </li>
   </ul></li>
-      </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/ecor/RGENERATEPREC/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-
-  </a>
-</li>
-      </ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -50,13 +44,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>This function extends <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code> and adds the corresponding gaussian correlation matrix for no-precipitation occurrence.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ecor/RGENERATEPREC/blob/HEAD/R/Gamma.R" class="external-link"><code>R/Gamma.R</code></a></small>
+    <h1>This function extends <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code> and adds the corresponding gaussian correlation matrix for no-precipitation occurrence.</h1>
+
     <div class="hidden name"><code>CCGamma.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function extends <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code> and adds the corresponding gaussian correlation matrix for no-precipitation occurrence.</p>
+    <p>This function extends <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code> and adds the corresponding gaussian correlation matrix for no-precipitation occurrence.</p>
     </div>
 
     <div id="ref-usage">
@@ -83,11 +77,11 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
+<dd><p>data frame or 'zoo'  R object containing daily precipitation time series for several gauges (one gauge time series per column). See <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
 
 
 <dt id="arg-lag">lag<a class="anchor" aria-label="anchor" href="#arg-lag"></a></dt>
-<dd><p>numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurrence. See <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
+<dd><p>numeric lag (expressed as number of days) used for computation for "cross" continuity ratio and joint probability of prercipitation (no)occurrence. See <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
 
 
 <dt id="arg-p-v-">p0_v1<a class="anchor" aria-label="anchor" href="#arg-p-v-"></a></dt>
@@ -100,7 +94,7 @@
 
 <dt id="arg-valmin">valmin<a class="anchor" aria-label="anchor" href="#arg-valmin"></a></dt>
 <dd><p>threshold precipitation value [mm] for wet/dry day indicator.
-If precipitation is lower than <code>valmin</code>, day is considered dry. Default is 0.5 mm. See <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
+If precipitation is lower than <code>valmin</code>, day is considered dry. Default is 0.5 mm. See <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>.</p></dd>
 
 
 <dt id="arg-nearpd">nearPD<a class="anchor" aria-label="anchor" href="#arg-nearpd"></a></dt>
@@ -138,9 +132,9 @@ If precipitation is lower than <code>valmin</code>, day is considered dry. Defau
     <div id="value">
     <h2>Value</h2>
     <p>An object which is a list containing the following fields:</p>
-<p><code>continuity_ratio</code> : <code>lag</code>-day lagged  continuity ratio, as returned by <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
-<p><code>occurrence</code>  : joint probability of <code>lag</code>-day lagged precipitation occurrence, as returned by <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
-<p><code>nooccurrence</code> : joint probability of <code>lag</code>-day lagged no precipitation occurrence, as returned by <code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
+<p><code>continuity_ratio</code> : <code>lag</code>-day lagged  continuity ratio, as returned by <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
+<p><code>occurrence</code>  : joint probability of <code>lag</code>-day lagged precipitation occurrence, as returned by <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
+<p><code>nooccurrence</code> : joint probability of <code>lag</code>-day lagged no precipitation occurrence, as returned by <code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>;</p>
 <p><code>lag</code> : number of days lagged between the two compared events (see argument <code>lag</code>);</p>
 <p><code>p0_v1</code> : vector of marginal probability of no precipitation occurrence. If <code>lag</code>
 is 0, it corresponds to the diagonal of  <code>nooccurrence</code> matrix (see argument <code>p0_v1</code>);</p>
@@ -158,14 +152,14 @@ default is <code>(lag==0)</code>.</p>
     <div id="references">
     <h2>References</h2>
     <p>D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
-<a href="https://www.sciencedirect.com/science/article/pii/S0022169498001863" class="external-link">https://www.sciencedirect.com/science/article/pii/S0022169498001863</a></p>
+<a href="https://doi.org/10.1016/S0022-1694%2898%2900186-3" class="external-link">doi:10.1016/S0022-1694(98)00186-3</a></p>
 <p>Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
 <a href="https://doi.org/10.1002/joc.2305" class="external-link">doi:10.1002/joc.2305</a>
 , https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.2305</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/RMAWGEN/man/continuity_ratio.html" class="external-link">continuity_ratio</a></code>,<code><a href="omega_inv.html">omega_inv</a></code>,<code><a href="omega.html">omega</a></code>,<code><a href="CCGammaToBlockmatrix.html">CCGammaToBlockmatrix</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://ecor.github.io/RMAWGEN/reference/continuity_ratio.html" class="external-link">continuity_ratio</a></code>,<code><a href="omega_inv.html">omega_inv</a></code>,<code><a href="omega.html">omega</a></code>,<code><a href="CCGammaToBlockmatrix.html">CCGammaToBlockmatrix</a></code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -268,7 +262,7 @@ default is <code>(lag==0)</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>

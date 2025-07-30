@@ -13,7 +13,7 @@ NULL
 #' 
 #' @note This function makes use of normal copula 
 #' 
-#' @seealso \code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}},\code{\link{omega_inv}}
+#' @seealso \code{\link[copula]{normalCopula}},\code{\link[copula]{pcopula}},\code{\link{omega}},\code{\link{omega_inv}}
 #' @export
 #' @examples 
 

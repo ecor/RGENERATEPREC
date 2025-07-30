@@ -36,7 +36,7 @@ p00 <- omega(x=rho,p0_v1=0.5,p0_v2=0.5)
 omega_root(x=rho,p0_v1=0.5,p0_v2=0.5,p00=p00)
 }
 \seealso{
-\code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}},\code{\link{omega_inv}}
+\code{\link[copula]{normalCopula}},\code{\link[copula]{pcopula}},\code{\link{omega}},\code{\link{omega_inv}}
 }
 \author{
 Emanuele Cordano

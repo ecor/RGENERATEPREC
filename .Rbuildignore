@@ -1,3 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-/docs
+LICENSE
+docs/
+README.md
+

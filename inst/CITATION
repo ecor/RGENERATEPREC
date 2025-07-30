@@ -20,22 +20,22 @@ bibentry("article",
  bibentry("manual",
     title = "RGENERATE: Tools To Generate Vector Time Series",
     author = "Emanuele Cordano",
-    year = "2017",
+    year = "2025",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATE",
     textVersion="Emanuele Cordano (2017). RGENERATE: Tools To Generate Vector Time Series. R package, https://CRAN.R-project.org/package=RGENERATE",
-    doi="10.5281/zenodo.6891938"
+    doi="	10.32614/CRAN.package.RGENERATE"
   )
 
 
  bibentry("manual",
     title = "RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series",
     author = "Emanuele Cordano",
-    year = "2017",
+    year = "2025",
     note = "R package",
     url = "https://CRAN.R-project.org/package=RGENERATEPREC",
     textVersion="Emanuele Cordano (2017). RGENERATEPREC: Tools to Generate Daily-Precipitation Time Series. R package, https://CRAN.R-project.org/package=RGENERATEPREC",
-    doi="10.5281/zenodo.6891940"
+    doi="10.32614/CRAN.package.RGENERATEPREC"
 
 
 )
@@ -43,11 +43,11 @@ bibentry("article",
  bibentry("manual",
     title = "RMAWGEN: Multi-Site Auto-Regressive Weather GENerator",
     author = "Emanuele Cordano and Emanuele Eccel",
-    year = "2017",
+    year = "2025",
     note = "R package",
-    url="https://CRAN.R-project.org/package=RMAWGEN,https://doi.org/10.5281/zenodo.6891890",
+    url="https://CRAN.R-project.org/package=RMAWGEN",
     textVersion= "Emanuele Cordano and Emanuele Eccel (2017). RMAWGEN: Multi-Site Auto-Regressive Weather GENerator. R Package, https://CRAN.R-project.org/package=RMAWGEN",
-     doi ="10.5281/zenodo.6891949"
+     doi ="10.32614/CRAN.package.RMAWGEN"
 
 )
 

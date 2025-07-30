@@ -13,7 +13,7 @@ NULL
 #' @param correlation numerical value. DEfault is \code{NA}.  Binary correlation retured by \code{\link{omega}}  when the argumet \code{correlation=TRUE} (see \code{\link{omega_root}})
 #' @param interval see \code{interval} option of \code{\link{uniroot}}. Default is \code{c(-1,1)}. 
 #' @param tolerance tolerance (numeric) parameter used for comparisons with the extreme value of marginal probabilities. Default is 0.001. 
-#' @param nearPD logical. If \code{TRUE} (Default) a positive-definite correlation matrix is returned by applying \code{\link{nearPD}} in case \code{p0} is a matrix and not \code{NULL}.
+#' @param nearPD logical. If \code{TRUE} (Default) a positive-definite correlation matrix is returned by applying \code{\link[Matrix]{nearPD}} in case \code{p0} is a matrix and not \code{NULL}.
 #' @param force.independence logical value. Default is \code{TRUE}. If it is \code{TRUE}, no negative corelation is considered and negative values of correletion are forced to be 0 (independence).
 #' @param ... further arguments for \code{\link{uniroot}}
 #' 
@@ -28,7 +28,7 @@ NULL
 #' 
 #' 
 #' @import Matrix
-#' @seealso \code{\link{normalCopula}},\code{\link{pcopula}},\code{\link{omega}}(and reference URLs therein)
+#' @seealso \code{\link[copula]{normalCopula}},\code{\link[copula]{pcopula}},\code{\link{omega}}(and reference URLs therein)
 #' @export
 #' @examples 
 

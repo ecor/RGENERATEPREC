@@ -126,12 +126,12 @@ monthly.factor=months,valmin=valmin)
 obs <- prec_mes[,it]>=valmin
 
 gen <- generate(model,exogen=vect,monthly.factor=months,n=length(months))
-}
+
 
 ## Only 10 generated realizations!!
 gen10 <- generate(model,exogen=vect,monthly.factor=months,n=10)
 
-
+}
 ### MultiSite Generation 
 
 
@@ -163,7 +163,7 @@ gen_multisite_logit <- generate(model_multisite_logit,exogen=exogen,origin=origi
 }
 \references{
 D.S. Wilks (1998), Multisite Generalization of a Daily Stochastic Precipitation Generation Model, Journal of Hydrology, Volume 210, Issues 1-4, September 1998, Pages 178-191,
-\url{https://www.sciencedirect.com/science/article/pii/S0022169498001863}
+\doi{10.1016/S0022-1694(98)00186-3}
 
 Muamaraldin Mhanna and Willy Bauwens (2011) A Stochastic Space-Time Model for the Generation of Daily Rainfall in the Gaza Strip, International Journal of Climatology, Volume 32, Issue 7, pages 1098-1112,
 \doi{10.1002/joc.2305}, https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.2305

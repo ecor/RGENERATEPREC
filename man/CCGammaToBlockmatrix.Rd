@@ -2,7 +2,7 @@
 % Please edit documentation in R/GammaBlockmatrix.R
 \name{CCGammaToBlockmatrix}
 \alias{CCGammaToBlockmatrix}
-\title{This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.}
+\title{This function returns a \code{\link[blockmatrix]{blockmatrix}} object containing the gaussian cross-correlation matrices.}
 \usage{
 CCGammaToBlockmatrix(data, lag = 0, p = 3, ...)
 }
@@ -16,13 +16,13 @@ CCGammaToBlockmatrix(data, lag = 0, p = 3, ...)
 \item{...}{further argments of \code{\link{CCGamma}}}
 }
 \value{
-A \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.
+A \code{\link[blockmatrix]{blockmatrix}} object containing the gaussian cross-correlation matrices.
 }
 \description{
-This function returns a \code{\link{blockmatrix}} object containing the gaussian cross-correlation matrices.
+This function returns a \code{\link[blockmatrix]{blockmatrix}} object containing the gaussian cross-correlation matrices.
 }
 \details{
-This a wrapper for \code{\link{CCGamma}} with the option \code{only.matrix=TRUE} and the function value is transformed into a \code{\link{blockmatrix}} object.
+This a wrapper for \code{\link{CCGamma}} with the option \code{only.matrix=TRUE} and the function value is transformed into a \code{\link[blockmatrix]{blockmatrix}} object.
 }
 \examples{
 
